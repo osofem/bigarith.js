@@ -3,7 +3,7 @@ class BigArith
 	constructor(n)
 	{
 		if(typeof(n) == "object" && n.name == "BigArith")
-			this.value  = n.valueOf();
+			this.value = n.valueOf();
 		else if(n == "PI")
 			this.value = "3.141592653589793";
 		else if(n == "LN2")
@@ -24,13 +24,17 @@ class BigArith
 			this.value = this.verify(n);
 	}
 	
-	/* Name of object */
+	/**	Name of object 
+	*	@return {String} - Name of the object
+	*/
 	get name()
 	{
 		return "BigArith";
 	}
 	
-	/* Value of object */
+	/** Value of object
+	*	@return {String} - this.value
+	*/
 	valueOf()
 	{
 		return this.value;
@@ -39,23 +43,25 @@ class BigArith
 	/** Return the absolute value of a number
 	*	function abs
 	*	@param {String} - String passed in via this.value;
-	*	@returns {String} - Absolute value of input
+	*	@returns {BigArith} - Absolute value of input
 	*/
 	abs()
 	{
-		return (isNaN(number)) ? NaN : ((this.value.split("")[0] == "-") ? (this.value.split("").splice(1, this.value.split("").length-1)).join("") : this.value);
+		return (isNaN(this.value)) ? NaN : ((this.value.split("")[0] == "-") ? new BigArith((this.value.split("").splice(1, this.value.split("").length-1)).join("")) : new BigArith(this.value));
 	}
 	
 	
 	/**	Word Dictionary
-	*	TODO==
-		complete
+	*	@param {String} - Word value for numbers e.g "one"
+	*	@returns {String} - String value of @param e.g "1"
 	*/
 	w_Dict(w)
 	{
 		/*Word Dictionary*/
 		var w_Dict = [];
-		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; w_Dict["four"] = "4"; w_Dict["five"] = "6"; w_Dict["seven"] = "7"; w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; w_Dict["eleven"] = "11"; w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90"; 
+		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; w_Dict["four"] = "4"; w_Dict["five"] = "5"; w_Dict["six"] = "6"; w_Dict["seven"] = "7"; w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; w_Dict["eleven"] = "11"; w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90";
+		w_Dict["hundred"] = this.padWithZero(2); w_Dict["thousand"] = this.padWithZero(3); w_Dict["million"] = this.padWithZero(6); w_Dict["billion"] = this.padWithZero(9); w_Dict["trillion"] = this.padWithZero(12); w_Dict["quadrillion"] = this.padWithZero(15); w_Dict["quintillion"] = this.padWithZero(18); w_Dict["sextillion"] = this.padWithZero(21); w_Dict["septillion"] = this.padWithZero(24); w_Dict["octillion"] = this.padWithZero(27); w_Dict["nonillion"] = this.padWithZero(30); w_Dict["decillion"] = this.padWithZero(33);
+		
 		return w_Dict[w];
 	}
 	
@@ -110,7 +116,7 @@ class BigArith
 		{
 			n = n.toLowerCase();
 			n = n.replace(/^\s|\s$/g, "").replace(/\s+/g, " ");
-			n = n.replace(" and ", " ");
+			n = n.replace(/\s(and)\s/g, " ");
 			
 			let fNum = "";
 			let dNum = "";
@@ -131,9 +137,31 @@ class BigArith
 				decimal.shift();
 				dNum = decimal.map(a=>{if(this.w_Dict(a).length < 2 && this.w_Dict(a).length > 0) return this.w_Dict(a); else return NaN;}).join("");
 			}
+			else
+				dNum = "0";
 			
 			//The Characteristic part
-			console.log(n);
+			let subArray = [];
+			let subString = "";
+			for(let i = 0; i < n.length; i++)
+			{
+				if(typeof(this.w_Dict(n[i])) == 'undefined')return NaN; //Spelling errors and what-nots
+				if(this.w_Dict(n[i]).length >= 3/*thousand and above*/)
+				{
+					subString += this.w_Dict(n[i]);
+					subArray.push(subString);
+					subString = "";
+				}
+				else if(n[i] == "hundred")
+					subString += this.w_Dict(n[i]);
+				else
+					subString = subString.substr(0, subString.length - this.w_Dict(n[i]).length) + this.w_Dict(n[i]);
+			}
+			subArray.push(subString);
+			for(let i = 0; i < subArray.length; i++)
+			{
+				fNum = fNum.substr(0, fNum.length - subArray[i].length) + subArray[i];
+			}
 			
 			//output
 			if(/^\d+$/.test(fNum) && /^\d+$/.test(dNum)/*Test that it contains only digits*/)
@@ -141,7 +169,7 @@ class BigArith
 				//Remove unnecessary zeros
 				fNum = fNum.replace(/^[0]+/g, "");
 				dNum = dNum.replace(/[0]+$/g, "");
-				return (sign?"-":"") /* + fNum goes here*/ + ((dNum == "")?"":"."+dNum);
+				return (sign?"-":"") + ((fNum == "")?"0":fNum) + ((dNum == "")?"":"."+dNum);
 			}
 			else
 				return NaN;
@@ -154,7 +182,7 @@ class BigArith
 	/**	Add two numbers together
 	*	function add
 	*	@param {Number|String|BigArith} - Number to add to the current BigArith object value
-	*	@returns {String} - Result of addition this.value + @param
+	*	@returns {BigArith} - Result of addition this.value + @param as a new BigArith object
 	
 	*	TODO===
 	*	Send to subtract when one parameter is carring the "-" sign
