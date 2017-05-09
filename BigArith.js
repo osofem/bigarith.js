@@ -18,8 +18,6 @@ class BigArith
 			this.value = "0.7071067811865476";
 		else if(n == "SQRT2")
 			this.value = "1.4142135623730951";
-		else if(n == "")
-			this.value = "0";
 		else
 			this.value = this.verify(n);
 	}
@@ -74,6 +72,10 @@ class BigArith
 	*/
 	verify(n)
 	{
+		//Empty string returns "0"
+		if(n == "")
+			return "0";
+		
 		//Can be already verified BigArith object
 		if(typeof(n) == "object" && n.name == "BigArith")
 			return n.valueOf();
@@ -98,6 +100,8 @@ class BigArith
 			n = n.split(".");
 			if(n.length > 2)
 				return NaN;
+			if(n[0] == "")
+				n[0] = "0";
 			if(typeof(n[1]) == 'undefined')
 				n[1] = "0";
 			if(/^\d+$/.test(n[0]) && /^\d+$/.test(n[1])/*Test that it contains only digits*/)
@@ -131,7 +135,7 @@ class BigArith
 			}
 			
 			//The Mantissa part
-			if(n.indexOf("point") > 0)
+			if(n.indexOf("point") >= 0)
 			{
 				let decimal = n.splice(n.indexOf("point"), n.length - n.indexOf("point"));
 				decimal.shift();
@@ -162,6 +166,7 @@ class BigArith
 			{
 				fNum = fNum.substr(0, fNum.length - subArray[i].length) + subArray[i];
 			}
+			if(fNum == "") fNum = "0";
 			
 			//output
 			if(/^\d+$/.test(fNum) && /^\d+$/.test(dNum)/*Test that it contains only digits*/)
