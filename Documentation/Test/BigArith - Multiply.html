@@ -1,0 +1,48 @@
+<html>
+	<script src="https://cdn.rawgit.com/osofem/BigArith.js/master/BigArith.js"></script>
+	<script>
+		var result = "";
+		
+		/*Initializing a BigArith object*/
+		var x = new BigArith("0.5"); //via strings
+		var y = new BigArith("zero point five"); //via words
+		var z = new BigArith(0.5); //via numbers
+		
+		//It can even be like this
+		var a = new BigArith(".5"); //via strings
+		var b = new BigArith("point five"); //via words
+		var c = new BigArith(5e-1); //via numbers
+		
+		//You should be able to multiply words, strings or numbers and a BigArith object using the multiply() function
+		result = x.multiply("point five").multiply(.5).multiply(".5").multiply(5e-1);
+		console.log(result); // => "0.03125" = 0.5 * 0.5 * 0.5 * 0.5 * 0.5
+		
+		//You should be able to multiply BigArith objects with each other using the multiply() function
+		result = x.multiply(y).multiply(z);
+		console.log(result);// => "0.125" = 0.5 * 0.5 * 0.5
+		
+		//You should be able to take a result and still multiply with it
+		result = result.multiply(2)
+		console.log(result); // => "0.25" = 0.125 * 2
+		
+		/*	The multiply() function always result a BigArith object 
+		* 	Get the value of your result as a string using the valueOf() function*/
+		console.log(result.valueOf()); // => "0.25"
+		
+		//You should be able to multiply BigArith constants with each other
+		d = new BigArith("PI");
+		console.log(d.multiply(new BigArith("LN2")).valueOf()); // => "2.1775860903036019356258727183229" = PI * LN2
+		
+		//Further example
+		var ai = new BigArith("one point five");
+		var bi = new BigArith("123");
+		var ci = new BigArith(3); 
+		result = ai.multiply(bi).multiply(ci);
+		console.log(result.valueOf()); // => "553.5" = 1.5 * 123 * 3
+		
+		//You should be able to do this
+		d = new BigArith("5");
+		result = d.multiply("negative three")
+		console.log(result.valueOf()); // => "-15" = 5 * (-3)
+	</script>
+</html>
