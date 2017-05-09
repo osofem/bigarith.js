@@ -38,6 +38,14 @@ class BigArith
 		return this.value;
 	}
 	
+	/** Word representation of this.value
+	*	@return {String} - this.value in words
+	*/
+	toWord()
+	{
+		//return this.value; TODO===
+	}
+	
 	/** Return the absolute value of a number
 	*	function abs
 	*	@param {String} - String passed in via this.value;
@@ -50,6 +58,7 @@ class BigArith
 	
 	
 	/**	Word Dictionary
+	*	function w_Dict
 	*	@param {String} - Word value for numbers e.g "one"
 	*	@returns {String} - String value of @param e.g "1"
 	*/
@@ -66,9 +75,9 @@ class BigArith
 	/**	Verify input evaluate to a valid number
 	*	function verify
 	*	@param {String|Number|BigArth} - Number within the safe integer limit or string in "-123.456" or "negative one hundred and 
-	*								twenty three point four five six" form or a BigArith object
+	*	twenty three point four five six" form or a BigArith object
 	*	@returns {String} - A string representation of @param in form "-123.456" or NaN if @param is not valid,
-	*						or throws an error if input is in number form but not within safe range.
+	*	or throws an error if input is in number form but not within safe range.
 	*/
 	verify(n)
 	{
@@ -188,9 +197,6 @@ class BigArith
 	*	function add
 	*	@param {Number|String|BigArith} - Number to add to the current BigArith object value
 	*	@returns {BigArith} - Result of addition this.value + @param as a new BigArith object
-	
-	*	TODO===
-	*	Send to subtract when one parameter is carring the "-" sign
 	*/
 	add(n)
 	{
@@ -199,6 +205,30 @@ class BigArith
 		
 		if(isNaN(a) || isNaN(b))
 			return NaN;
+			
+		return this.add_(a, b);
+	}
+	
+	//function add helper
+	add_(a, b)
+	{
+		var a = this.verify(a);
+		var b = this.verify(b);
+		var signFlag = "";
+		
+		if(isNaN(a) || isNaN(b))
+			return NaN;
+		
+		if(a[0] == "-" && b[0] != "-")
+			return this.subtract_(b, a.substr(1));
+		if(a[0] != "-" && b[0] == "-")
+			return this.subtract_(a, b.substr(1));
+		if(a[0] == "-" && b[0] == "-")
+		{
+			signFlag = "-";
+			a = [...a]; a.shift(); a = a.join("");
+			b = [...b]; b.shift(); b = b.join("");
+		}
 		
 		a = a.split(".");
 		b = b.split(".");
@@ -231,11 +261,98 @@ class BigArith
 		result = result.slice(0, result.length - max) + "." + result.slice(result.length - max);
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
-		return ((result == "")? "0" : new BigArith(result));
+		return ((result == "")? "0" : new BigArith(((signFlag=="")?"":"-")+result));
+	}
+	
+	/** Subtract n from this.value
+	*	function subtract
+	*	@param {Number|String|BigArith} - Number to subtract from the current BigArith object value
+	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
+	*/
+	subtract(n)
+	{
+		a = this.value;
+		b = this.verify(n);
+		if(isNaN(a) || isNaN(b))
+			return NaN;
+		
+		return this.subtract_(a, b);
+	}
+	
+	//function subtract helper
+	subtract_(a, b)
+	{
+		var a = this.verify(a);
+		var b = this.verify(b);
+		if(isNaN(a) || isNaN(b))
+			return NaN;
+		
+		if(a[0] == "-" && b[0] != "-")
+			return this.add_(a, "-"+b);
+		if(a[0] != "-" && b[0] == "-")
+			return this.add_(a, b.substr(1));
+		if(a[0] == "-" && b[0] == "-")
+		{
+			//swap the absolute parameters
+			let temp = a.substr(1);
+			a = b.substr(1);
+			b = temp;
+		}
+		
+		a = a.split(".");
+		b = b.split(".");
+		if(typeof(a[1]) == 'undefined') a[1] = "0";
+		if(typeof(b[1]) == 'undefined') b[1] = "0";
+		
+		let max = Math.max(a[1].length, b[1].length);
+		a[1] += this.padWithZero(max - a[1].length);
+		b[1] += this.padWithZero(max - b[1].length);
+
+		let signFlag = "";
+		if(a > b)
+		{
+			a = a[0]+a[1];
+			b = b[0]+b[1];
+		}
+		else
+		{
+			//swap the parameters
+			let temp = a[0]+a[1];
+			a = b[0]+b[1];
+			b = temp;
+			signFlag = "-";
+		}
+
+		a = a.split("");
+		b = b.split("");
+		var result = "";
+		for(let i = a.length-1, j = b.length-1; i >= 0 || j >= 0; i--, j--)
+		{
+			if(isNaN(parseInt(b[j])))b[j] = "0";
+			if(parseInt(a[i]) >= parseInt(b[j]))
+			{
+				result = (parseInt(a[i]) - parseInt(b[j])).toString() + result;
+			}
+			else if(parseInt(a[i]) < parseInt(b[j]))
+			{
+				if(i == 0)
+					result = (parseInt(a[i]) - parseInt(b[j])).toString() + result;
+				else
+				{
+					result = (parseInt(a[i])+10 - parseInt(b[j])).toString() + result;
+					a[i-1] = parseInt(a[i-1])-1;
+				}
+			}
+		}
+		result = result.slice(0, result.length - max) + "." + result.slice(result.length - max);
+		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
+		if(result[0] == ".") result = "0" + result;
+		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
+		
 	}
 	
 	/**	Return "n" numbers of zeros
-	*   @function padWithZero
+	*   function padWithZero
 	*	@param {Number} - Number of zeros to return
 	*	@returns {String} - "0" in @param places
 	*/
