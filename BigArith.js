@@ -30,7 +30,7 @@ class BigArith
 		return "BigArith";
 	}
 	
-	/** Value of object
+	/** 	Value of object
 	*	@return {String} - this.value
 	*/
 	valueOf()
@@ -38,7 +38,7 @@ class BigArith
 		return this.value;
 	}
 	
-	/** Word representation of this.value
+	/** 	Word representation of this.value
 	*	@return {String} - this.value in words
 	*/
 	toWord()
@@ -46,7 +46,7 @@ class BigArith
 		//return this.value; TODO===
 	}
 	
-	/** Return the absolute value of a number
+	/** 	Return the absolute value of a number
 	*	function abs
 	*	@param {String} - String passed in via this.value;
 	*	@returns {BigArith} - Absolute value of input
@@ -264,15 +264,15 @@ class BigArith
 		return ((result == "")? "0" : new BigArith(((signFlag=="")?"":"-")+result));
 	}
 	
-	/** Subtract n from this.value
+	/** 	Subtract n from this.value
 	*	function subtract
 	*	@param {Number|String|BigArith} - Number to subtract from the current BigArith object value
 	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
 	*/
 	subtract(n)
 	{
-		a = this.value;
-		b = this.verify(n);
+		var a = this.value;
+		var b = this.verify(n);
 		if(isNaN(a) || isNaN(b))
 			return NaN;
 		
@@ -352,7 +352,7 @@ class BigArith
 	}
 	
 	/**	Return "n" numbers of zeros
-	*   function padWithZero
+	*   	function padWithZero
 	*	@param {Number} - Number of zeros to return
 	*	@returns {String} - "0" in @param places
 	*/
