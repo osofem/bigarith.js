@@ -359,6 +359,11 @@ class BigArith
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
+	/**	Multiply n with this.value
+	*	function multiply
+	*	@param {Number|String|BigArith} - Number to multiply with the current BigArith object value
+	*	@returns {BigArith} - Result of multiplication this.value * @param as a new BigArith object
+	*/
 	multiply(n)
 	{
 		var a = this.value;
@@ -419,8 +424,8 @@ class BigArith
 		{
 			result = this.add_(result, results[i]+this.padWithZero(i));
 		}
-		result = result.valueOf();
-		if(max*2 > result.length) result = this.padWithZero(max*2 - result.length) + result;
+		result = result.valueOf(); //It's a BigArith
+		if(max*2 > result.length) result = this.padWithZero(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
 		result = result.slice(0, result.length - max*2) + "." + result.slice(result.length - max*2);
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
