@@ -38,7 +38,7 @@ class BigArith
 		return this.value;
 	}
 	
-	/** 	Word representation of this.value
+	/**	Word representation of this.value
 	*	@return {String} - this.value in words
 	*/
 	toWord()
@@ -46,7 +46,7 @@ class BigArith
 		//return this.value; TODO===
 	}
 	
-	/** 	Return the absolute value of a number
+	/**	Return the absolute value of a number
 	*	function abs
 	*	@param {String} - String passed in via this.value;
 	*	@returns {BigArith} - Absolute value of input
@@ -66,16 +66,25 @@ class BigArith
 	{
 		/*Word Dictionary*/
 		var w_Dict = [];
-		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; w_Dict["four"] = "4"; w_Dict["five"] = "5"; w_Dict["six"] = "6"; w_Dict["seven"] = "7"; w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; w_Dict["eleven"] = "11"; w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90";
-		w_Dict["hundred"] = this.padWithZero(2); w_Dict["thousand"] = this.padWithZero(3); w_Dict["million"] = this.padWithZero(6); w_Dict["billion"] = this.padWithZero(9); w_Dict["trillion"] = this.padWithZero(12); w_Dict["quadrillion"] = this.padWithZero(15); w_Dict["quintillion"] = this.padWithZero(18); w_Dict["sextillion"] = this.padWithZero(21); w_Dict["septillion"] = this.padWithZero(24); w_Dict["octillion"] = this.padWithZero(27); w_Dict["nonillion"] = this.padWithZero(30); w_Dict["decillion"] = this.padWithZero(33);
+		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; 
+		w_Dict["four"] = "4"; w_Dict["five"] = "5"; w_Dict["six"] = "6"; w_Dict["seven"] = "7"; 
+		w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; w_Dict["eleven"] = "11"; 
+		w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; 
+		w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; 
+		w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; 
+		w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90";
+		w_Dict["hundred"] = this.padWithZero(2); w_Dict["thousand"] = this.padWithZero(3); w_Dict["million"] = this.padWithZero(6); 
+		w_Dict["billion"] = this.padWithZero(9); w_Dict["trillion"] = this.padWithZero(12); w_Dict["quadrillion"] = this.padWithZero(15); 
+		w_Dict["quintillion"] = this.padWithZero(18); w_Dict["sextillion"] = this.padWithZero(21); w_Dict["septillion"] = this.padWithZero(24); 
+		w_Dict["octillion"] = this.padWithZero(27); w_Dict["nonillion"] = this.padWithZero(30); w_Dict["decillion"] = this.padWithZero(33);
 		
 		return w_Dict[w];
 	}
 	
 	/**	Verify input evaluate to a valid number
 	*	function verify
-	*	@param {String|Number|BigArth} - Number within the safe integer limit or string in "-123.456" or "negative one hundred and 
-	*	twenty three point four five six" form or a BigArith object
+	*	@param {String|Number|BigArth} - Number within the safe integer limit or string in "-123.456" or  
+	*	"negative one hundred and twenty three point four five six" form or a BigArith object
 	*	@returns {String} - A string representation of @param in form "-123.456" or NaN if @param is not valid,
 	*	or throws an error if input is in number form but not within safe range.
 	*/
@@ -264,7 +273,7 @@ class BigArith
 		return ((result == "")? "0" : new BigArith(((signFlag=="")?"":"-")+result));
 	}
 	
-	/** 	Subtract n from this.value
+	/**	Subtract n from this.value
 	*	function subtract
 	*	@param {Number|String|BigArith} - Number to subtract from the current BigArith object value
 	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
@@ -307,7 +316,7 @@ class BigArith
 		let max = Math.max(a[1].length, b[1].length);
 		a[1] += this.padWithZero(max - a[1].length);
 		b[1] += this.padWithZero(max - b[1].length);
-
+		
 		let signFlag = "";
 		if(a > b)
 		{
@@ -322,7 +331,7 @@ class BigArith
 			b = temp;
 			signFlag = "-";
 		}
-
+		
 		a = a.split("");
 		b = b.split("");
 		var result = "";
@@ -348,11 +357,78 @@ class BigArith
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
+	}
+	
+	multiply(n)
+	{
+		var a = this.value;
+		var b = this.verify(n);
+		var signFlag = "";
+	  
+		if(a[0] == "-" && b[0] != "-")
+		{
+			signFlag = "-";
+			a = a.substr(1);
+		}
+		if(a[0] != "-" && b[0] == "-")
+		{
+			signFlag = "-";
+			b = b.substr(1);
+		}
+		if(a[0] == "-" && b[0] == "-")
+		{
+			a = a.substr(1);
+			b = b.substr(1);
+		}
 		
+		a = a.split(".");
+		b = b.split(".");
+		if(typeof(a[1]) == 'undefined') a[1] = "0";
+		if(typeof(b[1]) == 'undefined') b[1] = "0";
+			
+		let max = Math.max(a[1].length, b[1].length);
+		a[1] += this.padWithZero(max - a[1].length);
+		b[1] += this.padWithZero(max - b[1].length);
+		
+		a = a[0] + a[1];
+		b = b[0] + b[1];
+		var results = [];
+		for(var i = a.length-1; i >= 0; i--)
+		{
+			var subSum = "";
+			var flag = 0;
+			for(var j = b.length-1; j >= 0; j--)
+			{
+				var z = a.charAt(i)*b.charAt(j)+flag;
+				if(z>9 && j>0)
+				{
+					flag = Math.floor(z/10);
+					subSum = (z-flag*10)+subSum;
+				}
+				else
+				{
+					subSum = z+subSum;
+					flag = 0;
+				}
+			}
+			results.push(subSum);
+		}
+	  
+		var result = "0";
+		for(var i = 0; i < results.length; i++)
+		{
+			result = this.add_(result, results[i]+this.padWithZero(i));
+		}
+		result = result.valueOf();
+		if(max*2 > result.length) result = this.padWithZero(max*2 - result.length) + result;
+		result = result.slice(0, result.length - max*2) + "." + result.slice(result.length - max*2);
+		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
+		if(result[0] == ".") result = "0" + result;
+		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
 	/**	Return "n" numbers of zeros
-	*   	function padWithZero
+	*	function padWithZero
 	*	@param {Number} - Number of zeros to return
 	*	@returns {String} - "0" in @param places
 	*/
