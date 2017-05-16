@@ -20,6 +20,8 @@ class BigArith
 			this.value = "1.4142135623730951";
 		else
 			this.value = this.verify(n);
+		
+		this.ObjName = "BigArith";
 	}
 	
 	/**	Name of object 
@@ -27,10 +29,10 @@ class BigArith
 	*/
 	get name()
 	{
-		return "BigArith";
+		return this.ObjName;
 	}
 	
-	/** 	Value of object
+	/** Returns the primitive value the BigArith object
 	*	@return {String} - this.value
 	*/
 	valueOf()
@@ -73,10 +75,10 @@ class BigArith
 		w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; 
 		w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; 
 		w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90";
-		w_Dict["hundred"] = this.padWithZero(2); w_Dict["thousand"] = this.padWithZero(3); w_Dict["million"] = this.padWithZero(6); 
-		w_Dict["billion"] = this.padWithZero(9); w_Dict["trillion"] = this.padWithZero(12); w_Dict["quadrillion"] = this.padWithZero(15); 
-		w_Dict["quintillion"] = this.padWithZero(18); w_Dict["sextillion"] = this.padWithZero(21); w_Dict["septillion"] = this.padWithZero(24); 
-		w_Dict["octillion"] = this.padWithZero(27); w_Dict["nonillion"] = this.padWithZero(30); w_Dict["decillion"] = this.padWithZero(33);
+		w_Dict["hundred"] = "0".repeat(2); w_Dict["thousand"] = "0".repeat(3); w_Dict["million"] = "0".repeat(6); 
+		w_Dict["billion"] = "0".repeat(9); w_Dict["trillion"] = "0".repeat(12); w_Dict["quadrillion"] = "0".repeat(15); 
+		w_Dict["quintillion"] = "0".repeat(18); w_Dict["sextillion"] = "0".repeat(21); w_Dict["septillion"] = "0".repeat(24); 
+		w_Dict["octillion"] = "0".repeat(27); w_Dict["nonillion"] = "0".repeat(30); w_Dict["decillion"] = "0".repeat(33);
 		
 		return w_Dict[w];
 	}
@@ -245,8 +247,8 @@ class BigArith
 		if(typeof(b[1]) == 'undefined') b[1] = "0";
 		
 		let max = Math.max(a[1].length, b[1].length);
-		a[1] += this.padWithZero(max - a[1].length);
-		b[1] += this.padWithZero(max - b[1].length);
+		a[1] += "0".repeat(max - a[1].length);
+		b[1] += "0".repeat(max - b[1].length);
 		
 		a = a[0] + a[1];
 		b = b[0] + b[1];
@@ -314,11 +316,11 @@ class BigArith
 		if(typeof(b[1]) == 'undefined') b[1] = "0";
 		
 		let max = Math.max(a[1].length, b[1].length);
-		a[1] += this.padWithZero(max - a[1].length);
-		b[1] += this.padWithZero(max - b[1].length);
+		a[1] += "0".repeat(max - a[1].length);
+		b[1] += "0".repeat(max - b[1].length);
 		
 		let signFlag = "";
-		if(a > b)
+		if(this.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "greater" || this.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "equal")
 		{
 			a = a[0]+a[1];
 			b = b[0]+b[1];
@@ -392,8 +394,8 @@ class BigArith
 		if(typeof(b[1]) == 'undefined') b[1] = "0";
 			
 		let max = Math.max(a[1].length, b[1].length);
-		a[1] += this.padWithZero(max - a[1].length);
-		b[1] += this.padWithZero(max - b[1].length);
+		a[1] += "0".repeat(max - a[1].length);
+		b[1] += "0".repeat(max - b[1].length);
 		
 		a = a[0] + a[1];
 		b = b[0] + b[1];
@@ -422,28 +424,63 @@ class BigArith
 		var result = "0";
 		for(var i = 0; i < results.length; i++)
 		{
-			result = this.add_(result, results[i]+this.padWithZero(i));
+			result = this.add_(result, results[i]+"0".repeat(i));
 		}
 		result = result.valueOf(); //It's a BigArith
-		if(max*2 > result.length) result = this.padWithZero(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
+		if(max*2 > result.length) result = "0".repeat(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
 		result = result.slice(0, result.length - max*2) + "." + result.slice(result.length - max*2);
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
-	/**	Return "n" numbers of zeros
-	*	function padWithZero
-	*	@param {Number} - Number of zeros to return
-	*	@returns {String} - "0" in @param places
+	/**	Is a greater than b
+	*	function compare
+	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
+	*	@returns {String} - "lesser" if a < b; "equal" if a == b; "greater" if a > b.
 	*/
-	padWithZero(n)
-	{
-		let zeros = "";
-		for(let i = 0; i < n; i++)
-		{
-			zeros += "0";
+	compare(a, b) {
+		//Check for signs
+		let cSign = false; let c = "";
+		let dSign = false; let d = "";
+		if(a[0] == "-"){
+			cSign = true;
+			c = a.substr(1);
+		}else c=a;
+		if(b[0] == "-"){
+			dSign = true;
+			d = b.substr(1);
+		}else d=b;
+		
+		c=c.replace(/^[0]*/g,"");
+		d=d.replace(/^[0]*/g,"");
+		c = c.split("."); d = d.split(".");
+		if(typeof c[1] == 'undefined')c[1] = '0';
+		if(typeof d[1] == 'undefined')d[1] = '0';
+		
+		c[1]=c[1].replace(/[0]*$/g,""); if(c[1] == "") c[1] ="0";
+		d[1]=d[1].replace(/[0]*$/g,""); if(d[1] == "") d[1] ="0";
+		let max = Math.max(c[1].length, d[1].length);
+		c[1] += "0".repeat(max - c[1].length);
+		d[1] += "0".repeat(max - d[1].length);
+		
+		if(cSign && dSign==false) return "lesser";
+		if(dSign && cSign==false) return "greater";
+		
+		if(c[0].length < d[0].length) return (cSign && dSign)? "greater" : "lesser";
+		if(c[0].length > d[0].length) return (cSign && dSign)? "lesser" : "greater";
+	  
+		//check mantissa
+		for(let i = 0; i < c[0].length/*Length is equal so pick one*/; i++){
+			if(c[0][i] > d[0][i]) return (cSign && dSign)? "lesser" : "greater";
+			if(c[0][i] < d[0][i]) return (cSign && dSign)? "greater" : "lesser";
 		}
-		return zeros;
+		
+		//check characteristic
+		for(let i = 0; i < Math.max(c[1].length, d[1].length); i++){
+			if(c[1][i] > d[1][i]) return (cSign && dSign)? "lesser" : "greater";
+			if(c[1][i] < d[1][i]) return (cSign && dSign)? "greater" : "lesser";
+		}
+		return "equal";
 	}
 }
