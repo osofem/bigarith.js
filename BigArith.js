@@ -72,7 +72,10 @@ class BigArith{
 		w_Dict["billion"] = "0".repeat(9); w_Dict["trillion"] = "0".repeat(12); w_Dict["quadrillion"] = "0".repeat(15); 
 		w_Dict["quintillion"] = "0".repeat(18); w_Dict["sextillion"] = "0".repeat(21); w_Dict["septillion"] = "0".repeat(24); 
 		w_Dict["octillion"] = "0".repeat(27); w_Dict["nonillion"] = "0".repeat(30); w_Dict["decillion"] = "0".repeat(33);
-		
+		w_Dict["undecillion"] = "0".repeat(36); w_Dict["duodecillion"] = "0".repeat(39); w_Dict["tredecillion"] = "0".repeat(42);
+		w_Dict["quattuordecillion"] = "0".repeat(45); w_Dict["quindecillion"] = "0".repeat(48); w_Dict["sexdecillion"] = "0".repeat(51);
+		w_Dict["septendecillion"] = "0".repeat(54); w_Dict["octodecillion"] = "0".repeat(57); w_Dict["novemdecillion"] = "0".repeat(60);
+		w_Dict["vigintillion"] = "0".repeat(63);
 		return w_Dict[w];
 	}
 	
