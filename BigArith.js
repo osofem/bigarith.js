@@ -1,7 +1,5 @@
-class BigArith
-{
-	constructor(n)
-	{
+class BigArith{
+	constructor(n){
 		if(typeof(n) == "object" && n.name == "BigArith")
 			this.value = n.valueOf();
 		else if(n == "PI")
@@ -27,24 +25,21 @@ class BigArith
 	/**	Name of object 
 	*	@return {String} - Name of the object
 	*/
-	get name()
-	{
+	get name(){
 		return this.ObjName;
 	}
 	
 	/** Returns the primitive value the BigArith object
 	*	@return {String} - this.value
 	*/
-	valueOf()
-	{
+	valueOf(){
 		return this.value;
 	}
 	
 	/**	Word representation of this.value
 	*	@return {String} - this.value in words
 	*/
-	toWord()
-	{
+	toWord(){
 		//return this.value; TODO===
 	}
 	
@@ -53,8 +48,7 @@ class BigArith
 	*	@param {String} - String passed in via this.value;
 	*	@returns {BigArith} - Absolute value of input
 	*/
-	abs()
-	{
+	abs(){
 		return (isNaN(this.value)) ? NaN : ((this.value.split("")[0] == "-") ? new BigArith((this.value.split("").splice(1, this.value.split("").length-1)).join("")) : new BigArith(this.value));
 	}
 	
@@ -64,8 +58,7 @@ class BigArith
 	*	@param {String} - Word value for numbers e.g "one"
 	*	@returns {String} - String value of @param e.g "1"
 	*/
-	w_Dict(w)
-	{
+	w_Dict(w){
 		/*Word Dictionary*/
 		var w_Dict = [];
 		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; 
@@ -90,8 +83,7 @@ class BigArith
 	*	@returns {String} - A string representation of @param in form "-123.456" or NaN if @param is not valid,
 	*	or throws an error if input is in number form but not within safe range.
 	*/
-	verify(n)
-	{
+	verify(n){
 		//Empty string returns "0"
 		if(n == "")
 			return "0";
@@ -167,19 +159,22 @@ class BigArith
 			//The Characteristic part
 			let subArray = [];
 			let subString = "";
-			for(let i = 0; i < n.length; i++)
-			{
+			let prevSuffix = "0".repeat(63);
+			for(let i = 0; i < n.length; i++){
 				if(typeof(this.w_Dict(n[i])) == 'undefined')return NaN; //Spelling errors and what-nots
-				if(this.w_Dict(n[i]).length >= 3/*thousand and above*/)
-				{
+				if(this.w_Dict(n[i]).length >= 3/*thousand and above*/){
+					if(prevSuffix.length < this.w_Dict(n[i]).length) return NaN; //"one million three billion" is wrong
 					subString += this.w_Dict(n[i]);
 					subArray.push(subString);
 					subString = "";
+					prevSuffix = this.w_Dict(n[i]);
 				}
-				else if(n[i] == "hundred")
+				else if(n[i] == "hundred"){
+					if(this.w_Dict(n[i-1]).length > 1) return NaN; 
 					subString += this.w_Dict(n[i]);
+				}
 				else
-					subString = subString.substr(0, subString.length - this.w_Dict(n[i]).length) + this.w_Dict(n[i]);
+					subString = subString.substr(0, subString.length - w_Dict(n[i]).length) + w_Dict(n[i]);
 			}
 			subArray.push(subString);
 			for(let i = 0; i < subArray.length; i++)
@@ -209,8 +204,7 @@ class BigArith
 	*	@param {Number|String|BigArith} - Number to add to the current BigArith object value
 	*	@returns {BigArith} - Result of addition this.value + @param as a new BigArith object
 	*/
-	add(n)
-	{
+	add(n){
 		var a = this.value;
 		var b = this.verify(n);
 		
@@ -221,8 +215,7 @@ class BigArith
 	}
 	
 	//function add helper
-	add_(a, b)
-	{
+	add_(a, b){
 		var a = this.verify(a);
 		var b = this.verify(b);
 		var signFlag = "";
@@ -280,8 +273,7 @@ class BigArith
 	*	@param {Number|String|BigArith} - Number to subtract from the current BigArith object value
 	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
 	*/
-	subtract(n)
-	{
+	subtract(n){
 		var a = this.value;
 		var b = this.verify(n);
 		if(isNaN(a) || isNaN(b))
@@ -291,8 +283,7 @@ class BigArith
 	}
 	
 	//function subtract helper
-	subtract_(a, b)
-	{
+	subtract_(a, b){
 		var a = this.verify(a);
 		var b = this.verify(b);
 		if(isNaN(a) || isNaN(b))
@@ -366,24 +357,20 @@ class BigArith
 	*	@param {Number|String|BigArith} - Number to multiply with the current BigArith object value
 	*	@returns {BigArith} - Result of multiplication this.value * @param as a new BigArith object
 	*/
-	multiply(n)
-	{
+	multiply(n){
 		var a = this.value;
 		var b = this.verify(n);
 		var signFlag = "";
 	  
-		if(a[0] == "-" && b[0] != "-")
-		{
+		if(a[0] == "-" && b[0] != "-"){
 			signFlag = "-";
 			a = a.substr(1);
 		}
-		if(a[0] != "-" && b[0] == "-")
-		{
+		if(a[0] != "-" && b[0] == "-"){
 			signFlag = "-";
 			b = b.substr(1);
 		}
-		if(a[0] == "-" && b[0] == "-")
-		{
+		if(a[0] == "-" && b[0] == "-"){
 			a = a.substr(1);
 			b = b.substr(1);
 		}
@@ -400,20 +387,16 @@ class BigArith
 		a = a[0] + a[1];
 		b = b[0] + b[1];
 		var results = [];
-		for(var i = a.length-1; i >= 0; i--)
-		{
+		for(var i = a.length-1; i >= 0; i--){
 			var subSum = "";
 			var flag = 0;
-			for(var j = b.length-1; j >= 0; j--)
-			{
+			for(var j = b.length-1; j >= 0; j--){
 				var z = a.charAt(i)*b.charAt(j)+flag;
-				if(z>9 && j>0)
-				{
+				if(z>9 && j>0){
 					flag = Math.floor(z/10);
 					subSum = (z-flag*10)+subSum;
 				}
-				else
-				{
+				else{
 					subSum = z+subSum;
 					flag = 0;
 				}
@@ -422,8 +405,7 @@ class BigArith
 		}
 	  
 		var result = "0";
-		for(var i = 0; i < results.length; i++)
-		{
+		for(var i = 0; i < results.length; i++){
 			result = this.add_(result, results[i]+"0".repeat(i));
 		}
 		result = result.valueOf(); //It's a BigArith
@@ -439,7 +421,7 @@ class BigArith
 	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
 	*	@returns {String} - "lesser" if a < b; "equal" if a == b; "greater" if a > b.
 	*/
-	compare(a, b) {
+	compare(a, b){
 		//Check for signs
 		let cSign = false; let c = "";
 		let dSign = false; let d = "";
@@ -470,13 +452,13 @@ class BigArith
 		if(c[0].length < d[0].length) return (cSign && dSign)? "greater" : "lesser";
 		if(c[0].length > d[0].length) return (cSign && dSign)? "lesser" : "greater";
 	  
-		//check mantissa
+		//check characteristic
 		for(let i = 0; i < c[0].length/*Length is equal so pick one*/; i++){
 			if(c[0][i] > d[0][i]) return (cSign && dSign)? "lesser" : "greater";
 			if(c[0][i] < d[0][i]) return (cSign && dSign)? "greater" : "lesser";
 		}
 		
-		//check characteristic
+		//check mantissa
 		for(let i = 0; i < Math.max(c[1].length, d[1].length); i++){
 			if(c[1][i] > d[1][i]) return (cSign && dSign)? "lesser" : "greater";
 			if(c[1][i] < d[1][i]) return (cSign && dSign)? "greater" : "lesser";
