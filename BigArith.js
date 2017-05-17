@@ -40,7 +40,100 @@ class BigArith{
 	*	@return {String} - this.value in words
 	*/
 	toWord(){
-		//return this.value; TODO===
+		let x = this.value;
+		let n = "", sign = false;
+		if(x[0] == "-"){
+			n = x.substr(1);
+			sign = true;
+		}
+		else n=x;
+		
+		var w_Dict2 = function(w){
+			/*Word Dictionary*/
+			var w_Dict = [];
+			w_Dict[""] = "";
+			w_Dict["0"] = "zero"; w_Dict["1"] = "one"; w_Dict["2"] = "two"; w_Dict["3"] = "three"; 
+			w_Dict["4"] = "four"; w_Dict["5"] = "five"; w_Dict["6"] = "six"; w_Dict["7"] = "seven"; 
+			w_Dict["8"] = "eight"; w_Dict["9"] = "nine"; w_Dict["10"] = "ten"; w_Dict["11"] = "eleven"; 
+			w_Dict["12"] = "twelve"; w_Dict["13"] = "thirteen"; w_Dict["14"] = "fourteen"; w_Dict["15"] = "fifteen"; 
+			w_Dict["16"] = "sixteen"; w_Dict["17"] = "seventeen"; w_Dict["18"] = "eighteen"; w_Dict["19"] = "nineteen"; 
+			w_Dict["20"] = "twenty"; w_Dict["30"] = "thirty"; w_Dict["40"] = "forty"; w_Dict["50"] = "fifty"; 
+			w_Dict["60"] = "sixty"; w_Dict["70"] = "seventy"; w_Dict["80"] = "eighty"; w_Dict["90"] = "ninety";
+			w_Dict["0".repeat(2)] = "hundred"; w_Dict["0".repeat(3)] = "thousand"; w_Dict["0".repeat(6)] = "million"; 
+			w_Dict["0".repeat(9)] = "billion"; w_Dict["0".repeat(12)] = "trillion"; w_Dict["0".repeat(15)] = "quadrillion"; 
+			w_Dict["0".repeat(18)] = "quintillion"; w_Dict["0".repeat(21)] = "sextillion"; w_Dict["0".repeat(24)] = "septillion"; 
+			w_Dict["0".repeat(27)] = "octillion"; w_Dict["0".repeat(30)] = "nonillion"; w_Dict["0".repeat(33)] = "decillion";
+			w_Dict["0".repeat(36)] = "undecillion"; w_Dict["0".repeat(39)] = "duodecillion"; w_Dict["0".repeat(42)] = "tredecillion";
+			w_Dict["0".repeat(45)] = "quattuordecillion"; w_Dict["0".repeat(48)] = "quindecillion"; w_Dict["0".repeat(51)] = "sexdecillion";
+			w_Dict["0".repeat(54)] = "septendecillion"; w_Dict["0".repeat(57)] = "octodecillion"; w_Dict["0".repeat(60)] = "novemdecillion";
+			w_Dict["0".repeat(63)] = "vigintillion";
+			return w_Dict[w];
+		}
+		
+		n = n.split(".");
+		if(typeof n[0] == 'undefined') n[0] = "0";
+		if(typeof n[1] == 'undefined') n[1] = "0";
+		n[0] = n[0].replace(/^[0]*/g,""); if(n[0] == '') n[0] = "0";
+		n[1] = n[1].replace(/[0]*$/g,"");
+		
+		//Characteristic part
+		let c = [...n[0]].reverse();
+		let ci = [], cj = "", count = 0;
+		for(let i = 0; i < c.length; i++)
+		{//There shold be an in-built function for this?
+			if(count == 2)
+			{
+				cj=c[i]+cj;
+				ci.push(cj);
+				count = 0;
+				cj = "";
+				continue;
+			}
+			cj=c[i]+cj;
+			count++;
+		}
+		if(cj != "")ci.push(cj);
+		ci = ci.reverse();
+		let word = "";
+		for(let i = 0; i < ci.length; i++){
+			let m = ci[i];
+			if(m =="000") continue;
+			if(m.length == 3){
+				if(m[0] != "0"){
+					word += w_Dict2(m[0]) + " hundred ";
+					if(m[1] + m[2] != "00") word += "and "
+				}
+				if(m[1] != "0")
+					word += " "+w_Dict2(m[1]+"0");
+				if(m[2] != "0")
+					word += " "+w_Dict2(m[2]);
+			}
+			if(m.length == 2){
+				if(m[0] == "1")
+				{
+					word += " "+w_Dict2(m[0]+m[1]);
+				}
+				else{
+					if(m[0] != "0")
+						word += " "+w_Dict2(m[0]+"0");
+					if(m[1] != "0")
+						word += " "+w_Dict2(m[1]);
+				}
+			}
+			if(m.length == 1){
+				if(m[0] != "0")
+					word += " "+w_Dict2(m[0]);
+			}
+			word += " "+w_Dict2("0".repeat(3*(ci.length-i-1))) + " ";
+		}
+		
+		//Mantissa part
+		if(n[1] != "") word += " point";
+		for(let i = 0; i < n[1].length; i++)
+		{
+			word += " "+w_Dict2(n[1][i]);
+		}
+		return (sign?"negative ":"") + word.replace(/\s+/g," ").trim();
 	}
 	
 	/**	Return the absolute value of a number
@@ -160,6 +253,7 @@ class BigArith{
 				dNum = "0";
 			
 			//The Characteristic part
+			if(n.includes("zero") && n.indexOf("zero") != 0) return NaN;
 			let subArray = [];
 			let subString = "";
 			let prevSuffix = "0".repeat(63);
