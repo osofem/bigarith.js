@@ -163,21 +163,31 @@ class BigArith{
 			let subArray = [];
 			let subString = "";
 			let prevSuffix = "0".repeat(63);
+			let prevHSuffix = false;
+			let prevValue = false;
 			for(let i = 0; i < n.length; i++){
 				if(typeof(this.w_Dict(n[i])) == 'undefined')return NaN; //Spelling errors and what-nots
 				if(this.w_Dict(n[i]).length >= 3/*thousand and above*/){
 					if(prevSuffix.length < this.w_Dict(n[i]).length) return NaN; //"one million three billion" is wrong
+					if(!prevValue) return NaN; //"one million thousnad" is wrong
 					subString += this.w_Dict(n[i]);
 					subArray.push(subString);
 					subString = "";
 					prevSuffix = this.w_Dict(n[i]);
+					prevValue = false;
+					prevHSuffix = false;
 				}
 				else if(n[i] == "hundred"){
+					if(prevHSuffix) return NaN; // "one hundred two hundred" is wrong
+					if(typeof this.w_Dict(n[i-1]) == 'undefined') return NaN; //"hundred thousand" is wrong
 					if(this.w_Dict(n[i-1]).length > 1) return NaN; 
 					subString += this.w_Dict(n[i]);
+					prevHSuffix = true;
 				}
-				else
-					subString = subString.substr(0, subString.length - w_Dict(n[i]).length) + w_Dict(n[i]);
+				else{
+					subString = subString.substr(0, subString.length - this.w_Dict(n[i]).length) + this.w_Dict(n[i]);
+					prevValue = true;
+				}
 			}
 			subArray.push(subString);
 			for(let i = 0; i < subArray.length; i++)
