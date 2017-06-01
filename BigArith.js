@@ -39,7 +39,7 @@ class BigArith{
 	/**	Word representation of this.value
 	*	@return {String} - this.value in words
 	*/
-	toWord(){
+	toWords(){
 		let x = this.value;
 		let n = "", sign = false;
 		if(x[0] == "-"){
@@ -79,6 +79,8 @@ class BigArith{
 		//Characteristic part
 		let c = [...n[0]].reverse();
 		let ci = [], cj = "", count = 0;
+		
+		//Group into chunk of three's
 		for(let i = 0; i < c.length; i++)
 		{//There shold be an in-built function for this?
 			if(count == 2)
@@ -92,6 +94,7 @@ class BigArith{
 			cj=c[i]+cj;
 			count++;
 		}
+		
 		if(cj != "")ci.push(cj);
 		ci = ci.reverse();
 		let word = "";
@@ -103,10 +106,9 @@ class BigArith{
 					word += w_Dict2(m[0]) + " hundred ";
 					if(m[1] + m[2] != "00") word += "and "
 				}
-				if(m[1] != "0")
-					word += " "+w_Dict2(m[1]+"0");
-				if(m[2] != "0")
-					word += " "+w_Dict2(m[2]);
+				if(m[1] == "1") word += " "+w_Dict2(m[1]+m[2]);
+				else if(m[1] > "1") word += " "+w_Dict2(m[1]+"0");
+				if(m[2] != "0" && m[1] != "1") word += " "+w_Dict2(m[2]);
 			}
 			if(m.length == 2){
 				if(m[0] == "1")
@@ -334,8 +336,7 @@ class BigArith{
 			return this.subtract_(b, a.substr(1));
 		if(a[0] != "-" && b[0] == "-")
 			return this.subtract_(a, b.substr(1));
-		if(a[0] == "-" && b[0] == "-")
-		{
+		if(a[0] == "-" && b[0] == "-"){
 			signFlag = "-";
 			a = [...a]; a.shift(); a = a.join("");
 			b = [...b]; b.shift(); b = b.join("");
