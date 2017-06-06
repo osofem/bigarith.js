@@ -56,11 +56,21 @@ class BigArith{
 		
 		//Characteristic part
 		let c = [...n[0]].reverse();
-		let chunk = [];
 		
 		//Group into chunk of three's
-		for(let i = 3; i <= c.length; i += 3) 
-			chunk.push(c.slice(i-3, i));
+		let chunk = [], cj = "", count = 0;
+		for(let i = 0; i < c.length; i++){
+		  if(count == 2){
+			cj=c[i]+cj;
+			chunk.push(cj);
+			count = 0;
+			cj = "";
+			continue;
+		  }
+		  cj=c[i]+cj;
+		  count++;
+		}
+		if(cj != "")chunk.push(cj);
 		chunk = chunk.reverse();
 		
 		let word = "";
@@ -136,8 +146,7 @@ class BigArith{
 			throw new Error("The number you entered in typeof 'number' form is not within the safe limit. Please enter the number as a string.");
 		
 		//It can be string in form "-123.89"
-		if(typeof(n) == 'string' && /\d/.test(n)/*This just test if it contains any digit, real test in below*/)
-		{
+		if(typeof(n) == 'string' && /\d/.test(n)/*This just test if it contains any digit, real test in below*/){
 			n = n.replace(/^\s|\s$/g, "");
 			let sign = false;
 			if(n[0] == "-")
@@ -165,8 +174,7 @@ class BigArith{
 		}
 		
 		//It can be string in form of "negative one thousand point one two"
-		if(typeof(n) == 'string')
-		{
+		if(typeof(n) == 'string'){
 			n = n.toLowerCase();
 			n = n.replace(/^\s|\s$/g, "").replace(/\s+/g, " ");
 			n = n.replace(/\s(and)\s/g, " ");
@@ -177,21 +185,18 @@ class BigArith{
 			//Is Negative?
 			let sign = false;
 			n = n.split(" ");
-			if(n[0] == "negative")
-			{
+			if(n[0] == "negative"){
 				sign = true;
 				n.shift();
 			}
 			
 			//The Mantissa part
-			if(n.indexOf("point") >= 0)
-			{
+			if(n.indexOf("point") >= 0){
 				let decimal = n.splice(n.indexOf("point"), n.length - n.indexOf("point"));
 				decimal.shift();
 				dNum = decimal.map(a=>{if(this.w_Dict(a).length < 2 && this.w_Dict(a).length > 0) return this.w_Dict(a); else return NaN;}).join("");
 			}
-			else
-				dNum = "0";
+			else dNum = "0";
 			
 			//The Characteristic part
 			if(n.includes("zero") && n.indexOf("zero") != 0) return NaN;
@@ -225,22 +230,19 @@ class BigArith{
 				}
 			}
 			subArray.push(subString);
-			for(let i = 0; i < subArray.length; i++)
-			{
+			for(let i = 0; i < subArray.length; i++){
 				fNum = fNum.substr(0, fNum.length - subArray[i].length) + subArray[i];
 			}
 			if(fNum == "") fNum = "0";
 			
 			//output
-			if(/^\d+$/.test(fNum) && /^\d+$/.test(dNum)/*Test that it contains only digits*/)
-			{
+			if(/^\d+$/.test(fNum) && /^\d+$/.test(dNum)/*Test that it contains only digits*/){
 				//Remove unnecessary zeros
 				fNum = fNum.replace(/^[0]+/g, "");
 				dNum = dNum.replace(/[0]+$/g, "");
 				return (sign?"-":"") + ((fNum == "")?"0":fNum) + ((dNum == "")?"":"."+dNum);
 			}
-			else
-				return NaN;
+			else return NaN;
 		}
 		
 		//That's all we support
