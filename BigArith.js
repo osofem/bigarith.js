@@ -29,7 +29,7 @@ class BigArith{
 		return this.ObjName;
 	}
 	
-	/** Returns the primitive value the BigArith object
+	/** Returns the primitive value of the BigArith object
 	*	@return {String} - this.value
 	*/
 	valueOf(){
@@ -48,28 +48,6 @@ class BigArith{
 		}
 		else n=x;
 		
-		var w_Dict2 = function(w){
-			/*Word Dictionary*/
-			var w_Dict = [];
-			w_Dict[""] = "";
-			w_Dict["0"] = "zero"; w_Dict["1"] = "one"; w_Dict["2"] = "two"; w_Dict["3"] = "three"; 
-			w_Dict["4"] = "four"; w_Dict["5"] = "five"; w_Dict["6"] = "six"; w_Dict["7"] = "seven"; 
-			w_Dict["8"] = "eight"; w_Dict["9"] = "nine"; w_Dict["10"] = "ten"; w_Dict["11"] = "eleven"; 
-			w_Dict["12"] = "twelve"; w_Dict["13"] = "thirteen"; w_Dict["14"] = "fourteen"; w_Dict["15"] = "fifteen"; 
-			w_Dict["16"] = "sixteen"; w_Dict["17"] = "seventeen"; w_Dict["18"] = "eighteen"; w_Dict["19"] = "nineteen"; 
-			w_Dict["20"] = "twenty"; w_Dict["30"] = "thirty"; w_Dict["40"] = "forty"; w_Dict["50"] = "fifty"; 
-			w_Dict["60"] = "sixty"; w_Dict["70"] = "seventy"; w_Dict["80"] = "eighty"; w_Dict["90"] = "ninety";
-			w_Dict["0".repeat(2)] = "hundred"; w_Dict["0".repeat(3)] = "thousand"; w_Dict["0".repeat(6)] = "million"; 
-			w_Dict["0".repeat(9)] = "billion"; w_Dict["0".repeat(12)] = "trillion"; w_Dict["0".repeat(15)] = "quadrillion"; 
-			w_Dict["0".repeat(18)] = "quintillion"; w_Dict["0".repeat(21)] = "sextillion"; w_Dict["0".repeat(24)] = "septillion"; 
-			w_Dict["0".repeat(27)] = "octillion"; w_Dict["0".repeat(30)] = "nonillion"; w_Dict["0".repeat(33)] = "decillion";
-			w_Dict["0".repeat(36)] = "undecillion"; w_Dict["0".repeat(39)] = "duodecillion"; w_Dict["0".repeat(42)] = "tredecillion";
-			w_Dict["0".repeat(45)] = "quattuordecillion"; w_Dict["0".repeat(48)] = "quindecillion"; w_Dict["0".repeat(51)] = "sexdecillion";
-			w_Dict["0".repeat(54)] = "septendecillion"; w_Dict["0".repeat(57)] = "octodecillion"; w_Dict["0".repeat(60)] = "novemdecillion";
-			w_Dict["0".repeat(63)] = "vigintillion";
-			return w_Dict[w];
-		}
-		
 		n = n.split(".");
 		if(typeof n[0] == 'undefined') n[0] = "0";
 		if(typeof n[1] == 'undefined') n[1] = "0";
@@ -78,55 +56,43 @@ class BigArith{
 		
 		//Characteristic part
 		let c = [...n[0]].reverse();
-		let ci = [], cj = "", count = 0;
+		let chunk = [];
 		
 		//Group into chunk of three's
-		for(let i = 0; i < c.length; i++)
-		{//There shold be an in-built function for this?
-			if(count == 2)
-			{
-				cj=c[i]+cj;
-				ci.push(cj);
-				count = 0;
-				cj = "";
-				continue;
-			}
-			cj=c[i]+cj;
-			count++;
-		}
+		for(let i = 3; i <= c.length; i += 3) 
+			chunk.push(c.slice(i-3, i));
+		chunk = chunk.reverse();
 		
-		if(cj != "")ci.push(cj);
-		ci = ci.reverse();
 		let word = "";
-		for(let i = 0; i < ci.length; i++){
-			let m = ci[i];
+		for(let i = 0; i < chunk.length; i++){
+			let m = chunk[i];
 			if(m =="000") continue;
 			if(m.length == 3){
 				if(m[0] != "0"){
-					word += w_Dict2(m[0]) + " hundred ";
+					word += this.w_Dict2(m[0]) + " hundred ";
 					if(m[1] + m[2] != "00") word += "and "
 				}
-				if(m[1] == "1") word += " "+w_Dict2(m[1]+m[2]);
-				else if(m[1] > "1") word += " "+w_Dict2(m[1]+"0");
-				if(m[2] != "0" && m[1] != "1") word += " "+w_Dict2(m[2]);
+				if(m[1] == "1") word += " "+this.w_Dict2(m[1]+m[2]);
+				else if(m[1] > "1") word += " "+this.w_Dict2(m[1]+"0");
+				if(m[2] != "0" && m[1] != "1") word += " "+this.w_Dict2(m[2]);
 			}
 			if(m.length == 2){
 				if(m[0] == "1")
 				{
-					word += " "+w_Dict2(m[0]+m[1]);
+					word += " "+this.w_Dict2(m[0]+m[1]);
 				}
 				else{
 					if(m[0] != "0")
-						word += " "+w_Dict2(m[0]+"0");
+						word += " "+this.w_Dict2(m[0]+"0");
 					if(m[1] != "0")
-						word += " "+w_Dict2(m[1]);
+						word += " "+this.w_Dict2(m[1]);
 				}
 			}
 			if(m.length == 1){
 				if(m[0] != "0")
-					word += " "+w_Dict2(m[0]);
+					word += " "+this.w_Dict2(m[0]);
 			}
-			word += " "+w_Dict2("0".repeat(3*(ci.length-i-1))) + " ";
+			word += " "+this.w_Dict2("0".repeat(3*(chunk.length-i-1))) + " ";
 		}
 		
 		//Mantissa part
@@ -145,33 +111,6 @@ class BigArith{
 	*/
 	abs(){
 		return (isNaN(this.value)) ? NaN : ((this.value.split("")[0] == "-") ? new BigArith((this.value.split("").splice(1, this.value.split("").length-1)).join("")) : new BigArith(this.value));
-	}
-	
-	
-	/**	Word Dictionary
-	*	function w_Dict
-	*	@param {String} - Word value for numbers e.g "one"
-	*	@returns {String} - String value of @param e.g "1"
-	*/
-	w_Dict(w){
-		/*Word Dictionary*/
-		var w_Dict = [];
-		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; 
-		w_Dict["four"] = "4"; w_Dict["five"] = "5"; w_Dict["six"] = "6"; w_Dict["seven"] = "7"; 
-		w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; w_Dict["eleven"] = "11"; 
-		w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; 
-		w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; 
-		w_Dict["twenty"] = "20"; w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; 
-		w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90";
-		w_Dict["hundred"] = "0".repeat(2); w_Dict["thousand"] = "0".repeat(3); w_Dict["million"] = "0".repeat(6); 
-		w_Dict["billion"] = "0".repeat(9); w_Dict["trillion"] = "0".repeat(12); w_Dict["quadrillion"] = "0".repeat(15); 
-		w_Dict["quintillion"] = "0".repeat(18); w_Dict["sextillion"] = "0".repeat(21); w_Dict["septillion"] = "0".repeat(24); 
-		w_Dict["octillion"] = "0".repeat(27); w_Dict["nonillion"] = "0".repeat(30); w_Dict["decillion"] = "0".repeat(33);
-		w_Dict["undecillion"] = "0".repeat(36); w_Dict["duodecillion"] = "0".repeat(39); w_Dict["tredecillion"] = "0".repeat(42);
-		w_Dict["quattuordecillion"] = "0".repeat(45); w_Dict["quindecillion"] = "0".repeat(48); w_Dict["sexdecillion"] = "0".repeat(51);
-		w_Dict["septendecillion"] = "0".repeat(54); w_Dict["octodecillion"] = "0".repeat(57); w_Dict["novemdecillion"] = "0".repeat(60);
-		w_Dict["vigintillion"] = "0".repeat(63);
-		return w_Dict[w];
 	}
 	
 	/**	Verify input evaluate to a valid number
@@ -572,5 +511,37 @@ class BigArith{
 			if(c[1][i] < d[1][i]) return (cSign && dSign)? "greater" : "lesser";
 		}
 		return "equal";
+	}
+	
+	/**	Word Dictionary
+	*	function w_Dict
+	*	@param {String} - Word value for numbers e.g "one"
+	*	@returns {String} - String value of @param e.g "1"
+	*/
+	w_Dict(w){
+		/*Word Dictionary*/
+		var w_Dict = [];
+		w_Dict["zero"] = "0"; w_Dict["one"] = "1"; w_Dict["two"] = "2"; w_Dict["three"] = "3"; w_Dict["four"] = "4"; w_Dict["five"] = "5"; w_Dict["six"] = "6"; w_Dict["seven"] = "7"; w_Dict["eight"] = "8"; w_Dict["nine"] = "9"; w_Dict["ten"] = "10"; 
+		w_Dict["eleven"] = "11"; w_Dict["twelve"] = "12"; w_Dict["thirteen"] = "13"; w_Dict["fourteen"] = "14"; w_Dict["fifteen"] = "15"; w_Dict["sixteen"] = "16"; w_Dict["seventeen"] = "17"; w_Dict["eighteen"] = "18"; w_Dict["nineteen"] = "19"; w_Dict["twenty"] = "20"; 
+		w_Dict["thirty"] = "30"; w_Dict["forty"] = "40"; w_Dict["fifty"] = "50"; w_Dict["sixty"] = "60"; w_Dict["seventy"] = "70"; w_Dict["eighty"] = "80"; w_Dict["ninety"] = "90"; w_Dict["hundred"] = "0".repeat(2); 
+		w_Dict["thousand"] = "0".repeat(3); w_Dict["million"] = "0".repeat(6); w_Dict["billion"] = "0".repeat(9); w_Dict["trillion"] = "0".repeat(12); w_Dict["quadrillion"] = "0".repeat(15); w_Dict["quintillion"] = "0".repeat(18); w_Dict["sextillion"] = "0".repeat(21); w_Dict["septillion"] = "0".repeat(24); w_Dict["octillion"] = "0".repeat(27); w_Dict["nonillion"] = "0".repeat(30); 
+		w_Dict["decillion"] = "0".repeat(33); w_Dict["undecillion"] = "0".repeat(36); w_Dict["duodecillion"] = "0".repeat(39); w_Dict["tredecillion"] = "0".repeat(42); w_Dict["quattuordecillion"] = "0".repeat(45); w_Dict["quindecillion"] = "0".repeat(48); w_Dict["sexdecillion"] = "0".repeat(51); w_Dict["septendecillion"] = "0".repeat(54); w_Dict["octodecillion"] = "0".repeat(57); w_Dict["novemdecillion"] = "0".repeat(60); w_Dict["vigintillion"] = "0".repeat(63);
+		return w_Dict[w];
+	}
+	
+	/**	Word Dictionary 2
+	*	function w_Dict2
+	*	@param {String} - number as string e.g "1"
+	*	@returns {String} - String value of @param e.g "one"
+	*/
+	w_Dict2(w){
+		/*Word Dictionary*/
+		var w_Dict = []; w_Dict[""] = "";
+		w_Dict["0"] = "zero"; w_Dict["1"] = "one"; w_Dict["2"] = "two"; w_Dict["3"] = "three"; w_Dict["4"] = "four"; w_Dict["5"] = "five"; w_Dict["6"] = "six"; w_Dict["7"] = "seven"; w_Dict["8"] = "eight"; w_Dict["9"] = "nine"; w_Dict["10"] = "ten"; 
+		w_Dict["11"] = "eleven"; w_Dict["12"] = "twelve"; w_Dict["13"] = "thirteen"; w_Dict["14"] = "fourteen"; w_Dict["15"] = "fifteen"; w_Dict["16"] = "sixteen"; w_Dict["17"] = "seventeen"; w_Dict["18"] = "eighteen"; w_Dict["19"] = "nineteen"; w_Dict["20"] = "twenty"; 
+		w_Dict["30"] = "thirty"; w_Dict["40"] = "forty"; w_Dict["50"] = "fifty"; w_Dict["60"] = "sixty"; w_Dict["70"] = "seventy"; w_Dict["80"] = "eighty"; w_Dict["90"] = "ninety"; w_Dict["0".repeat(2)] = "hundred"; 
+		w_Dict["0".repeat(3)] = "thousand"; w_Dict["0".repeat(6)] = "million"; w_Dict["0".repeat(9)] = "billion"; w_Dict["0".repeat(12)] = "trillion"; w_Dict["0".repeat(15)] = "quadrillion";  w_Dict["0".repeat(18)] = "quintillion"; w_Dict["0".repeat(21)] = "sextillion"; w_Dict["0".repeat(24)] = "septillion"; w_Dict["0".repeat(27)] = "octillion"; w_Dict["0".repeat(30)] = "nonillion"; 
+		w_Dict["0".repeat(33)] = "decillion"; w_Dict["0".repeat(36)] = "undecillion"; w_Dict["0".repeat(39)] = "duodecillion"; w_Dict["0".repeat(42)] = "tredecillion"; w_Dict["0".repeat(45)] = "quattuordecillion"; w_Dict["0".repeat(48)] = "quindecillion"; w_Dict["0".repeat(51)] = "sexdecillion"; w_Dict["0".repeat(54)] = "septendecillion"; w_Dict["0".repeat(57)] = "octodecillion"; w_Dict["0".repeat(60)] = "novemdecillion"; w_Dict["0".repeat(63)] = "vigintillion";
+		return w_Dict[w];
 	}
 }
