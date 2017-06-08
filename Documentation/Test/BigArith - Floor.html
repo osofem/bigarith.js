@@ -1,0 +1,25 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
+	<script src="../../BigArith.js"></script>
+	<script src="assert.js"></script>
+	<script>
+		/*Initializing a BigArith object*/
+		var x = new BigArith("0.5"); //via strings
+		var y = new BigArith("zero point three"); //via words
+		var z = new BigArith(7.45); //via numbers
+		
+		//It can also be like this
+		var a = new BigArith(".05"); //via strings
+		var b = new BigArith("eighty three point seven three"); //via words
+		var c = new BigArith("56857675753763473473463574574575693849335.567787856456453"); //via numbers
+		
+		//Floor
+		assertDeepEqual(x.floor(), new BigArith(0));
+		assertDeepEqual(y.floor(), new BigArith(0));
+		assertDeepEqual(z.floor(), new BigArith(7));
+		assertDeepEqual(a.floor(), new BigArith(0));
+		assertDeepEqual(b.floor(), new BigArith(83));
+		assertDeepEqual(c.floor(), new BigArith("56857675753763473473463574574575693849335"));
+	</script>
+</html>
