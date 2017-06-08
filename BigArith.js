@@ -109,7 +109,7 @@ class BigArith{
 		if(n[1] != "") word += " point";
 		for(let i = 0; i < n[1].length; i++)
 		{
-			word += " "+w_Dict2(n[1][i]);
+			word += " "+this.w_Dict2(n[1][i]);
 		}
 		return (sign?"negative ":"") + word.replace(/\s+/g," ").trim();
 	}
@@ -465,10 +465,10 @@ class BigArith{
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
-	/**	Is a greater than b
+	/**	Comparing a to b
 	*	function compare
 	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
-	*	@returns {String} - "lesser" if a < b; "equal" if a == b; "greater" if a > b.
+	*	@returns {String} - ("lesser" if a < b) - ("equal" if a == b) - ("greater" if a > b)
 	*/
 	compare(a, b){
 		//Check for signs
@@ -513,6 +513,73 @@ class BigArith{
 			if(c[1][i] < d[1][i]) return (cSign && dSign)? "greater" : "lesser";
 		}
 		return "equal";
+	}
+	
+	/**	Round this.value to the nearest integer
+	*	function round
+	*	@param {String} - this.value e.g "0.5"
+	*	@returns {BigArith} - this.value rounded to nearest whole number e.g "1"
+	*/
+	round(){
+		let n = this.value;
+		if(n.includes(".")){
+			n = n.split(".");
+			if(this.compare(n[1][0], "5") == "equal" || this.compare(n[1][0], "5") == "greater") 
+				n[0] = this.add_(n[0], "1").valueOf(); 
+			n = n[0];
+		}
+		return new BigArith(n);
+	}
+	
+	/**	Floor this.value
+	*	function floor
+	*	@param {String} - this.value
+	*	@returns {BigArith} - floored value of this.value
+	*/
+	floor(){
+		let n = this.value;
+		if(n.includes(".")) n = n.split(".")[0];
+		return new BigArith(n);
+	}
+	
+	/**	Ceil this.value
+	*	function ceil
+	*	@param {String} - this.value
+	*	@returns {BigArith} - ceiled value of this.value
+	*/
+	ceil(){
+		let n = this.value;
+		if(n.includes(".")) n = this.add_(n.split(".")[0], "1").valueOf();
+		return new BigArith(n);
+	}
+	
+	/**	Return this.value to fixed decimal point
+	*	function toFixed
+	*	@param {Number|String|BigArith} - the number of digits needed after decimal point. Valid input is 0 to 200
+	*	@returns {String} - this.value fixed to @param decimal points.
+	*/
+	toFixed(d){
+		let e = new BigArith(this.verify(d)).floor().valueOf();
+		if(d < 0 || d > 200) throw new Error("Argument must be between 0 and 200! " + e + " supplied.");
+		let n = this.value;
+		if(n.includes(".")){
+			n = n.split(".");
+			if(e == "0"){
+				if(this.compare(n[1][0], "5") == "equal" || this.compare(n[1][0], "5") == "greater"){
+					n[0] = this.add_(n[0], "1").valueOf();
+					n[1] = "0";
+				}
+				else n[1] = "0";
+			}
+			else if(this.compare(n[1].length.toString(), e) == "lesser") n[1] += "0".repeat(e - Number(n[1].length));
+			else if(this.compare(n[1].length.toString(), e) == "greater"){
+				if(this.compare(n[1][e], "5") == "equal" || this.compare(n[1][e], "5") == "greater") n[1] = this.add_(n[1].slice(0, e), "1").valueOf();
+				else n[1] = n[1].slice(0, e);
+			}
+			n = n[0]+((n[1]!="0")?("."+n[1]):"");
+		}
+		else n=n+((this.compare(e, "0") == "greater")?("."+"0".repeat(e)):"");
+		return n; 
 	}
 	
 	/**	Word Dictionary
