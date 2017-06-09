@@ -1,0 +1,23 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
+	<script src="../../BigArith.js"></script>
+	<script src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></script>
+	<script>
+		/*Initializing a BigArith object*/
+		var x = new BigArith(2);
+		
+		//CompareAbs
+		assertEqual(x.compareAbs("2"), "equal");
+		assertEqual(x.compareAbs(-2), "equal");
+		assertEqual(x.compareAbs("two"), "equal");
+		assertEqual(x.compareAbs("2.0"), "equal");
+		assertEqual(x.compareAbs("negative two"), "equal");
+		assertEqual(x.compareAbs("-2"), "equal");
+		
+		//Or
+		assertEqual(BigArith.compareAbs("-165.8987","165.898700000000000000000"), "equal");
+		assertEqual(BigArith.compareAbs("0.123568123","-0.03455893"), "greater");
+		assertEqual(BigArith.compareAbs("0.03455893","0.123568123"), "lesser");
+	</script>
+</html>

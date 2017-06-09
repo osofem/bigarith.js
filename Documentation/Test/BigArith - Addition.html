@@ -2,7 +2,7 @@
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
 	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
 	<script src="../../BigArith.js"></script>
-	<script src="assert.js"></script>
+	<script src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></script>
 	<script>
 		var result;
 		
@@ -64,5 +64,8 @@
 		i = new BigArith("one thousand point eight");
 		assertEqual(i.add("three hundred and two").toWords(), "one thousand three hundred and two point eight");
 		assertEqual(i.add("one").toWords(), "one thousand one point eight");
+		
+		i = new BigArith("-2");
+		assertEqual(i.add("-3").toWords(), "negative five");
 	</script>
 </html>
