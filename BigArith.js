@@ -149,8 +149,7 @@ class BigArith{
 		if(typeof(n) == 'string' && /\d/.test(n)/*This just test if it contains any digit, real test in below*/){
 			n = n.replace(/^\s|\s$/g, "");
 			let sign = false;
-			if(n[0] == "-")
-			{
+			if(n[0] == "-"){
 				sign = true;
 				n = n.slice(1, n.length);
 			}
@@ -162,8 +161,7 @@ class BigArith{
 				n[0] = "0";
 			if(typeof(n[1]) == 'undefined')
 				n[1] = "0";
-			if(/^\d+$/.test(n[0]) && /^\d+$/.test(n[1])/*Test that it contains only digits*/)
-			{
+			if(/^\d+$/.test(n[0]) && /^\d+$/.test(n[1])/*Test that it contains only digits*/){
 				//Remove unnecessary zeros
 				n[0] = n[0].replace(/^[0]+/g, "");
 				n[1] = n[1].replace(/[0]+$/g, "");
@@ -249,38 +247,36 @@ class BigArith{
 		return NaN;
 	}
 	
-	/**	Add two numbers together
+	/**	Add n to this.value
 	*	function add
-	*	@param {Number|String|BigArith} - Number to add to the current BigArith object value
+	*	@param {Number|String|BigArith} - Number to add to this.value
 	*	@returns {BigArith} - Result of addition this.value + @param as a new BigArith object
 	*/
 	add(n){
-		var a = this.value;
-		var b = this.verify(n);
-		
-		if(isNaN(a) || isNaN(b))
-			return NaN;
-			
-		return this.add_(a, b);
+		return BigArith.add(this.value, n);
 	}
 	
-	//function add helper
-	add_(a, b){
-		var a = this.verify(a);
-		var b = this.verify(b);
+	/**	Add two numbers together
+	*	function add
+	*	@param {Number|String|BigArith} - Numbers to add together
+	*	@returns {BigArith} - Result of addition a + b as a new BigArith object
+	*/
+	static add(a, b){
+		var a = new BigArith(a).valueOf();
+		var b = new BigArith(b).valueOf();
 		var signFlag = "";
 		
 		if(isNaN(a) || isNaN(b))
 			return NaN;
 		
 		if(a[0] == "-" && b[0] != "-")
-			return this.subtract_(b, a.substr(1));
+			return BigArith.subtract(b, new BigArith(a).abs().valueOf());
 		if(a[0] != "-" && b[0] == "-")
-			return this.subtract_(a, b.substr(1));
+			return BigArith.subtract(a, new BigArith(b).abs().valueOf());
 		if(a[0] == "-" && b[0] == "-"){
 			signFlag = "-";
-			a = [...a]; a.shift(); a = a.join("");
-			b = [...b]; b.shift(); b = b.join("");
+			a = new BigArith(a).abs().valueOf();
+			b = new BigArith(b).abs().valueOf();
 		}
 		
 		a = a.split(".");
@@ -314,7 +310,7 @@ class BigArith{
 		result = result.slice(0, result.length - max) + "." + result.slice(result.length - max);
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
-		return ((result == "")? "0" : new BigArith(((signFlag=="")?"":"-")+result));
+		return ((result == "")? new BigArith("0") : new BigArith(((signFlag=="")?"":"-")+result));
 	}
 	
 	/**	Subtract n from this.value
@@ -323,30 +319,28 @@ class BigArith{
 	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
 	*/
 	subtract(n){
-		var a = this.value;
-		var b = this.verify(n);
-		if(isNaN(a) || isNaN(b))
-			return NaN;
-		
-		return this.subtract_(a, b);
+		return BigArith.subtract(this.value, n);
 	}
 	
-	//function subtract helper
-	subtract_(a, b){
-		var a = this.verify(a);
-		var b = this.verify(b);
+	/**	Subtract b from a
+	*	function subtract
+	*	@param {Number|String|BigArith} - Numbers to subtract
+	*	@returns {BigArith} - Result of subtraction a - b as a new BigArith object
+	*/
+	static subtract(a, b){
+		var a = new BigArith(a).valueOf();
+		var b = new BigArith(b).valueOf();
 		if(isNaN(a) || isNaN(b))
 			return NaN;
 		
 		if(a[0] == "-" && b[0] != "-")
-			return this.add_(a, "-"+b);
+			return BigArith.add(a, "-"+b);
 		if(a[0] != "-" && b[0] == "-")
-			return this.add_(a, b.substr(1));
-		if(a[0] == "-" && b[0] == "-")
-		{
+			return BigArith.add(a, new BigArith(b).abs().valueOf());
+		if(a[0] == "-" && b[0] == "-"){
 			//swap the absolute parameters
-			let temp = a.substr(1);
-			a = b.substr(1);
+			let temp = new BigArith(a).abs().valueOf();
+			a = new BigArith(b).abs().valueOf();
 			b = temp;
 		}
 		
@@ -360,13 +354,11 @@ class BigArith{
 		b[1] += "0".repeat(max - b[1].length);
 		
 		let signFlag = "";
-		if(this.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "greater" || this.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "equal")
-		{
+		if(BigArith.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "greater" || BigArith.compare(a[0]+"."+a[1], b[0]+"."+b[1]) == "equal"){
 			a = a[0]+a[1];
 			b = b[0]+b[1];
 		}
-		else
-		{
+		else{
 			//swap the parameters
 			let temp = a[0]+a[1];
 			a = b[0]+b[1];
@@ -377,19 +369,15 @@ class BigArith{
 		a = a.split("");
 		b = b.split("");
 		var result = "";
-		for(let i = a.length-1, j = b.length-1; i >= 0 || j >= 0; i--, j--)
-		{
-			if(isNaN(parseInt(b[j])))b[j] = "0";
-			if(parseInt(a[i]) >= parseInt(b[j]))
-			{
+		for(let i = a.length-1, j = b.length-1; i >= 0 || j >= 0; i--, j--){
+			if(isNaN(parseInt(b[j]))) b[j] = "0";
+			if(parseInt(a[i]) >= parseInt(b[j])){
 				result = (parseInt(a[i]) - parseInt(b[j])).toString() + result;
 			}
-			else if(parseInt(a[i]) < parseInt(b[j]))
-			{
+			else if(parseInt(a[i]) < parseInt(b[j])){
 				if(i == 0)
 					result = (parseInt(a[i]) - parseInt(b[j])).toString() + result;
-				else
-				{
+				else{
 					result = (parseInt(a[i])+10 - parseInt(b[j])).toString() + result;
 					a[i-1] = parseInt(a[i-1])-1;
 				}
@@ -403,25 +391,34 @@ class BigArith{
 	
 	/**	Multiply n with this.value
 	*	function multiply
-	*	@param {Number|String|BigArith} - Number to multiply with the current BigArith object value
+	*	@param {Number|String|BigArith} - Number to multiply with this.value
 	*	@returns {BigArith} - Result of multiplication this.value * @param as a new BigArith object
 	*/
 	multiply(n){
-		var a = this.value;
-		var b = this.verify(n);
+		return BigArith.multiply(this.value, n);
+	}
+	
+	/**	Multiply a and b
+	*	function multiply
+	*	@param {Number|String|BigArith} - Numbers to multiply 
+	*	@returns {BigArith} - Result of multiplication a * b as a new BigArith object
+	*/
+	static multiply(a, b){
+		var a = new BigArith(a).valueOf();
+		var b = new BigArith(b).valueOf();
 		var signFlag = "";
-	  
+		
 		if(a[0] == "-" && b[0] != "-"){
 			signFlag = "-";
-			a = a.substr(1);
+			a = new BigArith(a).abs().valueOf();
 		}
 		if(a[0] != "-" && b[0] == "-"){
 			signFlag = "-";
-			b = b.substr(1);
+			b = new BigArith(b).abs().valueOf();
 		}
 		if(a[0] == "-" && b[0] == "-"){
-			a = a.substr(1);
-			b = b.substr(1);
+			a = new BigArith(a).abs().valueOf();
+			b = new BigArith(b).abs().valueOf();
 		}
 		
 		a = a.split(".");
@@ -455,7 +452,7 @@ class BigArith{
 	  
 		var result = "0";
 		for(var i = 0; i < results.length; i++){
-			result = this.add_(result, results[i]+"0".repeat(i));
+			result = BigArith.add(result, results[i]+"0".repeat(i));
 		}
 		result = result.valueOf(); //It's a BigArith
 		if(max*2 > result.length) result = "0".repeat(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
@@ -465,26 +462,35 @@ class BigArith{
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
+	/**	Comparing this.value to n
+	*	function compare
+	*	@param {String|Number|BigArth} - the number this.value is to be compared to. Can be negative and fraction
+	*	@returns {String} - ("lesser" if this.value < n) - ("equal" if this.value == n) - ("greater" if this.value > n)
+	*/
+	compare(n){
+		return BigArith.compare(this.value, n);
+	}
+	
 	/**	Comparing a to b
 	*	function compare
-	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
+	*	@param {String|Number|BigArth} - numbers a and b as strings to be compared. Can be negative and fraction
 	*	@returns {String} - ("lesser" if a < b) - ("equal" if a == b) - ("greater" if a > b)
 	*/
-	compare(a, b){
+	static compare(a, b){
+		var a = new BigArith(a).valueOf();
+		var b = new BigArith(b).valueOf();
 		//Check for signs
 		let cSign = false; let c = "";
 		let dSign = false; let d = "";
 		if(a[0] == "-"){
 			cSign = true;
-			c = a.substr(1);
+			c = new BigArith(a).abs().valueOf();
 		}else c=a;
 		if(b[0] == "-"){
 			dSign = true;
-			d = b.substr(1);
+			d = new BigArith(b).abs().valueOf();
 		}else d=b;
-		
-		c=c.replace(/^[0]*/g,"");
-		d=d.replace(/^[0]*/g,"");
+	
 		c = c.split("."); d = d.split(".");
 		if(typeof c[1] == 'undefined')c[1] = '0';
 		if(typeof d[1] == 'undefined')d[1] = '0';
@@ -515,6 +521,24 @@ class BigArith{
 		return "equal";
 	}
 	
+	/**	Comparing absolute value of a to absolute value of b
+	*	function compareAbs
+	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
+	*	@returns {String} - ("lesser" if abs(a) < abs(b)) - ("equal" if abs(a) == abs(b)) - ("greater" if abs(a) > abs(b))
+	*/
+	compareAbs(n){
+		return BigArith.compare(new BigArith(this.value).abs().valueOf(), new BigArith(n).abs().valueOf());
+	}
+
+	/**	Comparing absolute value of a to absolute value of b
+	*	function compareAbs
+	*	@param {String} - numbers a and b as strings to be compared. Can be negative and fraction
+	*	@returns {String} - ("lesser" if abs(a) < abs(b)) - ("equal" if abs(a) == abs(b)) - ("greater" if abs(a) > abs(b))
+	*/
+	static compareAbs(a, b){
+		return BigArith.compare(new BigArith(a).abs().valueOf(), new BigArith(b).abs().valueOf());
+	}
+	
 	/**	Round this.value to the nearest integer
 	*	function round
 	*	@param {String} - this.value e.g "0.5"
@@ -524,8 +548,8 @@ class BigArith{
 		let n = this.value;
 		if(n.includes(".")){
 			n = n.split(".");
-			if(this.compare(n[1][0], "5") == "equal" || this.compare(n[1][0], "5") == "greater") 
-				n[0] = this.add_(n[0], "1").valueOf(); 
+			if(BigArith.compare(n[1][0], "5") == "equal" || BigArith.compare(n[1][0], "5") == "greater") 
+				n[0] = BigArith.add(n[0], "1").valueOf(); 
 			n = n[0];
 		}
 		return new BigArith(n);
@@ -549,7 +573,7 @@ class BigArith{
 	*/
 	ceil(){
 		let n = this.value;
-		if(n.includes(".")) n = this.add_(n.split(".")[0], "1").valueOf();
+		if(n.includes(".")) n = BigArith.add(n.split(".")[0], "1").valueOf();
 		return new BigArith(n);
 	}
 	
@@ -560,26 +584,48 @@ class BigArith{
 	*/
 	toFixed(d){
 		let e = new BigArith(this.verify(d)).floor().valueOf();
-		if(d < 0 || d > 200) throw new Error("Argument must be between 0 and 200! " + e + " supplied.");
+		if(BigArith.compare(d, 0) == "lesser" || BigArith.compare(d, 200) == "greater") throw new Error("Argument must be between 0 and 200! " + e + " supplied.");
 		let n = this.value;
 		if(n.includes(".")){
 			n = n.split(".");
 			if(e == "0"){
-				if(this.compare(n[1][0], "5") == "equal" || this.compare(n[1][0], "5") == "greater"){
-					n[0] = this.add_(n[0], "1").valueOf();
+				if(BigArith.compare(n[1][0], "5") == "equal" || BigArith.compare(n[1][0], "5") == "greater"){
+					n[0] = BigArith.add(n[0], "1").valueOf();
 					n[1] = "0";
 				}
 				else n[1] = "0";
 			}
-			else if(this.compare(n[1].length.toString(), e) == "lesser") n[1] += "0".repeat(e - Number(n[1].length));
-			else if(this.compare(n[1].length.toString(), e) == "greater"){
-				if(this.compare(n[1][e], "5") == "equal" || this.compare(n[1][e], "5") == "greater") n[1] = this.add_(n[1].slice(0, e), "1").valueOf();
+			else if(BigArith.compare(n[1].length.toString(), e) == "lesser") n[1] += "0".repeat(e - Number(n[1].length));
+			else if(BigArith.compare(n[1].length.toString(), e) == "greater"){
+				if(BigArith.compare(n[1][e], "5") == "equal" || BigArith.compare(n[1][e], "5") == "greater") n[1] = BigArith.add(n[1].slice(0, e), "1").valueOf();
 				else n[1] = n[1].slice(0, e);
 			}
 			n = n[0]+((n[1]!="0")?("."+n[1]):"");
 		}
-		else n=n+((this.compare(e, "0") == "greater")?("."+"0".repeat(e)):"");
+		else n=n+((BigArith.compare(e, "0") == "greater")?("."+"0".repeat(e)):"");
 		return n; 
+	}
+	
+	/**	Random number between 0 and 1 (1 exclusive)
+    *	function random
+    *	@returns {String} - any number between 0 and 1 (1 exclusive)
+    */
+	static random(){
+		let len = Math.floor(Math.random()*201);
+		let n = "0";
+        for(let i = 0; i < len; i++){
+			n += Math.floor(Math.random()*10);
+		}
+		return (n == "0")?n:("0."+n.slice(1));
+	}
+	
+	/**	Random int between min and max (min inclusive, max exclusive) 
+    *	function random_int
+	*	@param {Number|String|BigArith} - minimum and maximum integer that can be returned (min inclusive, max exclusive)
+    *	@returns {String} - any integer between min and max
+    */
+	static random_int(min, max){
+		return (new BigArith(BigArith.random()).multiply(new BigArith(max).subtract(min)).add(min)).floor().valueOf();
 	}
 	
 	/**	Word Dictionary
