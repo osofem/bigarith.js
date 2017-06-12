@@ -2,8 +2,10 @@ class BigArith{
 	constructor(n){
 		if(typeof(n) == "object" && n.name == "BigArith")
 			this.value = n.valueOf();
+		else if(typeof n == "undefined")
+			this.value = "0";
 		else if(n == "PI")
-			this.value = "3.141592653589793";
+			this.value = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
 		else if(n == "LN2")
 			this.value = "0.6931471805599453";
 		else if(n == "LN10")
@@ -15,11 +17,13 @@ class BigArith{
 		else if(n == "SQRT1_2")
 			this.value = "0.7071067811865476";
 		else if(n == "SQRT2")
-			this.value = "1.4142135623730951";
+			this.value = "1.41421356237309504880168872420969807856967187537694807317667973799073247846210703885038753432764157273501384623091229702492483605585073721264412149709993583141322266592750559275579995050115278206057147";
+		
 		else
 			this.value = this.verify(n);
 		
 		this.ObjName = "BigArith";
+		this.ver = "v0.0-beta0.3";
 	}
 	
 	/**	Name of object 
@@ -27,6 +31,13 @@ class BigArith{
 	*/
 	get name(){
 		return this.ObjName;
+	}
+	
+	/**	Code version 
+	*	@return {String} - Version of code in format v0.0-beta0.0
+	*/
+	get version(){
+		return this.ver;
 	}
 	
 	/** Returns the primitive value of the BigArith object
@@ -52,25 +63,70 @@ class BigArith{
 		return true;
 	}
 	
+	/** Returns true if this.value is integer, false otherwise
+	*	@return {boolean} - this.value is integer?
+	*/
+	isInteger(){
+		if(this.value.indexOf(".") == -1) return true;
+		return false;
+	}
+	
+	/** Returns true if this.value is even, false otherwise
+	*	@return {boolean} - this.value is even?
+	*/
+	isEven(){
+		if(BigArith.compare(BigArith.divide(this.value, 2), BigArith.divide(this.value, 2).floor()) == "equal") return true;
+		return false;
+	}
+	
+	/** Returns true if this.value is NOT even and an integer, false otherwise
+	*	@return {boolean} - this.value is NOT even and is an integer?
+	*/
+	isOdd(){
+		if(!new BigArith(this.value).isEven() && new BigArith(this.value).isInteger()) return true;
+		return false;
+	}
+	
 	//TODO============
 	squareRoot(){
 		return new BigArith(Math.sqrt(this.value));
 	}
 	
 	//TODO============
-	divide(n){
-		return new BigArith(this.value/n);
+	cubeRoot(){
+		return new BigArith(Math.cbrt(this.value));
 	}
 	
-	//TODO============
-	static divide(a, b){
-		return new BigArith(a/b);
+	
+	/**	Return this.value%n (reminder of this.value/n)
+	*	function modulus
+	*	@param {String|Number|BigArth} - n - the divisor with this.value as the dividend
+	*	@returns {BigArith} - reminder of this.value mod n
+	*/
+	modulus(n){
+		return BigArith.modulus(this.value, n);
 	}
 	
-	/**	Return the absolute value of a number
+	/**	Return a%b (reminder of a/b)
+	*	function modulus
+	*	@param {String|Number|BigArth} - a - the dividend
+	*	@param {String|Number|BigArth} - b - the divisor.
+	*	@returns {BigArith} - reminder of a mod b
+	*/
+	static modulus(a, b){
+		var a = new BigArith(a);
+		var b = new BigArith(b);
+		if(BigArith.compare(b, "0") == "equal") return NaN;
+		
+		if(a.isInteger() && b.isInteger())
+			return new BigArith(((a.isNegative())?"-":"")+BigArith.divWithRem(a, b)[1]);
+		else
+			return new BigArith(((a.isNegative())?"-":"")+BigArith.subtract(a.abs(), BigArith.multiply(BigArith.divide(a.abs(), b.abs()).valueOf().split(".")[0], b.abs())));
+	}
+	
+	/**	Return the absolute value of this.value
 	*	function abs
-	*	@param {String} - String passed in via this.value;
-	*	@returns {BigArith} - Absolute value of input
+	*	@returns {BigArith} - Absolute value of this.value
 	*/
 	abs(){
 		return (isNaN(this.value)) ? NaN : ((this.value.split("")[0] == "-") ? new BigArith((this.value.split("").splice(1, this.value.split("").length-1)).join("")) : new BigArith(this.value));
@@ -78,10 +134,10 @@ class BigArith{
 	
 	/**	Verify input evaluate to a valid number
 	*	function verify
-	*	@param {String|Number|BigArth} - Number within the safe integer limit or string in "-123.456" or  
+	*	@param {String|Number|BigArth} - n - Number within the safe integer limit or string in "-123.456" or  
 	*	"negative one hundred and twenty three point four five six" form or a BigArith object
 	*	@returns {String} - A string representation of @param in form "-123.456" or NaN if @param is not valid,
-	*	or throws an error if input is in number form but not within safe range.
+	*	or throws an error if input is in number form but not within safe limits.
 	*/
 	verify(n){
 		//Empty string returns "0"
@@ -104,6 +160,9 @@ class BigArith{
 			let sign = false;
 			if(n[0] == "-"){
 				sign = true;
+				n = n.slice(1, n.length);
+			}
+			else if(n[0] == "+"){
 				n = n.slice(1, n.length);
 			}
 			
@@ -138,6 +197,9 @@ class BigArith{
 			n = n.split(" ");
 			if(n[0] == "negative"){
 				sign = true;
+				n.shift();
+			}
+			else if(n[0] == "positive"){
 				n.shift();
 			}
 			
@@ -202,8 +264,8 @@ class BigArith{
 	
 	/**	Add n to this.value
 	*	function add
-	*	@param {Number|String|BigArith} - Number to add to this.value
-	*	@returns {BigArith} - Result of addition this.value + @param as a new BigArith object
+	*	@param {Number|String|BigArith} - n - A summand with this.value as the second summand
+	*	@returns {BigArith} - sum of this.value and @param
 	*/
 	add(n){
 		return BigArith.add(this.value, n);
@@ -211,8 +273,9 @@ class BigArith{
 	
 	/**	Add two numbers together
 	*	function add
-	*	@param {Number|String|BigArith} - Numbers to add together
-	*	@returns {BigArith} - Result of addition a + b as a new BigArith object
+	*	@param {Number|String|BigArith} - a - A summand.
+	*	@param {Number|String|BigArith} - b - A summand.
+	*	@returns {BigArith} - sum of a and b
 	*/
 	static add(a, b){
 		var a = new BigArith(a).valueOf();
@@ -250,7 +313,7 @@ class BigArith{
 			var z = a.charAt(i)*1 + b.charAt(j)*1 + flag;
 			if(z>9 && (i>0 || j>0))
 			{
-				flag = Math.floor(z/10);
+				flag = new BigArith(z/10).floor().valueOf()*1;
 				result = (z-flag*10)+result;
 			}
 			else
@@ -268,8 +331,8 @@ class BigArith{
 	
 	/**	Subtract n from this.value
 	*	function subtract
-	*	@param {Number|String|BigArith} - Number to subtract from the current BigArith object value
-	*	@returns {BigArith} - Result of subtraction this.value - @param as a new BigArith object
+	*	@param {Number|String|BigArith} - n - The subtrahend with this.value as the minuend
+	*	@returns {BigArith} - difference of this.value and @param
 	*/
 	subtract(n){
 		return BigArith.subtract(this.value, n);
@@ -277,8 +340,9 @@ class BigArith{
 	
 	/**	Subtract b from a
 	*	function subtract
-	*	@param {Number|String|BigArith} - Numbers to subtract
-	*	@returns {BigArith} - Result of subtraction a - b as a new BigArith object
+	*	@param {Number|String|BigArith} - a - the Minuend
+	*	@param {Number|String|BigArith} - b - the subtrahend 
+	*	@returns {BigArith} - difference of a and b
 	*/
 	static subtract(a, b){
 		var a = new BigArith(a).valueOf();
@@ -342,10 +406,10 @@ class BigArith{
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
 	}
 	
-	/**	Multiply n with this.value
+	/**	Multiply n and this.value
 	*	function multiply
-	*	@param {Number|String|BigArith} - Number to multiply with this.value
-	*	@returns {BigArith} - Result of multiplication this.value * @param as a new BigArith object
+	*	@param {Number|String|BigArith} - n - the multiplier with this.value as the multiplicand
+	*	@returns {BigArith} - product of this.value and @param
 	*/
 	multiply(n){
 		return BigArith.multiply(this.value, n);
@@ -353,8 +417,9 @@ class BigArith{
 	
 	/**	Multiply a and b
 	*	function multiply
-	*	@param {Number|String|BigArith} - Numbers to multiply 
-	*	@returns {BigArith} - Result of multiplication a * b as a new BigArith object
+	*	@param {Number|String|BigArith} - a - the multiplicand
+	*	@param {Number|String|BigArith} - b - the multiplier
+	*	@returns {BigArith} - product of a and b
 	*/
 	static multiply(a, b){
 		var a = new BigArith(a).valueOf();
@@ -392,7 +457,7 @@ class BigArith{
 			for(var j = b.length-1; j >= 0; j--){
 				var z = a.charAt(i)*b.charAt(j)+flag;
 				if(z>9 && j>0){
-					flag = Math.floor(z/10);
+					flag = new BigArith(z/10).floor().valueOf()*1;
 					subSum = (z-flag*10)+subSum;
 				}
 				else{
@@ -413,6 +478,131 @@ class BigArith{
 		result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
 		if(result[0] == ".") result = "0" + result;
 		return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
+	}
+	
+	/**	Return this.valus/n (division of this.valus and n)
+	*	function divide
+	*	@param {String|Number|BigArth} - n - The divisor with this.value as the dividend. 
+	*	@returns {BigArith} - The quotient to 200 decimal places when necessary.
+	*/
+	divide(n){
+		return BigArith.divide(this.value, n);
+	}
+	
+	/**	Return a/b (division of a/b)
+	*	function divide
+	*	@param {String|Number|BigArth} - a - The dividend.
+	*	@param {String|Number|BigArth} - b - The divisor.
+	*	@returns {BigArith} - The quotient to 200 decimal places when necessary.
+	*/
+	static divide(a, b){
+		var a = new BigArith(a).valueOf().split(".");
+		var b = new BigArith(b).valueOf().split(".");
+		
+		//Note where the decimal points are and remove them
+		let numeratorIndex = 0;
+		let denominatorIndex = 0;
+		if(typeof a[1] != "undefined")
+			numeratorIndex = a[1].length;
+		if(typeof b[1] != "undefined")
+			denominatorIndex = b[1].length;
+		a = a[0] + ((typeof a[1] != "undefined")?a[1]:"");
+		b = b[0] + ((typeof b[1] != "undefined")?b[1]:"");
+		
+		let result = BigArith.divWithRem(a, b);
+		let rem = result[1];
+		let remResult = "0.";
+		let count = 0;
+		
+		while(BigArith.compare(rem, "0") == "greater" && count < 201){
+			rem += "0";
+			let j = BigArith.divWithRem(rem, b);
+			remResult +=  j[0];
+			rem = j[1];
+			count++;
+		}
+		if(remResult == "0.") remResult = "0";
+		result = new BigArith(BigArith.add(result[0], remResult)).valueOf();
+		let dPosition = (result.indexOf(".") == -1)?result.length : result.indexOf(".");
+		
+		//Numerator decimal point means we shift the decimal point in answer forward
+		//Denominator decimal point means we shift the decimal point iin answer backward
+		dPosition = dPosition+denominatorIndex-numeratorIndex;
+		result = result.split(".");
+		if(typeof result[1] == "undefined") result[1] = "0";
+		if(dPosition < 0){
+			result = "0." + "0".repeat(-1*dPosition) + result[0] + result[1];
+		}
+		else if(dPosition == 0){
+			result = "0." + result[0] + result[1];
+		}
+		else if(dPosition > 0){
+			if(dPosition <= result[0].length){
+				result = result[0].slice(0, dPosition) + "." + result[0].slice(dPosition) + result[1];
+			}
+			else{
+				dPosition -= result[0].length; 
+				result = result[0] + result[1].slice(0, dPosition) +
+					((dPosition-result[1].length>0)?"0".repeat(dPosition-result[1].length):"") + "." +
+					result[1].substr(dPosition)+ "0";
+			}
+		}
+	
+		if(count == 201 /*&& BigArith.compare(precision, 200) == "equal"*/)
+			return new BigArith(new BigArith(result).toFixed(200));
+		/*if(BigArith.compare(precision, 200) == "lesser") suspend the use of precission for now toFixed should actually do
+			return new BigArith(new BigArith(result).toFixed(precision));*/
+		else
+			return new BigArith(result);
+	}
+	
+	/**	Return a/b (division of a/b)
+	*	function divWithRem
+	*	@param {String|Number|BigArth} - a - The dividend. Must always be integers.
+	*	@param {String|Number|BigArth} - b - The divisor. Must always be integers.
+	*	@returns {Array of integers} - [quotient, reminder]
+	*/
+	static divWithRem(a, b){
+		var a = new BigArith(a);
+		var b = new BigArith(b);
+		if(isNaN(a) || isNaN(b))
+			return NaN;
+		
+		if(!a.isInteger() || !b.isInteger()) throw new Error("divWithRem accepts only integers. Non integers passed in");
+		if(BigArith.compare(b, 0) == "equal") throw new Error("Division by zero");
+		let signFlag = false;
+		
+		if((a.isNegative() || b.isNegative()) && !(a.isNegative() && b.isNegative())) signFlag = true;
+		
+		a = a.abs().valueOf();
+		b = b.abs().valueOf();
+		
+		
+		let aLen = a.length;
+		let aSub = "";
+		let result = "0";
+		let hold = a;
+		for(let i = 0; i < aLen; i++){
+			aSub += a[i];
+			if(BigArith.compare(aSub, "0") == "equal"){result += "0";}
+			else if(BigArith.compare(b, aSub) == "greater"){result += "0"; continue;} 
+			else{
+				let count = 0;
+				hold = aSub;
+				while(BigArith.compare(hold, b) != "lesser"){
+					hold = BigArith.subtract(hold,b);
+					count++;
+				}
+				result += count;
+			}
+			aSub = hold;
+		}
+		if(aSub.length > 1 && aSub[0] == "0"){
+			hold = new BigArith(aSub).valueOf();
+		}
+		result = result.replace(/^0*/g,"");
+		result = (result == "")? "0" : result;
+		return [((signFlag)?"-":"")+result, hold];
 	}
 	
 	/**	Comparing this.value to n
@@ -443,7 +633,7 @@ class BigArith{
 			dSign = true;
 			d = new BigArith(b).abs().valueOf();
 		}else d=b;
-	
+	//console.log(c);
 		c = c.split("."); d = d.split(".");
 		if(typeof c[1] == 'undefined')c[1] = '0';
 		if(typeof d[1] == 'undefined')d[1] = '0';
@@ -501,8 +691,12 @@ class BigArith{
 		let n = this.value;
 		if(n.includes(".")){
 			n = n.split(".");
-			if(BigArith.compare(n[1][0], "5") == "equal" || BigArith.compare(n[1][0], "5") == "greater") 
-				n[0] = BigArith.add(n[0], "1").valueOf(); 
+			if(BigArith.compare(n[1][0], "5") == "equal" || BigArith.compare(n[1][0], "5") == "greater"){
+				if(new BigArith(n[0]).isPositive())
+					n[0] = BigArith.add(n[0], "1").valueOf();
+				else
+					n[0] = BigArith.subtract(n[0], "1").valueOf();
+			}
 			n = n[0];
 		}
 		return new BigArith(n);
@@ -515,7 +709,12 @@ class BigArith{
 	*/
 	floor(){
 		let n = this.value;
-		if(n.includes(".")) n = n.split(".")[0];
+		if(n.includes(".")){
+			n = n.split(".")[0];
+			if(new BigArith(n).isNegative()){
+				n = BigArith.subtract(n, "1");
+			}
+		}
 		return new BigArith(n);
 	}
 	
@@ -526,7 +725,12 @@ class BigArith{
 	*/
 	ceil(){
 		let n = this.value;
-		if(n.includes(".")) n = BigArith.add(n.split(".")[0], "1").valueOf();
+		if(n.includes(".")){
+			n = BigArith.add(n.split(".")[0], "1");
+			if(n.isNegative()){
+				n = BigArith.subtract(n, "1");
+			}
+		}
 		return new BigArith(n);
 	}
 	
@@ -541,16 +745,35 @@ class BigArith{
 		let n = this.value;
 		if(n.includes(".")){
 			n = n.split(".");
-			if(e == "0"){
+			if(BigArith.compare(e, "0") == "equal"){
 				if(BigArith.compare(n[1][0], "5") == "equal" || BigArith.compare(n[1][0], "5") == "greater"){
 					n[0] = BigArith.add(n[0], "1").valueOf();
 					n[1] = "0";
 				}
 				else n[1] = "0";
 			}
-			else if(BigArith.compare(n[1].length.toString(), e) == "lesser") n[1] += "0".repeat(e - Number(n[1].length));
+			else if(BigArith.compare(n[1].length.toString(), e) == "lesser"){ n[1] += "0".repeat(e - Number(n[1].length));}
 			else if(BigArith.compare(n[1].length.toString(), e) == "greater"){
-				if(BigArith.compare(n[1][e], "5") == "equal" || BigArith.compare(n[1][e], "5") == "greater") n[1] = BigArith.add(n[1].slice(0, e), "1").valueOf();
+				if(BigArith.compare(n[1][e], "5") == "equal" || BigArith.compare(n[1][e], "5") == "greater"){
+					let z0 = n[1].slice(0, e).length;
+					let z1 = BigArith.add(n[1].slice(0, e), "0").valueOf().length; //To check if it have leading zeros hence 0.00456 can become 0.456
+					n[1] = BigArith.add(n[1].slice(0, e), "1").valueOf();
+					let z2 = n[1].length;
+					
+					if(z0 != z1){//Has leading zero
+						n[1] = "0".repeat(z0-z1) + n[1];
+					}
+					
+					if(z2 > z1){
+						if(n[1][0] != "0"){
+							n[0] = BigArith.add(n[0], "1").valueOf();
+							n[1] = "0".repeat(e);
+						}
+						else{
+							n[1] = n[1].substr(1);
+						}
+					}
+				}
 				else n[1] = n[1].slice(0, e);
 			}
 			n = n[0]+((n[1]!="0")?("."+n[1]):"");
@@ -564,20 +787,20 @@ class BigArith{
     *	@returns {String} - any number between 0 and 1 (1 exclusive)
     */
 	static random(){
-		let len = Math.floor(Math.random()*201);
+		let len = new BigArith(Math.random()*201).floor().valueOf()*1;
 		let n = "0";
         for(let i = 0; i < len; i++){
-			n += Math.floor(Math.random()*10);
+			n += new BigArith(Math.random()*10).floor().valueOf();
 		}
 		return (n == "0")?n:("0."+n.slice(1));
 	}
 	
 	/**	Random int between min and max (min inclusive, max exclusive) 
-    *	function random_int
+    *	function randomInt
 	*	@param {Number|String|BigArith} - minimum and maximum integer that can be returned (min inclusive, max exclusive)
     *	@returns {String} - any integer between min and max
     */
-	static random_int(min, max){
+	static randomInt(min, max){
 		return (new BigArith(BigArith.random()).multiply(new BigArith(max).subtract(min)).add(min)).floor().valueOf();
 	}
 	
