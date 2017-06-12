@@ -1,0 +1,39 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
+	<script src="../../BigArith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../../assert/assert.js"></script>
+	<script>
+		/*Initializing a BigArith object*/
+		var ba = new BigArith(); //This initialises to "0"
+		assertDeepEqual(ba, new BigArith(0));
+		
+		var ba = new BigArith(""); //With an empty string, this initialises to "0"
+		assertDeepEqual(ba, new BigArith(0));
+		
+		ba = new BigArith(123); //via number
+		assertDeepEqual(ba, new BigArith("123"));
+		
+		ba = new BigArith("0.5"); //via strings
+		assertDeepEqual(ba, new BigArith("0.5"));
+		
+		ba = new BigArith("twenty five point three eight"); //via words
+		assertDeepEqual(ba, new BigArith("25.38"));
+		
+		ba = new BigArith(5e3); //via number in expontial form
+		assertDeepEqual(ba, new BigArith("5000"));
+		
+		ba = new BigArith("negative thirty four"); //negative words
+		assertDeepEqual(ba, new BigArith("-34"));
+		
+		ba = new BigArith("positive sixty eight"); //positive words, though the "positive" is not necessary
+		assertDeepEqual(ba, new BigArith("68"));
+		
+		ba = new BigArith("-34"); //negative strings
+		assertDeepEqual(ba, new BigArith("-34"));
+		
+		ba = new BigArith("+34"); //positive strings, though the "+" is not necessary
+		assertDeepEqual(ba, new BigArith("34"));
+	</script>
+</html>
