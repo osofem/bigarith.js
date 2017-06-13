@@ -30,7 +30,7 @@ var ba = new BigArith(12345);
 ```
 The number must be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> value else an error will be thrown. <em>Only integers are recommended for this method</em> however this will not throw an error if fractions are used. However, <em>it is recommended that fractions are initialized with strings.</em> See <a href="#init_string">here</a>.
 
-##### 2. Initiating with string
+##### 2. <span id="init_string">Initiating with string</span>
 ```javascript
 var ba = new BigArith("67876445565433556789877654567987457008645656765434567889086654234542126677.8977566766788767");
 var bb = new BigArith(""); //this initialize variable bb to a BigArith object of value "0"
