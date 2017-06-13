@@ -18,20 +18,20 @@ You can also download <code>BigArith</code> from <code>https://github.com/osofem
 
 ### How do I initialize the <code>BigArith</code> object
 The <code>BigArith</code> object can be initialized with a single line of code.
-```
+```javascript
 var ba = new BigArith();
 ```
 This single line will simply initialize the variable <code>ba</code> to a <code>BigArith</code> object of value <code>"0"</code>.
 
 Other ways to initialize the library are
 ##### 1. Initiating with number
-```
+```javascript
 var ba = new BigArith(12345);
 ```
 The number must be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> value else an error will be thrown. <em>Only integers are recommended for this method</em> however this will not throw an error if fractions are used. However, <em>it is recommended that fractions are initialized with strings.</em> See <a href="#init_string">here</a>.
 
 ##### 2. Initiating with string
-```
+```javascript
 var ba = new BigArith("67876445565433556789877654567987457008645656765434567889086654234542126677.8977566766788767");
 var bb = new BigArith(""); //this initialize variable bb to a BigArith object of value "0"
 var bc = new BigArith("-123"); //this initialize variable bb to a BigArith object of value "-123"
@@ -40,7 +40,7 @@ var bd = new BigArith("+123"); //this initialize variable bd to a BigArith objec
 <code>BigArith</code> also accepts strings of digits. This can be of any length, can be negative, positive, integer, or fracton. <em>If fractions are to be used, it is recommended they are passed in as strings.</em> An empty string initialize to <code>"0"</code>
 
 ##### 3. Initiating with words
-```
+```javascript
 var ba = new BigArith("negative five million six hundred and thirty seven thousand eight hundred and six five point three two");
 var bb = new BigArith("positive three"); //this initialize variable bb to a BigArith object of value "3"
 var bc = new BigArith("three"); //this initialize variable bc to a BigArith object of value "3"
@@ -48,7 +48,7 @@ var bd = new BigArith("point two three seven"); //this initialize variable bd to
 ```
 <code>BigArith</code> accepts english words of up to <code>&#177;1x10<sup>124</sup>-0.0000{insert 195 more zeroes}01</code> (i.e. <code>nine hundred and ninety nine quadragintillion point nine nine nine nine nine {insert 195 more "nine"'s}</code>). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word or this can be outrightly omitted. The fraction part <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
 
-```
+```javascript
 var ba = new BigArith("three point one two"); // This evaluate to '3.12"
 var bb = new BigArith("three point twelve"); // This evaluate to NaN
 ```
