@@ -1,5 +1,5 @@
 ## Welcome to BigArith
-[![Gitter](https://badges.gitter.im/osofem/BigArith-js.svg)](https://gitter.im/BigArith-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that handles very large numbers (be it integers or fractions) to precision.
 
@@ -53,7 +53,7 @@ var ba = new BigArith("three point one two"); // This evaluate to '3.12"
 var bb = new BigArith("three point twelve"); // This evaluate to NaN
 ```
 ##### 4. Initiating with a constant
-```
+```javascript
 var ba = new BigArith("PI"); // this evaluate to "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196"
 ```
 <code>BigArith</code> has a list of inbuilt constants which can be ble used the initialization. Check <a href="#list_constant">here</a> for the updated list.
