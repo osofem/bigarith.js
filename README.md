@@ -12,7 +12,7 @@ Hmm, will think up some reasons shortly
 ### How do I include BigArith in my code?
 There are two ways to include <code>BigArith</code> in your code and you can choose the one that suits your need.
 1. Include the library from the rawgit.com CDN.<br>
-  You can do that by adding <code>&lt; script src="https://cdn.rawgit.com/osofem/BigArith.js/ &lt;version tag&gt; /BigArith.js" &gt; &lt;/script&gt; </code> to your code. Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
+  You can do that by adding <code>&lt;script src="https://cdn.rawgit.com/osofem/BigArith.js/&lt;version tag&gt;/BigArith.js"&gt; &lt;/script&gt; </code> to your code. Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
 2. Download the source from GitHub.com<br>
 You can also download <code>BigArith</code> from <code>https://github.com/osofem/BigArith.js/releases/</code> (the latest version is always recommended).
 
@@ -46,7 +46,7 @@ var bb = new BigArith("positive three"); //this initialize variable bb to a BigA
 var bc = new BigArith("three"); //this initialize variable bc to a BigArith object of value "3"
 var bd = new BigArith("point two three seven"); //this initialize variable bd to a BigArith object of value "0.237"
 ```
-<code>BigArith</code> accepts english words of up to <code>&#177;1x10<sup>124</sup>-0.0000{insert 195 more zeroes}01</code> (i.e. <code>nine hundred and ninety nine quadragintillion point nine nine nine nine nine {insert 195 more "nine"'s}</code>). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word or this can be outrightly omitted. The fraction part <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
+<code>BigArith</code> accepts english words of up to <code>&#177;1x10<sup>124</sup> - 0.0000{insert 195 more zeroes}01</code> (i.e. <code>nine hundred and ninety nine quadragintillion point nine nine nine nine nine {insert 195 more "nine"'s}</code>). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word or this can be outrightly omitted. The fraction part <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
 
 ```javascript
 var ba = new BigArith("three point one two"); // This evaluate to '3.12"
