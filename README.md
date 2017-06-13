@@ -1,4 +1,4 @@
-## Welcome to BigArith
+## Welcome to BigArith.js
 [![Join the chat at https://gitter.im/BigArith-js/Lobby](https://badges.gitter.im/BigArith-js/Lobby.svg)](https://gitter.im/BigArith-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that handles very large numbers (be it integers or fractions) to precision.
@@ -12,7 +12,7 @@ Hmm, will think up some reasons shortly
 ### How do I include BigArith in my code?
 There are two ways to include <code>BigArith</code> in your code and you can choose the one that suits your need.
 1. Include the library from the rawgit.com CDN.<br>
-  You can do that by adding <code>&lt;script src="https://cdn.rawgit.com/osofem/BigArith.js/<version tag>/BigArith.js" &gt; &lt;/script&gt;</code> to your code. Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
+  You can do that by adding <code>&lt; script src="https://cdn.rawgit.com/osofem/BigArith.js/ &lt;version tag&gt; /BigArith.js" &gt; &lt;/script&gt; </code> to your code. Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
 2. Download the source from GitHub.com<br>
 You can also download <code>BigArith</code> from <code>https://github.com/osofem/BigArith.js/releases/</code> (the latest version is always recommended).
 
