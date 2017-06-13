@@ -1,11 +1,19 @@
 ## Welcome to BigArith
+[![Gitter](https://badges.gitter.im/osofem/BigArith.svg)](https://gitter.im/osofem/BigArith?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-##Introduction
-The name <code>BigArith</code> is short for Big Arithmetic i.e. a class that handles very large numbers (be it integers or fractions) to precision.
-You can use the [editor on GitHub](https://github.com/osofem/BigArith.js/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that handles very large numbers (be it integers or fractions) to precision.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+### Where can I use this library?
+<code>BigArith</code> uses the newly introduced ECMAScript 2015 <code>class</code> keyword so the minimum version of browsers will be <code>Google Chrome 42.0</code>, <code>Mozilla Firefox 45</code>, <code>Microsoft Edge 13</code>, <code>Opera 43.0</code>, <code>Safari 9.0</code> and no support for <code>Microsoft Internet Explorer</code>.
 
+### Why the use of <code>class</code> instead of the widely supported <code>Function.prototype</code>?
+Hmm, will think up some reasons shortly
+
+### How do I include <code>BigArith</code> in my code?
+There are two ways to include <code>BigArith</code> in your code and you can choose the one that suits your need.
+1. Include the library from the rawgit CDN.
+  You can do that by adding <code>&lt;script src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0/BigArith.js"&gt;&lt;/script&gt;</code> to your code (but remember to change the <code>v0.0</code> part to the version you are targetting, the latest version is always recommended). Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
+2. Download the source from GitHub.com
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
