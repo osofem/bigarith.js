@@ -10,37 +10,14 @@ Hmm, will think up some reasons shortly
 
 ### How do I include <code>BigArith</code> in my code?
 There are two ways to include <code>BigArith</code> in your code and you can choose the one that suits your need.
-1. Include the library from the rawgit CDN.
-  You can do that by adding <code>&lt;script src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0/BigArith.js"&gt;&lt;/script&gt;</code> to your code (but remember to change the <code>v0.0</code> part to the version you are targetting, the latest version is always recommended). Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
-2. Download the source from GitHub.com
-### Markdown
+1. Include the library from the rawgit CDN.<br>
+  You can do that by adding <code><script src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0/BigArith.js"></script&gt;</code> to your code (but remember to change the <code>v0.0</code> part to the version you are targetting, the latest version is always recommended). Check https://github.com/osofem/BigArith.js/releases/ for the latest version.
+2. Download the source from GitHub.com<br>
+You can also download <code>BigArith</code> from <code>https://github.com/osofem/BigArith.js/releases/</code> (the latest version is always recommended).
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### How do I initialize the <code>BigArith</code> object
+The <code>BigArith</code> object can be initialized with a single line of code.
 ```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/osofem/BigArith.js/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+var ba = new BigArith();
+```
+This single line will simply initialize the variable <code>ba</code> to a <code>BigArith</code> object of value <code>"0"</code>.
