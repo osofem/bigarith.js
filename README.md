@@ -1,5 +1,5 @@
 ## Welcome to BigArith
-[![Gitter](https://badges.gitter.im/osofem/BigArith-js.svg)](https://gitter.im/osofem/BigArith-js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Gitter](https://badges.gitter.im/osofem/BigArith-js.svg)](https://gitter.im/BigArith-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that handles very large numbers (be it integers or fractions) to precision.
 
