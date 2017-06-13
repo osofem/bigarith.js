@@ -22,3 +22,19 @@ The <code>BigArith</code> object can be initialized with a single line of code.
 var ba = new BigArith();
 ```
 This single line will simply initialize the variable <code>ba</code> to a <code>BigArith</code> object of value <code>"0"</code>.
+
+Other ways to initialize the library are
+##### 1. Initiating with number
+```
+var ba = new BigArith(12345);
+```
+The number must be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> value else an error will be thrown. <em>Only integers are recommended for this method</em> however this will not throw an error if fractions are used. However, <em>it is recommended that fractions are initialized with strings.</em> See <a href="#init_string">here</a>.
+
+##### 2. Initiating with string
+```
+var ba = new BigArith("67876445565433556789877654567987457008645656765434567889086654234542126677.8977566766788767");
+var bb = new BigArith(""); //this initialize variable bb to a BigArith object of value "0"
+var bc = new BigArith("-123"); //this initialize variable bb to a BigArith object of value "-123"
+var bd = new BigArith("+123"); //this initialize variable bd to a BigArith object of value "123"
+```
+<code>BigArith</code> also accepts strings of digits. This can be of any length, can be negative, positive, integer, or fracton. <em>If fractions are to be used, it is recommended they are passed in as strings.</em> An empty string initialize to <code>"0"</code>
