@@ -1,11 +1,15 @@
-# abs() method
-The <code>abs()</code> method returns the absolute value of a number. There is a method function and a static method function.
+# abs()
+<code>abs()</code> returns the absolute value of a number. There is a method function and a static method function.
 
 #### Syntax
+##### method function
 ```javascript
-ba.abs(); //method
-//or
-BigArith.abs(n); //static method
+ba.abs();
+```
+
+##### static method function
+```javascript
+BigArith.abs(n);
 ```
 
 ### Parameters
@@ -20,31 +24,31 @@ The number to find the absolute value of. It could be a string of digits, a numb
 A BigArith object with it value set to the absolute value of the object abs() is called on.
 
 ### Description
-There are two functions which could be used the *method function*, and the *static method function*. The method takes no parameter and returns the absolute value of the BigArith object it is called on.
-The static method however takes a paramter n and is always used as <code>BigArith.abs()</code>. 
+There are two functions which could be used the *method function*, and the *static method function*. The method function takes no parameter and returns the absolute value of the BigArith object it is called on.
+The static method function takes a paramter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. 
 
 ### Examples
-#### Using method 
+#### Using method function
 
 ```javascript
 var ba = new BigArith("-17031986");
-ba.abs(); //BigArith object with value "17031986"
+ba = ba.abs(); //BigArith object with value "17031986"
 
 ba = new BigArith("+17031986");
-ba.abs(); //BigArith object with value "17031986"
+ba = ba.abs(); //BigArith object with value "17031986"
 
 ba = new BigArith(null);
-ba.abs(); //BigArith object with value "0" 
+ba = ba.abs(); //BigArith object with value "0" 
 ```
 
-#### Using the static method
+#### Using the static method function
 
 ```javascript
-BigArith.abs("-17031986"); //BigArith object with value "17031986"
-BigArith.abs("+17031986"); //BigArith object with value "17031986"
-BigArith.abs(null); //BigArith object with value "0"
-BigArith.abs(); //BigArith object with value "0"
-BigArith.abs(NaN); //NaN
+var ba = BigArith.abs("-17031986"); //BigArith object with value "17031986"
+ba = BigArith.abs("+17031986"); //BigArith object with value "17031986"
+ba = BigArith.abs(null); //BigArith object with value "0"
+ba = BigArith.abs(); //BigArith object with value "0"
+ba = BigArith.abs(NaN); //NaN
 ```
 
 More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
