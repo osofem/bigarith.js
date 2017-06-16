@@ -5,10 +5,7 @@ The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that h
 In this article <code>BigArith.js</code> refers to the library and <code>BigArith</code> refers to the object.
 
 ### Where can I use this library?
-<code>BigArith.js</code> uses the newly introduced ECMAScript 2015 <code>class</code> keyword so the minimum version of browsers will be <code>Google Chrome 42.0</code>, <code>Mozilla Firefox 45</code>, <code>Microsoft Edge 13</code>, <code>Opera 43.0</code>, <code>Safari 9.0</code> and no support for <code>Microsoft Internet Explorer</code>.
-
-### Why the use of class instead of the widely supported Function.prototype?
-Hmm, will think up some reasons shortly
+<code>BigArith.js</code> has been successfully tested on all modern browser. ===TODO===Updated supported browsers=== <!--<code>Google Chrome 42.0</code>, <code>Mozilla Firefox 45</code>, <code>Microsoft Edge 13</code>, <code>Opera 43.0</code>, <code>Safari 9.0</code> and no support for <code>Microsoft Internet Explorer</code>.-->
 
 ### How do I include BigArith.js in my code?
 There are two ways to include <code>BigArith.js</code> in your code.
@@ -31,8 +28,8 @@ This single line will simply initialize the variable <code>ba</code> to a <code>
 ```javascript
 var ba = new BigArith(12345); //initialize ba to a BigArith object of value "12345"
 ```
-The number must be between the <code>Number.MIN_SAFE_INTEGER</code> (-9007199254740991) and <code>Number.MAX_SAFE_INTEGER</code> (9007199254740991) limits else an error will be thrown. <em>Please note that only integers are recommended for this method</em> because of the floating point precision _problem_ in JavaScript (with is one of the problem BigArith.js aim at solving). 
-Doing this <code>var ba = new BigArith(0.45);</code> might still be _"safe"_ but some people can be tempted to do this <code>var ba = new BigArith(0.1*0.2);</code>. As it is known <code>0.1*0.2</code> will not give <code>0.02</code> in JavaScript but rather <code>0.020000000000000004</code>. So it is better to avoid initializing fractional numbers this way all together.
+The number must be between the <code>Number.MIN_SAFE_INTEGER</code> (-9007199254740991) and <code>Number.MAX_SAFE_INTEGER</code> (9007199254740991) limits else a <code>RangeError</code> will be thrown. <em>Please note that only integers are recommended for this method</em> because of the floating point precision _problem_ in JavaScript (with is one of the problems BigArith.js aim at solving). 
+Doing this <code>var ba = new BigArith(0.45);</code> might still be considered _"safe"_ but some people can be tempted to do this <code>var ba = new BigArith(0.1*0.2);</code>. As it is known <code>0.1*0.2</code> will not give <code>0.02</code> in JavaScript but rather <code>0.020000000000000004</code>. Therefore, it is better to avoid initializing fractional numbers this way all together.
 
 > It is recommended fractional numbers are initialized with strings.
 > See [here](#init_string) for the howto details.
@@ -50,13 +47,14 @@ Strings that contains characters other than: digits <code>0</code> to <code>9</c
 
 ##### 4. Initiating with words
 ```javascript
-var ba = new BigArith("negative five million six hundred and thirty seven thousand eight hundred and six five point three two"); //initialize ba to a BigArith object of value "-5637805.32"
+var ba = new BigArith("negative five million six hundred and thirty seven thousand eight hundred and sixty five point three two"); //initialize ba to a BigArith object of value "-5637865.32"
 var bb = new BigArith("positive three"); //initialize bb to a BigArith object of value "3"
 var bc = new BigArith("three"); //initialize bc to a BigArith object of value "3"
 var bd = new BigArith("point two three seven"); //initialize bd to a BigArith object of value "0.237"
 ```
-<code>BigArith.js</code> accepts english words of up to &#177;1x10<sup>124</sup>-0.0000{insert 195 more zeroes}01 (i.e. nine hundred and ninety nine quadragintillion point nine nine nine nine nine {insert 195 more "nine"'s}). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word but this can be outrightly omitted. The mantissa part (part after the decimal point) <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
-[Short Scale](https://en.wikipedia.org/wiki/Long_and_short_scales) naming system should be used.
+<code>BigArith.js</code> accepts english words of up to &#177;1x10<sup>1,005</sup>-0.0000{insert 195 more zeroes}01 (i.e. nine hundred and ninety nine trecentretrigintillion point nine nine nine nine nine {insert 195 more "nine"'s}). That is 1,005 length of characteristic and 200 length of mantissa (yea, I know, that is awesome :stuck_out_tongue_winking_eye:). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word but this can be outrightly omitted. The mantissa part (part after the decimal point) <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
+
+This is case insensitive and only [Short Scale](#short_scales) naming system is supported.
 
 ```javascript
 var ba = new BigArith("three point one two"); // This evaluate to "3.12"
@@ -68,17 +66,54 @@ var ba = new BigArith("PI"); // this evaluate to "3.1415926535897932384626433832
 ```
 <code>BigArith.js</code> has a list of inbuilt constants which can be used for initialization. Check [here](#list_constant) for the updated list.
 
+##### 6. Initiating with another BigArith object
+```javascript
+var ba = new BigArith("3"); //initialize ba to a BigArith object of value "3"
+var bb = new BigArith(ba); //initialize bb to the value of ba (i.e. "3")
+```
+
 ### Working with a BigArith object
 
-### <span id="list_constant">List of constants</span>
-Here is a updated list of constants predefined in <code>BigArith.js</code>
-Constant | Description | Value
------------- | ------------ | -------------
-PI | pi | 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196
-LN2 | ln(2) | 0.6931471805599453
-LN10 | ln(10) | 2.302585092994046
-LOG2E | log<sub>e</sub><sup>2</sup> | 1.4426950408889634
-LOG10E | log<sub>e</sub><sup>10</sup> | 0.4342944819032518
-SQRT1_2 | &#8730;&#0189; | 0.70710678118654752440084436210484903928483593768847403658833986899536623923105351942519376716382078636750692311545614851246241802792536860632206074854996791570661133296375279637789997525057639103028574
-SQRT2 | &#8730;2 | 1.41421356237309504880168872420969807856967187537694807317667973799073247846210703885038753432764157273501384623091229702492483605585073721264412149709993583141322266592750559275579995050115278206057147
-E | e | 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319525101901
+#### <span id="#valueOf">valueOf() method</span>
+The <code>valueOf()</code> method returns the value of the BigArith object as a strings of digits.
+```javascript
+var ba = new BigArith("negative five million six hundred and thirty seven thousand eight hundred and sixty five point three two");
+console.log(ba.valueOf());//this outputs "-5637865.32" to the console
+```
+
+#### toWords() method
+The <code>toWords</code> method returns the value of the BigArith object in English words using the [Short Scale](#short_scales) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1005 or the length of the mantissa part (part after the decimal point) is greater than 200, a <code>RangeError</code> is thrown.
+```javascript
+var ba = new BigArith(1e3);
+console.log(ba.toWords());//this outputs "one thousand" to the console
+```
+<hr>
+See also:
+1. [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html),
+2. [add()](https://osofem.github.io/BigArith.js/documentation/add.html),
+3. [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html),
+4. [compare()](https://osofem.github.io/BigArith.js/documentation/compare.html),
+5. [compareAbs()](https://osofem.github.io/BigArith.js/documentation/compareabs.html),
+6. [divide()](https://osofem.github.io/BigArith.js/documentation/divide.html),
+7. [floor()](https://osofem.github.io/BigArith.js/documentation/floor.html),
+8. [isEven()](https://osofem.github.io/BigArith.js/documentation/iseven.html),
+9. [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html),
+10. [isOdd()](https://osofem.github.io/BigArith.js/documentation/isodd.html),
+11. [isPositive()](https://osofem.github.io/BigArith.js/documentation/ispositive.html),
+12. [max()](https://osofem.github.io/BigArith.js/documentation/max.html),
+13. [min()](https://osofem.github.io/BigArith.js/documentation/min.html)
+14. [modulus()](https://osofem.github.io/BigArith.js/documentation/modulus.html)
+15. [multiply()](https://osofem.github.io/BigArith.js/documentation/multiply.html),
+16. [random()](https://osofem.github.io/BigArith.js/documentation/random.html),
+17. [randomInt()](https://osofem.github.io/BigArith.js/documentation/randomint.html),
+18. [round()](https://osofem.github.io/BigArith.js/documentation/round.html),
+19. [square()](https://osofem.github.io/BigArith.js/documentation/square.html),
+20. [squareRoot()](https://osofem.github.io/BigArith.js/documentation/squareroot.html),
+21. [subtract()](https://osofem.github.io/BigArith.js/documentation/subtract.html),
+22. [toFixed()](https://osofem.github.io/BigArith.js/documentation/tofixed.html),
+23. [toWords()](https://osofem.github.io/BigArith.js/documentation/towords.html),
+24. [valueOf()](https://osofem.github.io/BigArith.js/documentation/valueof.html)
+</ol>
+
+
+
