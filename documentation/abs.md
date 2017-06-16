@@ -20,7 +20,7 @@ The number to find the absolute value of. It could be a string of digits, a numb
 A BigArith object with it value set to the absolute value of the object abs() is called on.
 
 ### Description
-There are two functions which could be used the method, and the static method. The method takes no parameter and returns the absolute value of the BigArith object it is called on.
+There are two functions which could be used the *method function*, and the *static method function*. The method takes no parameter and returns the absolute value of the BigArith object it is called on.
 The static method however takes a paramter n and is always used as <code>BigArith.abs()</code>. 
 
 ### Examples
