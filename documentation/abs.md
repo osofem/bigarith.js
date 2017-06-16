@@ -2,7 +2,7 @@
 The <code>abs()</code> method returns the absolute value of a number. There is a method function and a static method function.
 
 #### Syntax
-````javascript
+```javascript
 ba.abs(); //method
 //or
 BigArith.abs(n); //static method
