@@ -87,11 +87,11 @@ The <code>toWords</code> method returns the value of the BigArith object in Engl
 var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
 ```
-<hr>
+
 See also:
-1. [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html),
-2. [add()](https://osofem.github.io/BigArith.js/documentation/add.html),
-3. [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html),
+1. [abs](https://osofem.github.io/BigArith.js/documentation/abs.html)
+2. [add](https://osofem.github.io/BigArith.js/documentation/add.html)
+3. [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html)
 4. [compare()](https://osofem.github.io/BigArith.js/documentation/compare.html),
 5. [compareAbs()](https://osofem.github.io/BigArith.js/documentation/compareabs.html),
 6. [divide()](https://osofem.github.io/BigArith.js/documentation/divide.html),
@@ -113,7 +113,6 @@ See also:
 22. [toFixed()](https://osofem.github.io/BigArith.js/documentation/tofixed.html),
 23. [toWords()](https://osofem.github.io/BigArith.js/documentation/towords.html),
 24. [valueOf()](https://osofem.github.io/BigArith.js/documentation/valueof.html)
-</ol>
 
 
 
