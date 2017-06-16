@@ -1,5 +1,6 @@
 ## Welcome to BigArith.js
 [![Join the chat at https://gitter.im/BigArith-js/Lobby](https://badges.gitter.im/BigArith-js/Lobby.svg)](https://gitter.im/BigArith-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[ChangaLog](CHANGELOG.hmtl)
 
 The name <code>BigArith</code> is short for Big Arithmetic i.e. a library that handles very large numbers (be it integers or fractions) to precision.
 In this article <code>BigArith.js</code> refers to the library and <code>BigArith</code> refers to the object.
