@@ -22,15 +22,15 @@ The number to ceil. This could be a string of digits, a number, or a BigArith ob
 
 ### Return value
 #### method function
-A BigArith object with it value equals to the <code>ceil</code>'ed value of the BigArith object it is called on.
+A BigArith object with its value equals to the <code>ceil</code>ed value of the BigArith object it is called on.
 
 #### static method function
-A BigArith object with it value equals to the <code>ceil</code>'ed value of n.
+A BigArith object with its value equals to the <code>ceil</code>'ed value of n.
 
 ##### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes no parameter and returns a BigArith whose value equals the smallest integer greater than or equal to that of the BigArith object it is called on.
 
-The static method function takes one parameters (n) and is always used as <code>BigArith.ceil()</code>. It returns the smallest integer greater than or equal to n. 
+The static method function takes one parameter (n) and is always used as <code>BigArith.ceil()</code>. It returns the smallest integer greater than or equal to n. 
 
 If the parameters are numbers, it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
