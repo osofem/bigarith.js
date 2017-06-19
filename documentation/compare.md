@@ -25,11 +25,11 @@ The number to compare to. This could be a string of digits, a number, or a BigAr
 The number to compare with. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
-#### method function
--1 if value of BigArith object is less to n, 0 if value of BigArith object is equal to n, 1 if value of BigArith object is greater than n
+#### method function - {integer}
+<code>-1</code> if value of BigArith object is less to n, <code>0</code> if value of BigArith object is equal to n, <code>1</code> if value of BigArith object is greater than n
 
-#### static method function
--1 if a is less to b, 0 if a is equal to b, 1 if a is greater than b.
+#### static method function - {integer}
+<code>-1</code> if a is less to b, <code>0</code> if a is equal to b, <code>1</code> if a is greater than b.
 
 ##### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter (n) and returns an integer indicating whether value of object is lesser, equals or greater than n.
@@ -38,9 +38,9 @@ The static method function takes two parameters (a, b) and is always used as <co
 
 If the parameters are numbers, it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
-* -1 : BigArith object value < n or a < b.
-* 0 : BigArith object value == n or a == b.
-* 1 : BigArith object value > n or a > b.
+* <code>-1</code> : BigArith object value < n or a < b.
+* <code>0</code> : BigArith object value == n or a == b.
+* <code>1</code> : BigArith object value > n or a > b.
 
 ### Examples
 #### Using method function

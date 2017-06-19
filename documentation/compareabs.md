@@ -25,11 +25,11 @@ The number to compare to. This could be a string of digits, a number, or a BigAr
 The number to compare with. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
-#### method function
--1 if absolute value of BigArith object is less to absolute value of n, 0 if absolute value of BigArith object is equal to absolute value of n, 1 if absolute value of BigArith object is greater than absolute value of n
+#### method function - {integer}
+<code>-1</code> if absolute value of BigArith object is less to absolute value of n, <code>0</code> if absolute value of BigArith object is equal to absolute value of n, <code>1</code> if absolute value of BigArith object is greater than absolute value of n
 
-#### static method function
--1 if absolute value of a is less to absolute value of b, 0 if absolute value of a is equal to absolute value of b, 1 if absolute value of a is greater than absolute value of b.
+#### static method function - {integer}
+<code>-1</code> if absolute value of a is less to absolute value of b, <code>0</code> if absolute value of a is equal to absolute value of b, <code>1</code> if absolute value of a is greater than absolute value of b.
 
 ##### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter (n) and returns an integer indicating whether absolute value of object is lesser, equals or greater than absolute value of n.
@@ -38,9 +38,9 @@ The static method function takes two parameters (a, b) and is always used as <co
 
 If the parameters are numbers, it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
-* -1 : BigArith object absolute value < n absolute value or a absolute value < b absolute value.
-* 0 : BigArith object absolute value == n absolute value or a absolute value == b absolute value.
-* 1 : BigArith object absolute value > n absolute value or a absolute value > b absolute value.
+* <code>-1</code> : BigArith object absolute value < n absolute value or a absolute value < b absolute value.
+* <code>0</code> : BigArith object absolute value == n absolute value or a absolute value == b absolute value.
+* <code>1</code> : BigArith object absolute value > n absolute value or a absolute value > b absolute value.
 
 ### Examples
 #### Using method function

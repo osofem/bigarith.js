@@ -25,10 +25,10 @@ The first summand: this could be a string of digits, a number, or a BigArith obj
 The second summand: this could be a string of digits, a number, or a BigArith object.
 
 ### Return value
-#### method function
+#### method function - {BigArith}
 A BigArith object with its value equals to the sum of n and the value of the BigArith object it is called on.
 
-#### static method function
+#### static method function - {BigArith}
 A BigArith object with its value equals to the sum of a and b.
 
 ##### Description

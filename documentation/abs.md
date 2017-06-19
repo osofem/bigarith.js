@@ -21,10 +21,10 @@ BigArith.abs(n);
 The number to find the absolute value of. It could be a string of digits, a number, or a BigArith object
 	
 ### Return value
-#### method function
+#### method function - {BigArith}
 A BigArith object with its value equals to absolute value of the BigArith object it is called on.
 
-##### static method function
+##### static method function - {BigArith}
 A BigArith object with its value equals to absolute value of n. 
 
 ### Description
