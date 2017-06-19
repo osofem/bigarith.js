@@ -10,7 +10,7 @@ In this article <code>BigArith.js</code> refers to the library and <code>BigArit
 ### How do I include BigArith.js in my code?
 There are two ways to include <code>BigArith.js</code> in your code.
 1. Include the library from the rawgit.com CDN.<br>
-You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/ &lt;version tag&gt;/BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version.
+You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/&lt;version tag&gt;/BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version.
 2. Download the source from GitHub.com<br>
 You can also download BigArith.js from [releases](https://github.com/osofem/BigArith.js/releases/) on github.com (the latest version is always recommended).
 
