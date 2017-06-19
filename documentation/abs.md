@@ -13,19 +13,23 @@ BigArith.abs(n);
 ```
 
 ### Parameters
-#### method
+#### method function
 *none*
 
-#### static method
+#### static method function
 ##### n - {string|number|BigArith}
 The number to find the absolute value of. It could be a string of digits, a number, or a BigArith object
 	
 ### Return value
-A BigArith object of value set to absolute value of n (if the static method function is used) or this.value (if method function is used). 
+#### method function
+A BigArith object with it value equals to absolute value of the BigArith object it is called on.
+
+##### static method function
+A BigArith object with it value equals to absolute value of n. 
 
 ### Description
-There are two functions which could be used the *method function*, and the *static method function*. The method function takes no parameter and returns the absolute value of the BigArith object it is called on.
-The static method function takes a parameter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. If the parameter is a number, if should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code>.
+There are two functions which could be used, the *method function*, and the *static method function*. The method function takes no parameter and returns the absolute value of the BigArith object it is called on.
+The static method function takes a parameter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. If the parameter is a number, it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 ### Examples
 #### Using method function
