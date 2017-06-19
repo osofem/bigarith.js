@@ -21,11 +21,11 @@ BigArith.abs(n);
 The number to find the absolute value of. It could be a string of digits, a number, or a BigArith object
 	
 ### Return value
-A BigArith object with it value set to the absolute value of the object abs() is called on.
+A BigArith object of value set to absolute value of n (if the static method function is used) or this.value (if method function is used). 
 
 ### Description
 There are two functions which could be used the *method function*, and the *static method function*. The method function takes no parameter and returns the absolute value of the BigArith object it is called on.
-The static method function takes a paramter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. 
+The static method function takes a parameter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. If the parameter is a number, if should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code>.
 
 ### Examples
 #### Using method function
