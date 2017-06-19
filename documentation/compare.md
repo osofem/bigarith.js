@@ -63,6 +63,9 @@ console.log(ba.compare(null)); //logs 0
 
 ba = new BigArith("8888888888888888888888888888888888888888888888888888888");
 console.log(ba.compare("99999999999999999999999999999999999999999999999999999999999999")); //logs -1
+
+ba = new BigArith("23453434");
+console.log(ba.compare(NaN)); //logs NaN
 ```
 
 #### Using the static method function
@@ -72,6 +75,7 @@ console.log(BigArith.compare("-17031986", "24011985")); //logs -1
 console.log(BigArith.compare("+17031986", "24011985")); //logs -1
 console.log(BigArith.compare("8888888888888888888888888888888888888888888888888888888", "99999999999999999999999999999999999999999999999999999999999999")); //logs -1
 console.log(BigArith.compare(null, "")); //logs 0
+console.log(BigArith.compare("23453434", NaN)); //logs NaN
 ```
 
 More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
