@@ -15,7 +15,7 @@ BigArith.add(a, b);
 ### Parameters
 #### method function
 ##### n - {string|number|BigArith}
-A summand with the value of the BigArith object <code>add()</code> is called on as the second summand. This could be a string of digits, a number, or another BigArith object.
+A summand with the value of the BigArith object <code>add()</code> is called on as the second summand. This could be a string of digits, a number, or a BigArith object.
 
 #### static method function
 ##### a - {string|number|BigArith}
@@ -26,7 +26,7 @@ The second summand. This could be a string of digits, a number, or a BigArith ob
 
 ### Return value
 #### method function
-A BigArith object with it value equals to the sum of n and the value of the object it is called on.
+A BigArith object with it value equals to the sum of n and the value of the BigArith object it is called on.
 
 #### static method function
 A BigArith object with it value equals to the sum of a and b.
