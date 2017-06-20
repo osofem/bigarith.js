@@ -238,12 +238,66 @@ BigArith.prototype.isOdd=function(){
 	return false;
 }
 
-/** Returns square of this.value
+/** 
+*	Returns square of this.value
 *	function square
 *	@return {BigArith} - product of this.value and this.value
 */
 BigArith.prototype.square=function(){
-	return new BigArith(this.value).multiply(this.value);
+	return BigArith.multiply(this.value, this.value);
+}
+
+/** [NEEDS OPTIMIZATION - n tends to gets very large within few calculations and this slows down speed. Takes 9105ms to calculate sqrt 2 to 200 decimal place]
+*	Returns square root of this.value
+*	function squareRoot
+*	@return {BigArith} - root of this.value
+*/
+BigArith.prototype.squareRoot=function(){
+	if(isNaN(this.value) || new BigArith(this.value).isNegative()) return NaN;
+	var n = this.value;
+	
+	var ps = BigArith.perfectSq(n); //Find the perfect square just less than or equal to n
+	var result = ps;
+	var quotient = ps;
+	n = BigArith.subtract(n, BigArith.multiply(ps, ps));
+	if(BigArith.compare(n,0) == 0) return new BigArith(result);
+	
+	//If we got here that means we have reminders
+	n = BigArith.multiply(n, 100);
+	result +=  ".";
+	for(var count = 0; count <= 201; count++){
+		// take quotient double it and multiply by 10
+		var j = BigArith.multiply(quotient, 20); 
+		
+		//Find a number bewteen j+1 and j+9 such that (j+i) * i will just be less than n
+		var i = 1;
+		for(; i <= 9; i++){
+			var g = BigArith.multiply(BigArith.add(j,i), i); //(j+i)*i
+			if(BigArith.compare(g, n) >= 0) break;
+		} i--; //if ((j+i) * i) is not less than n, i will have gotten to 10 
+		n =  BigArith.multiply(BigArith.subtract(n, BigArith.multiply(BigArith.add(j,i), i)),100);//(n-(j+i)*i)*100;
+		result += i;
+		quotient += i.toString();
+	}
+	return new BigArith(new BigArith(result).toFixed(200));
+}
+
+/** [NEEDS OPTIMIZATION - incase n is very large]
+*	Returns the perfect square just below or equals to n
+* 	function perfectSq
+*	@param - {string|number|BigArth} n The number to find the perfect square before
+*	@return {string} - the perfect square just less than n or n if it is a perfect square
+*/
+BigArith.perfectSq=function(n){ 
+	var n = new BigArith(n).toString();
+	//start counting from 1 to we get to i*i<=n
+	//This is not the best idea if n is very large
+	var i = new BigArith(1);
+	while(true){
+		if(BigArith.compare(new BigArith(i).square(), n) >= 0) break; 
+		i = BigArith.add(i, 1);
+	} 
+	return (BigArith.compare(BigArith.multiply(i, i), n) == 0)?i.toString():i.subtract(1).toString(); 
 }
 
 /**	
@@ -556,24 +610,6 @@ BigArith.toFixed=function(n, d){
 	}
 	else n=n+((BigArith.compare(e, "0") == 1)?("."+"0".repeat(e)):"");
 	return n; 
-}
-
-//TODO=================
-BigArith.prototype.isPrime=function(){
-	return BigArith.isPrime(this.value);
-}
-
-//TODO=================
-BigArith.isPrime=function(n){
-	var n = new BigArith(n);
-	if(isNaN(n)) return NaN;
-	if(BigArith.compare(n,2) == -1 || !n.isInteger()) return false;
-	if(BigArith.compare(BigArith.modulus(n,2), 0) == 0 && BigArith.compare(n, 2) == 1) return false;
-	var half = BigArith.add(BigArith.ceil(BigArith.multiply(BigArith.subtract(n, 1), "0.5")), 1);
-	for(var i = 3; BigArith.compare(i, half) <= 0; i=BigArith.add(i,2)){
-		if(BigArith.compare(BigArith.modulus(n,i), 0) == 0) return false;
-	}
-	return true;
 }
 
 /**	

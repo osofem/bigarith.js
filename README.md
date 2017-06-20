@@ -158,7 +158,7 @@ var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
 ```
 
-See also:
+See also with full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation):
 1. [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html)
 2. [add()](https://osofem.github.io/BigArith.js/documentation/add.html)
 3. [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html)
@@ -187,5 +187,3 @@ See also:
 26. [truncate()](https://osofem.github.io/BigArith.js/documentation/truuncate.html)
 27. [isPrime()](https://osofem.github.io/BigArith.js/documentation/isprime.html)
 28. [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
-
-Get full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)

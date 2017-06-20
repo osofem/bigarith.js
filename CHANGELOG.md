@@ -46,8 +46,4 @@
 * Added square()
 * Added negate()
 * Added truncate()
-* Added isPrime() [unstable]
 * Added squareRoot() [unstable]
-
-* Added cubicRoot()
-* Added power()
