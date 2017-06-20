@@ -32,7 +32,7 @@ var BigArith=function(n){
 	
 	//assign this.value
 	if(n == null) this.value = "0"
-	else if(typeof n == "object" && n.name == "BigArith") this.value = n.valueOf();
+	else if(typeof n == "object" && n.name == "BigArith") this.value = n.toString();
 	else if(typeof n == "undefined" || n == "") this.value = "0";
 	else if(n == "PI") this.value = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
 	else if(n == "LN2") this.value = "0.6931471805599453";
@@ -56,7 +56,7 @@ var BigArith=function(n){
 BigArith.prototype.verify = function(n){
 	//Can be already verified BigArith object
 	if(typeof(n) == "object" && n.name == "BigArith")
-		return n.valueOf();
+		return n.toString();
 		
 	//Can be a number in form of 1000 or 1e3
 	if(typeof(n) == 'number' && n <= Number.MAX_SAFE_INTEGER && n >= Number.MIN_SAFE_INTEGER)//Number must be within the safe integer range
@@ -261,7 +261,7 @@ BigArith.prototype.abs=function(){
 *	function abs
 *	@param {string|number|BigArth} n value to find absolute of.
 *	@returns {BigArith} - Absolute value of n
-*	Dependent on isNegative(), valueOf(), negate(), isNaN() (native)
+*	Dependent on isNegative(), negate(), isNaN() (native)
 */
 BigArith.abs=function(n){
 	var n=new BigArith(n);
@@ -284,11 +284,11 @@ BigArith.prototype.negate=function(){
 *	function negate
 *	@param {string|number|BigArth} n number to negate
 *	@returns {BigArith} - number with the sign changed
-*	Dependent valueOf()
+*	Dependent toString()
 */
 BigArith.negate=function(n){
 	var n = new BigArith(n);
-	return (n.valueOf()[0] == "-")?new BigArith(n.valueOf().substr(1)):new BigArith("-"+n);
+	return (n.toString()[0] == "-")?new BigArith(n.toString().substr(1)):new BigArith("-"+n);
 }
 
 /**	
@@ -306,13 +306,13 @@ BigArith.prototype.truncate=function(){
 *	function truncate
 *	@param {string|number|BigArth} n number to truncate
 *	@returns {BigArith} - characteristic part of the number
-*	Dependent isNaN(), valueOf(), indexOf()
+*	Dependent isNaN(), toString(), indexOf()
 */
 BigArith.truncate=function(n){
 	var n = new BigArith(n);
 	if(isNaN(n)) return NaN;
-	if(n.valueOf().indexOf(".") == -1) return n;
-	return new BigArith(n.valueOf().split(".")[0]);
+	if(n.toString().indexOf(".") == -1) return n;
+	return new BigArith(n.toString().split(".")[0]);
 }
 
 /**	
@@ -332,7 +332,7 @@ BigArith.prototype.compare=function(n){
 *	@param {string|number|BigArth} a number to be compared. Can be negative and fractional
 *	@param {string|number|BigArth} b number to be compared. Can be negative and fractional
 *	@returns {number} - (-1 if a < b), (0 if a == b), (1 if a > b)
-*	Dependent on valueOf(), isNegative(), isPositive(), abs(), Math.max() (can't use BigArith.max, it's dependent on compare)
+*	Dependent on toString(), isNegative(), isPositive(), abs(), Math.max() (can't use BigArith.max, it's dependent on compare)
 */
 BigArith.compare=function(a, b){
 	var a = new BigArith(a);
@@ -343,12 +343,12 @@ BigArith.compare=function(a, b){
 	var dSign = false, d = "";
 	if(a.isNegative()){
 		cSign = true;
-		c = a.abs().valueOf();
-	}else c=a.valueOf();
+		c = a.abs().toString();
+	}else c=a.toString();
 	if(b.isNegative()){
 		dSign = true;
-		d = b.abs().valueOf();
-	}else d=b.valueOf();
+		d = b.abs().toString();
+	}else d=b.toString();
 	
 	c = c.split("."); d = d.split(".");
 	(typeof c[1] == 'undefined')?c[1]='0':0;
@@ -385,7 +385,7 @@ BigArith.compare=function(a, b){
 *	function compareAbs
 *	@param {string|number|BigArth} n value to be comapared with this.value
 *	@returns {string} - (-1 if abs(a) < abs(b)) - (0 if abs(a) == abs(b)) - (1 if abs(a) > abs(b))
-*	Dependent on static compare(), abs(), valueOf()
+*	Dependent on static compareAbs() 
 */
 BigArith.prototype.compareAbs=function(n){
 	return BigArith.compareAbs(this.value, n);
@@ -397,6 +397,7 @@ BigArith.prototype.compareAbs=function(n){
 *	@param {string|number|BigArth} a value to be compare
 *	@param {string|number|BigArth} b value to be compare
 *	@returns {string} - (-1 if abs(a) < abs(b)) - (0 if abs(a) == abs(b)) - (1 if abs(a) > abs(b))
+*	Dependent on static compare(), abs()
 */
 BigArith.compareAbs=function(a, b){
 	return BigArith.compare(new BigArith(a).abs(), new BigArith(b).abs());
@@ -515,14 +516,14 @@ BigArith.prototype.toFixed=function(d){
 
 //TODO==========
 BigArith.toFixed=function(n, d){
-	var e = new BigArith(d).floor().valueOf();
+	var e = new BigArith(d).floor().toString();
 	if(BigArith.compare(d, 0) == -1 || BigArith.compare(d, 200) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and 200! " + e + " supplied.");
 	var n = new BigArith(n);
 	if(!n.isInteger()){
-		n = n.valueOf().split(".");
+		n = n.toString().split(".");
 		if(BigArith.compare(e, "0") == 0){
 			if(BigArith.compare(n[1][0], "5") >= 0){
-				n[0] = BigArith.add(n[0], "1").valueOf();
+				n[0] = BigArith.add(n[0], "1").toString();
 				n[1] = "0";
 			}
 			else n[1] = "0";
@@ -531,8 +532,8 @@ BigArith.toFixed=function(n, d){
 		else if(BigArith.compare(n[1].length.toString(), e) == 1){
 			if(BigArith.compare(n[1][e], "5") >= 0){
 				var z0 = n[1].slice(0, e).length;
-				var z1 = BigArith.add(n[1].slice(0, e), "0").valueOf().length; //To check if it have leading zeros hence 0.00456 can become 0.456
-				n[1] = BigArith.add(n[1].slice(0, e), "1").valueOf();
+				var z1 = BigArith.add(n[1].slice(0, e), "0").toString().length; //To check if it have leading zeros hence 0.00456 can become 0.456
+				n[1] = BigArith.add(n[1].slice(0, e), "1").toString();
 				var z2 = n[1].length;
 				
 				if(z0 != z1){//Has leading zero
@@ -541,7 +542,7 @@ BigArith.toFixed=function(n, d){
 				
 				if(z2 > z1){
 					if(n[1][0] != "0"){
-						n[0] = BigArith.add(n[0], "1").valueOf();
+						n[0] = BigArith.add(n[0], "1").toString();
 						n[1] = "0".repeat(e);
 					}
 					else{
@@ -579,13 +580,13 @@ BigArith.isPrime=function(n){
 *	Random number between 0 and 1 (1 exclusive)
 *	function random
 *	@returns {string} - any number between 0 and 1 (1 exclusive)
-*	Dependent on Math.random(), floor(), valueOf()
+*	Dependent on Math.random(), floor(), toString(), valueOf()
 */
 BigArith.random=function(){
-	var len = new BigArith(Math.random()*201).floor().valueOf()*1;
+	var len = new BigArith(Math.random()*201).floor().valueOf();
 	var n = "0";
 	for(var i = 0; i < len; i++){
-		n += new BigArith(Math.random()*10).floor().valueOf();
+		n += new BigArith(Math.random()*10).floor().toString();
 	}
 	return (n == "0")?n:("0."+n.slice(1));
 }
@@ -596,10 +597,10 @@ BigArith.random=function(){
 *	@param {number|string|BigArith} min minimum integer that can be returned (inclusive)
 *	@param {number|string|BigArith} max maximum integer that can be returned (exclusive)
 *	@returns {string} - any integer between min and max
-*	Dependent on static random(), floor(), valueOf(), multiply(), subtract(), add()
+*	Dependent on static random(), floor(), toString(), multiply(), subtract(), add()
 */
 BigArith.randomInt=function(min, max){
-	return (new BigArith(BigArith.random()).multiply(BigArith.subtract(max, min)).add(min)).floor().valueOf();
+	return (new BigArith(BigArith.random()).multiply(BigArith.subtract(max, min)).add(min)).floor().toString();
 }
 
 /**	
@@ -694,7 +695,7 @@ BigArith.prototype.add = function(n){
 *	@param {number|string|BigArith} A summand.
 *	@param {number|string|BigArith} A summand.
 *	@returns {BigArith} - sum of a and b
-*	Dependent on valueOf(), floor(), substract(), abs(), max()
+*	Dependent on toString(), floor(), substract(), abs(), max(), valueOf()
 */
 BigArith.add = function(a, b){
 	var a = new BigArith(a);
@@ -714,12 +715,12 @@ BigArith.add = function(a, b){
 		b = b.abs();
 	}
 	
-	a = a.valueOf().split(".");
-	b = b.valueOf().split(".");
+	a = a.toString().split(".");
+	b = b.toString().split(".");
 	(typeof(a[1]) == 'undefined')?a[1]="0":0;
 	(typeof(b[1]) == 'undefined')?b[1]="0":0;
 	
-	var max = BigArith.max(a[1].length, b[1].length).valueOf()*1;
+	var max = BigArith.max(a[1].length, b[1].length).valueOf();
 	a[1] += "0".repeat(max - a[1].length);
 	b[1] += "0".repeat(max - b[1].length);
 	
@@ -732,7 +733,7 @@ BigArith.add = function(a, b){
 		var z = a.charAt(i)*1 + b.charAt(j)*1 + flag;
 		if(z>9 && (i>0 || j>0))
 		{
-			flag = new BigArith(z/10).floor().valueOf()*1;
+			flag = new BigArith(z/10).floor().valueOf();
 			result = (z-flag*10)+result;
 		}
 		else
@@ -765,16 +766,16 @@ BigArith.prototype.subtract=function(n){
 *	@param {number|string|BigArith} The Minuend
 *	@param {number|string|BigArith} The subtrahend 
 *	@returns {BigArith} - difference of a and b
-*	Dependent on add(), abs(), valueOf(), compare(), max()
+*	Dependent on add(), abs(), toString(), compare(), max(), valueOf()
 */
 BigArith.subtract=function(a, b){
 	var a = new BigArith(a);
 	var b = new BigArith(b);
-	if(isNaN(a.valueOf()) || isNaN(b.valueOf()))
+	if(isNaN(a) || isNaN(b))
 		return NaN;
 	
 	if(a.isNegative() && b.isPositive())
-		return BigArith.add(a, "-"+b.valueOf());
+		return BigArith.add(a, "-"+b.toString());
 	if(a.isPositive() && b.isNegative())
 		return BigArith.add(a, b.abs());
 	if(a.isNegative() && b.isNegative()){
@@ -784,12 +785,12 @@ BigArith.subtract=function(a, b){
 		b = temp;
 	}
 	
-	a = a.valueOf().split(".");
-	b = b.valueOf().split(".");
+	a = a.toString().split(".");
+	b = b.toString().split(".");
 	(typeof(a[1]) == 'undefined')?a[1]="0":0;
 	(typeof(b[1]) == 'undefined')?b[1]="0":0;
 	
-	var max = BigArith.max(a[1].length, b[1].length).valueOf()*1;
+	var max = BigArith.max(a[1].length, b[1].length).valueOf();
 	a[1] += "0".repeat(max - a[1].length);
 	b[1] += "0".repeat(max - b[1].length);
 	
@@ -846,7 +847,7 @@ BigArith.prototype.multiply=function(n){
 *	@param {number|string|BigArith} - the multiplicand
 *	@param {number|string|BigArith} - the multiplier
 *	@returns {BigArith} - product of a and b
-*	Dependent on valueOf(), abs(), max(), static add()
+*	Dependent on toString(), abs(), max(), static add(), valueOf()
 */
 BigArith.multiply=function(a, b){
 	var a = new BigArith(a);
@@ -866,12 +867,12 @@ BigArith.multiply=function(a, b){
 		b = b.abs();
 	}
 	
-	a = a.valueOf().split(".");
-	b = b.valueOf().split(".");
+	a = a.toString().split(".");
+	b = b.toString().split(".");
 	(typeof(a[1]) == 'undefined')?a[1]="0":0;
 	(typeof(b[1]) == 'undefined')?b[1]="0":0;
 		
-	var max = BigArith.max(a[1].length, b[1].length).valueOf()*1;
+	var max = BigArith.max(a[1].length, b[1].length).valueOf();
 	a[1] += "0".repeat(max - a[1].length);
 	b[1] += "0".repeat(max - b[1].length);
 	
@@ -884,7 +885,7 @@ BigArith.multiply=function(a, b){
 		for(var j = b.length-1; j >= 0; j--){
 			var z = a.charAt(i)*b.charAt(j)+flag;
 			if(z>9 && j>0){
-				flag = new BigArith(z/10).floor().valueOf()*1;
+				flag = new BigArith(z/10).floor().valueOf();
 				subSum = (z-flag*10)+subSum;
 			}
 			else{
@@ -899,7 +900,7 @@ BigArith.multiply=function(a, b){
 	for(var i = 0; i < results.length; i++){
 		result = BigArith.add(result, results[i]+"0".repeat(i));
 	}
-	result = result.valueOf(); //It's a BigArith
+	result = result.toString(); //It's a BigArith
 	if(max*2 > result.length) result = "0".repeat(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
 	result = result.slice(0, result.length - max*2) + "." + result.slice(result.length - max*2);
 	result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
@@ -951,8 +952,8 @@ BigArith.prototype.divide=function(n){
 *	@returns {BigArith} - The quotient to 200 decimal places when necessary.
 */
 BigArith.divide=function(a, b){
-	var a = new BigArith(a).valueOf().split(".");
-	var b = new BigArith(b).valueOf().split(".");
+	var a = new BigArith(a).toString().split(".");
+	var b = new BigArith(b).toString().split(".");
 	
 	//Note where the decimal points are and remove them
 	var numeratorIndex = 0;
@@ -1029,8 +1030,8 @@ BigArith.divWithRem=function(a, b){
 	
 	if((a.isNegative() || b.isNegative()) && !(a.isNegative() && b.isNegative())) signFlag = true;
 	
-	a = a.abs().valueOf();
-	b = b.abs().valueOf();
+	a = a.abs().toString();
+	b = b.abs().toString();
 	
 	var aLen = a.length;
 	var aSub = "";
@@ -1052,7 +1053,7 @@ BigArith.divWithRem=function(a, b){
 		aSub = hold;
 	}
 	if(aSub.length > 1 && aSub[0] == "0"){
-		hold = new BigArith(aSub).valueOf();
+		hold = new BigArith(aSub).toString();
 	}
 	result = result.replace(/^0*/g,"");
 	result = (result == "")? "0" : result;
