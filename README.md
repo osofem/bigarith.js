@@ -9,7 +9,7 @@ Depending on the environment in which BigArith.js will be used, it can be instal
 Server-side usage
 1. Install on node.js
 	```javascript
-	npm install bigarith.js</code>
+	npm install bigarith.js
 	```
 
 Client-side usage
