@@ -1,0 +1,23 @@
+{
+  "name": "bigarith.js",
+  "version": "0.0.0",
+  "description": "Do very large math!",
+  "main": "BigArith.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/osofem/BigArith.js/"
+  },
+  "keywords": [
+    "math",
+    "arithmetic",
+    "biginteger",
+    "bignumber",
+    "bigmath",
+    "arbitrary-precision"
+  ],
+  "author": "Oso Oluwafemi <osofem87@gmail.com> (https://osofem.github.io/BigArith.js/)",
+  "license": "Apache-2.0"
+}

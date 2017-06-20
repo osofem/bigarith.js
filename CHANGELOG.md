@@ -39,13 +39,15 @@
 
 ### v0.0-beta0.4
 * Restructed the library from "class" to "constructor function"
+* Added node.js support
 * Fixed some bugs
-* Added square()
-* added perfectSquare()
-	
-* Added isPrime()
-* Added squareRoot()
-* Added cubicRoot()
-* Added power()
 * Added max()
 * Added min()
+* Added square()
+* Added negate()
+* Added truncate()
+* Added isPrime() [unstable]
+* Added squareRoot() [unstable]
+
+* Added cubicRoot()
+* Added power()
