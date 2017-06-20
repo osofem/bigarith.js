@@ -7,21 +7,24 @@
 Depending on the environment in which BigArith.js will be used, it can be installed via:
 
 Server-side usage
-1. Install on node.js
+1. Installing on node.js
 	```javascript
 	npm install bigarith.js
 	```
 
 Client-side usage
-1. Include the library from the rawgit.com CDN.<br>
+1. Including the library from the rawgit.com CDN.<br>
 	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/ &lt;version tag&gt; /BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace &lt;version tag&gt; with the version targetted e.g. <code>v1.0</code>. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version (the latest version is always recommended).
-2. Download the source from GitHub.com<br>
+2. Downloading the source from GitHub.com<br>
 	You can also download BigArith.js from [releases](https://github.com/osofem/BigArith.js/releases/) on github.com (the latest version is always recommended).
 
-Please choose the method that best suit your need.
+Choose the method that best suit your need.
 
 ### Usage
 <code>BigArith.js</code> can be initialized in six ways.
+
+> In the server-side, always add the <code>var BigArith = require('bigarith.js');</code> and every other thing remains the same in both server-side and client-side.
+
 ##### 1. Initiating without any parameter or null
 ###### Server-side
 ```javascript
@@ -50,7 +53,7 @@ var ba = new BigArith(12345); //initialize ba to a BigArith object of value "123
 ```
 The number must be between the <code>Number.MIN_SAFE_INTEGER</code> (-9007199254740991) and <code>Number.MAX_SAFE_INTEGER</code> (9007199254740991) limits else a <code>RangeError</code> will be thrown. <em>Please note that only integers are recommended for this method</em> because of the floating point precision _problem_ in JavaScript (with is one of the problems BigArith.js aim at solving). 
 
-Doing this <code>var ba = new BigArith(0.45);</code> might still be considered _"safe"_ but some can be tempted to do this <code>var ba = new BigArith(0.1 \* 0.2);</code>. As it is known <code>0.1 \* 0.2</code> will not give <code>0.02</code> in JavaScript but rather <code>0.020000000000000004</code>. Therefore, it is better to avoid initializing fractional numbers this way all together.
+Doing <code>var ba = new BigArith(0.45);</code> might still be considered _"safe"_ but some can be tempted to do <code>var ba = new BigArith(0.1 \* 0.2);</code>. As it is known <code>0.1 \* 0.2</code> will not give <code>0.02</code> in JavaScript but rather <code>0.020000000000000004</code>. Therefore, it is better to avoid initializing fractional numbers this way all together.
 
 > It is recommended fractional numbers are initialized with strings.
 > See [here](#init_string).
@@ -94,7 +97,9 @@ var bb = new BigArith("positive three"); //initialize bb to a BigArith object of
 var bc = new BigArith("three"); //initialize bc to a BigArith object of value "3"
 var bd = new BigArith("point two three seven"); //initialize bd to a BigArith object of value "0.237"
 ```
-<code>BigArith.js</code> accepts english words of up to (&#177;1x10^1,005)-0.0000{insert 195 more zeroes}01 (i.e. nine hundred and ninety nine trecentretrigintillion point nine nine nine nine nine {insert 195 more "nine"'s}). That is 1,005 length of characteristic and 200 length of mantissa (yea, I know, that is awesome :stuck_out_tongue_winking_eye:). A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word but this can be outrightly omitted. The mantissa part (part after the decimal point) <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
+<code>BigArith.js</code> accepts english words of up to (&#177;1x10^1,005)-0.0000{insert 195 more zeroes}01 (i.e. nine hundred and ninety nine trecentretrigintillion point nine nine nine nine nine {insert 195 more "nine"'s}). That is 1,005 length of characteristic (parts before the decimal point) and 200 length of mantissa (parts after the decimal point). 
+
+A negative number <em>should</em> start with the word <code>"negative"</code>, a positive number can start with the "postive" word but this can be outrightly omitted. The mantissa part <em>should be spelt out</em> after the word <code>point</code> or else the word will evaluate to <code>NaN</code>.
 
 This is case insensitive and only [Short Scale](short_scales.html) naming system is supported.
 
@@ -129,8 +134,6 @@ var ba = new BigArith("3"); //initialize ba to a BigArith object of value "3"
 var bb = new BigArith(ba); //initialize bb to the value of ba (i.e. "3")
 ```
 
-> In the server-side, always add the <code>var BigArith = require('bigarith.js');</code> and every other thing remains the same in both server-side and client-side.
-
 ### Functions
 #### toString() method
 The <code>toString()</code> method returns the value of the BigArith object as a strings of digits.
@@ -158,7 +161,7 @@ var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
 ```
 
-See also with full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation):
+See also:
 1. [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html)
 2. [add()](https://osofem.github.io/BigArith.js/documentation/add.html)
 3. [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html)
@@ -187,3 +190,5 @@ See also with full documentation [here](https://github.com/osofem/BigArith.js/tr
 26. [truncate()](https://osofem.github.io/BigArith.js/documentation/truuncate.html)
 27. [isPrime()](https://osofem.github.io/BigArith.js/documentation/isprime.html)
 28. [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
+
+Full documentation is [here](https://github.com/osofem/BigArith.js/tree/master/documentation).
