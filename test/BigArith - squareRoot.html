@@ -1,0 +1,34 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
+	<script src="../BigArith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		
+		assertDeepEqual(new BigArith(4).squareRoot(), new BigArith("2"));
+		assertDeepEqual(new BigArith(16).squareRoot(), new BigArith("4"));
+		//console.log(BigArith.multiply("9999999999999999", "9999999999999999"));
+		
+		
+		//assertDeepEqual(new BigArith(BigArith.multiply("9999999999999999","9999999999999999")).squareRoot(), new BigArith("9999999999999999"));
+		
+		
+		let then = new Date();
+		assertDeepEqual(new BigArith(2).squareRoot(), new BigArith("SQRT2"));
+		let now = new Date();
+		console.log(now-then);
+		
+		assertDeepEqual(new BigArith("0152.2756").squareRoot(), new BigArith("12.34"));
+		
+		//assertDeepEqual(new BigArith(0.5).squareRoot(), new BigArith("SQRT1_2"));
+		
+		//assertDeepEqual(new BigArith(0).squareRoot(), new BigArith("0"));
+		//assertDeepEqual(new BigArith().squareRoot(), new BigArith("0"));
+		//assertDeepEqual(new BigArith(null).squareRoot(), new BigArith("0"));
+		
+		//Negative numbers should give NaN
+		assertIsNaN(new BigArith("-4").squareRoot());
+		assertIsNaN(new BigArith(NaN).squareRoot());
+	</script>
+</html>

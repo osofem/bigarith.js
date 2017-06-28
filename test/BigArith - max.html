@@ -1,0 +1,22 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<bascript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></bascript>
+	<script src="../BigArith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		var ba = new BigArith(2);
+		//max
+		assertDeepEqual(ba.max("2"), new BigArith("2"));
+		assertDeepEqual(ba.max(-2), new BigArith("2"));
+		assertDeepEqual(ba.max("two"), new BigArith("2"));
+		assertDeepEqual(ba.max("2.0"), new BigArith("2"));
+		assertDeepEqual(ba.max("negative two"), new BigArith("2"));
+		assertDeepEqual(ba.max("-2"), new BigArith("2"));
+		
+		//Or
+		assertDeepEqual(BigArith.max("-165.8987", "165.898700000000000000000"), new BigArith("165.8987"));
+		assertDeepEqual(BigArith.max("0.123568123", "-0.03455893"), new BigArith("0.123568123"));
+		assertDeepEqual(BigArith.max("+0.03455893", "0.123568123"), new BigArith("0.123568123"));
+	</script>
+</html>

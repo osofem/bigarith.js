@@ -1,0 +1,13 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
+	<script src="../BigArith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		console.log(BigArith.randomInt("0", 1000)); //Any number between 0 and 1000
+		console.log(BigArith.randomInt("one", "one million")); //Any number between 1 and 1000000
+		console.log(BigArith.randomInt("one million", "three trillion")); //Any number between 1000000 and 1000000000000
+		console.log(BigArith.randomInt(1e3, new BigArith("1000"))); //Will always display 1000
+	</script>
+</html>
