@@ -14,7 +14,7 @@ Server-side usage
 
 Client-side usage
 1. Including the library from the rawgit.com CDN.<br>
-	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/ &lt;version tag&gt; /BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace &lt;version tag&gt; with the version targetted e.g. <code>v1.0</code>. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version (the latest version is always recommended).
+	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/&lt;version tag&gt;/BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace &lt;version tag&gt; with the version targetted e.g. <code>v1.0</code>. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version (the latest version is always recommended).
 2. Downloading the source from GitHub.com<br>
 	You can also download BigArith.js from [releases](https://github.com/osofem/BigArith.js/releases/) on github.com (the latest version is always recommended).
 
