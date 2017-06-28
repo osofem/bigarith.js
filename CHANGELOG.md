@@ -37,9 +37,11 @@
 * Added isEven()
 * Added isOdd()	
 
-### v0.0-beta0.4
-* Restructed the library from "class" to "constructor function"
+### v0.0.1
+#### Released - 28th June, 2017
 * Added node.js support
+* Changed version number to corelate with npm package (node.js)
+* Restructed the library from "class" to "constructor function"
 * Fixed some bugs
 * Added max()
 * Added min()
@@ -47,3 +49,8 @@
 * Added negate()
 * Added truncate()
 * Added squareRoot() [unstable]
+
+### v0.0.2
+* Added sin()
+* Added cos()
+* Added tan()

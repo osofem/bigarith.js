@@ -1,6 +1,6 @@
 {
   "name": "bigarith.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Do very large math!",
   "main": "BigArith.js",
   "scripts": {

@@ -21,7 +21,7 @@ Client-side usage
 Choose the method that best suit your need.
 
 ### Usage
-<code>BigArith.js</code> can be initialized in six ways.
+`BigArith.js` can be initialized in six ways.
 
 > In the server-side, always add the <code>var BigArith = require('bigarith.js');</code> and every other thing remains the same in both server-side and client-side.
 
@@ -188,7 +188,6 @@ See also:
 24. [toString()](https://osofem.github.io/BigArith.js/documentation/tostring.html)
 25. [valueOf()](https://osofem.github.io/BigArith.js/documentation/valueof.html)
 26. [truncate()](https://osofem.github.io/BigArith.js/documentation/truuncate.html)
-27. [isPrime()](https://osofem.github.io/BigArith.js/documentation/isprime.html)
-28. [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
+27. [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
 
 Full documentation is [here](https://github.com/osofem/BigArith.js/tree/master/documentation).

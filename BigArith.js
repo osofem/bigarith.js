@@ -190,18 +190,20 @@ BigArith.prototype.toString=function(){
 
 /** 
 *	Returns true if this.value is negative, false otherwise
-*	@return {boolean} - this.value negative?
+*	@return {boolean} - this.value is less than positive zero
 */
 BigArith.prototype.isNegative=function(){
+	if(isNaN(this.value)) return NaN;
 	if(this.value[0] == "-") return true;
 	return false;
 }
 	
 /** 
 *	Returns true if this.value is positive, false otherwise
-*	@return {boolean} - this.value positive?
+*	@return {boolean} - this.value is greater than negative zero
 */
 BigArith.prototype.isPositive=function(){
+	if(isNaN(this.value)) return NaN;
 	if(this.value[0] == "-") return false;
 	return true;
 }
@@ -233,6 +235,7 @@ BigArith.prototype.isEven=function(){
 *	@return {boolean} - this.value is NOT even and is an integer?
 */
 BigArith.prototype.isOdd=function(){
+	if(isNaN(this.value)) return NaN;
 	var d = new BigArith(this.value);
 	if(!d.isEven() && d.isInteger()) return true;
 	return false;
@@ -247,7 +250,7 @@ BigArith.prototype.square=function(){
 	return BigArith.multiply(this.value, this.value);
 }
 
-/** [NEEDS OPTIMIZATION - n tends to gets very large within few calculations and this slows down speed. Takes 9105ms to calculate sqrt 2 to 200 decimal place]
+/** [NEEDS OPTIMIZATION - n tends to gets very large within few calculations and this slows down calculation speed. Takes 9105ms to calculate sqrt 2 to 200 decimal place]
 *	Returns square root of this.value
 *	function squareRoot
 *	@return {BigArith} - root of this.value
@@ -256,10 +259,12 @@ BigArith.prototype.squareRoot=function(){
 	if(isNaN(this.value) || new BigArith(this.value).isNegative()) return NaN;
 	var n = this.value;
 	
-	var ps = BigArith.perfectSq(n); //Find the perfect square just less than or equal to n
+	//Find the perfect square just less than or equal to n
+	var ps = BigArith.perfectSq(n); 
 	var result = ps;
 	var quotient = ps;
 	n = BigArith.subtract(n, BigArith.multiply(ps, ps));
+	//If reminder is 0, return result we have reached the end of calculation
 	if(BigArith.compare(n,0) == 0) return new BigArith(result);
 	
 	//If we got here that means we have reminders
@@ -269,15 +274,20 @@ BigArith.prototype.squareRoot=function(){
 		// take quotient double it and multiply by 10
 		var j = BigArith.multiply(quotient, 20); 
 		
-		//Find a number bewteen j+1 and j+9 such that (j+i) * i will just be less than n
+		//Find a number bewteen j+1 and j+9 such that (j+i)*i will just be less than or equal to n
 		var i = 1;
 		for(; i <= 9; i++){
 			var g = BigArith.multiply(BigArith.add(j,i), i); //(j+i)*i
-			if(BigArith.compare(g, n) >= 0) break;
-		} i--; //if ((j+i) * i) is not less than n, i will have gotten to 10 
+			if(BigArith.compare(g, n) >= 0 || BigArith.compare(n, 0) == 0) break;
+		}
+		//If (j+i)*i > n or i == 10, reduce i by 1
+		if(i == 10 || BigArith.compare(BigArith.multiply(BigArith.add(j,i), i), n) == 1) i--;
 		n =  BigArith.multiply(BigArith.subtract(n, BigArith.multiply(BigArith.add(j,i), i)),100);//(n-(j+i)*i)*100;
 		result += i;
 		quotient += i.toString();
+		
+		//If reminder is 0, break we have reached the end of calculation
+		if(BigArith.compare(n, 0) == 0) break;
 	}
 	return new BigArith(new BigArith(result).toFixed(200));
 }
@@ -505,7 +515,7 @@ BigArith.max=function(a, b){
 
 
 /**	
-*	Floor this.value
+*	Returns largest integer less than or equal to this.value
 *	function floor
 *	@returns {BigArith} - floored value of this.value
 *	Dependent on static floor()
@@ -516,7 +526,7 @@ BigArith.prototype.floor=function(){
 
 
 /**	
-*	Returns largest integer less than or equals to a given number
+*	Returns largest integer less than or equal to n
 *	function floor
 *	@param {string|number|BigArth} n number to floor
 *	@returns {BigArith} - floored number
@@ -561,6 +571,28 @@ BigArith.ceil=function(n){
 			n = n.truncate();
 	}
 	return n;
+}
+
+/**	
+*	Round this.value to the nearest integer
+*	function round
+*	@param {string} - this.value e.g "0.5"
+*	@returns {BigArith} - this.value rounded to nearest whole number e.g "1"
+*	Dependent on toString(), static compare(), isPositive(), add(), subtract()
+*/
+BigArith.prototype.round=function(){
+	var n = this.value;
+	if(n.indexOf(".")>-1){
+		n = n.split(".");
+		if(BigArith.compare(n[1][0], "5") >= 0){
+			if(new BigArith(n[0]).isPositive())
+				n[0] = BigArith.add(n[0], "1").toString();
+			else
+				n[0] = BigArith.subtract(n[0], "1").toString();
+		}
+		n = n[0];
+	}
+	return new BigArith(n);
 }
 
 //TODO==========
@@ -967,7 +999,7 @@ BigArith.modulus=function(a, b){
 	if(a.isInteger() && b.isInteger())
 		return new BigArith(((a.isNegative())?"-":"")+BigArith.divWithRem(a, b)[1]);
 	else
-		return new BigArith(((a.isNegative())?"-":"")+BigArith.subtract(a.abs(), BigArith.multiply(BigArith.divide(a.abs(), b.abs()).valueOf().split(".")[0], b.abs())));
+		return new BigArith(((a.isNegative())?"-":"")+BigArith.subtract(a.abs(), BigArith.multiply(BigArith.divide(a.abs(), b.abs()).toString().split(".")[0], b.abs())));
 }
 
 /**	
@@ -1006,7 +1038,7 @@ BigArith.divide=function(a, b){
 	var remResult = "0.";
 	var count = 0;
 
-	while(BigArith.compare(rem, "0") == 1 && count < 201){
+	while(BigArith.compare(rem, "0") == 1 && BigArith.compare(count, new BigArith().decimalSupport+1) == -1){
 		rem += "0";
 		var j = BigArith.divWithRem(rem, b);
 		remResult +=  j[0];
@@ -1018,7 +1050,7 @@ BigArith.divide=function(a, b){
 	var dPosition = (result.indexOf(".") == -1)?result.length : result.indexOf(".");
 	
 	//Numerator decimal point means we shift the decimal point in answer forward
-	//Denominator decimal point means we shift the decimal point iin answer backward
+	//Denominator decimal point means we shift the decimal point in answer backward
 	dPosition = dPosition+denominatorIndex-numeratorIndex;
 	result = result.split(".");
 	if(typeof result[1] == "undefined") result[1] = "0";
@@ -1039,9 +1071,9 @@ BigArith.divide=function(a, b){
 				result[1].substr(dPosition)+ "0";
 		}
 	}
-
-	if(count == 201 /*&& BigArith.compare(precision, 200) == "equal"*/)
-		return new BigArith(new BigArith(result).toFixed(200));
+	
+	if(BigArith.compare(count, new BigArith().decimalSupport+1) == 0 /*&& BigArith.compare(precision, 200) == "equal"*/)
+		return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
 	/*if(BigArith.compare(precision, 200) == "lesser") suspend the use of precission for now toFixed should actually do
 		return new BigArith(new BigArith(result).toFixed(precision));*/
 	else
