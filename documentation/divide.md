@@ -44,7 +44,7 @@ If n (in case of method function) or b (in case of static method function) is eq
 
 
 ### Examples
-> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.
 
 #### Using method function
 
@@ -74,7 +74,7 @@ var ba = new BigArith("-17031986");
 ba = ba.divide("+17031986").add("24011985").multiply("456785564"); //BigArith object with value "10968327654198976"
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
+More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
 
 ### See also
 * [subtract()](https://osofem.github.io/BigArith.js/documentation/subtract.html)

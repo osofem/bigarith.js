@@ -43,7 +43,7 @@ The static method function takes two parameters (a, b) and is always used as <co
 * <code>1</code> : BigArith object absolute value > n absolute value or a absolute value > b absolute value.
 
 ### Examples
-> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.
 
 #### Using method function
 
@@ -74,7 +74,7 @@ console.log(BigArith.compareAbs("88888888888888888888888888888888888888888888888
 console.log(BigArith.compareAbs(null, "")); //logs 0
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
+More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
 
 ### See also
 * [compare()](https://osofem.github.io/BigArith.js/documentation/compare.html)

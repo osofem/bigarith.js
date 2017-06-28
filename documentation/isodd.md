@@ -1,5 +1,5 @@
 # isOdd()
-<code>isOdd()</code> returns a boolean indicating wheather a number (integer) is not exactly divisible by 2 or not . There is ONLY a method function for this.
+<code>isOdd()</code> returns a boolean indicating whether a number (integer) is not exactly divisible by 2 or not . This have only a method function.
 
 #### Syntax
 ##### method function
@@ -13,7 +13,7 @@ ba.isOdd();
 
 ### Return value
 #### method function - {boolean}
-Returns true if the value of the BigArith object it is called on is an integer and not exactly divisible by 2 and false otherwise.
+Returns true if the value of the BigArith object it is called on is an integer and not exactly divisible by 2 otherwise false.
 
 ##### Description
 There is no static method function for `isOdd()` so it should ALWAYS be used as a member function.
@@ -21,7 +21,7 @@ There is no static method function for `isOdd()` so it should ALWAYS be used as 
 
 ### Examples
 
-> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.
 
 #### Using method function
 
@@ -51,7 +51,7 @@ ba = new BigArith(NaN);
 console.log(ba = ba.isOdd()); //logs NaN to the console 
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
+More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
 
 ### See also
 * [isEven()](https://osofem.github.io/BigArith.js/documentation/iseven.html)

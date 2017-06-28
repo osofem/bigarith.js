@@ -35,7 +35,7 @@ The static method function takes a parameter n and is always used as <code>BigAr
 > Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 ### Examples
-> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.
 
 #### Using method function
 
@@ -60,7 +60,7 @@ ba = BigArith.abs(); //BigArith object with value "0"
 ba = BigArith.abs(NaN); //NaN
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
+More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
 
 ### See also
 * [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html)

@@ -40,7 +40,7 @@ The static method function takes two parameters (a, b) and is always used as <co
 
 
 ### Examples
-> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.
 
 #### Using method function
 
@@ -70,7 +70,7 @@ var ba = new BigArith("-17031986");
 ba = ba.add("+17031986").add("24011985").subtract("456785564"); //BigArith object with value "-432773579"
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
+More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
 
 ### See also
 * [subtract()](https://osofem.github.io/BigArith.js/documentation/subtract.html)

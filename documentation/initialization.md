@@ -1,6 +1,6 @@
 `BigArith.js` can be initialized in six ways.
 
-> In the server-side, always add the <code>var BigArith = require('bigarith.js');</code> and every other thing remains the same in both server-side and client-side.
+> In the server-side, always add the <code>var BigArith = require('bigarith.js');</code> however every other thing remains the same in both server-side and client-side.
 
 ##### 1. Initiating without any parameter or null
 ###### Server-side
@@ -137,3 +137,5 @@ The <code>toWords</code> method returns the value of the BigArith object in Engl
 var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
 ```
+
+Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
