@@ -36,10 +36,12 @@ There are two functions which could be used, the *method function*, and the *sta
 
 The static method function takes two parameters (a, b) and is always used as <code>BigArith.add()</code>. It returns the sum of a and b. 
 
-If the parameters are numbers, it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
+> Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 
 ### Examples
+> In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` and every other thing remains the same in both server-side and client-side code.
+
 #### Using method function
 
 ```javascript
@@ -59,6 +61,13 @@ ba = ba.add("99999999999999999999999999999999999999999999999999999999999999"); /
 var ba = BigArith.add("-17031986", "24011985"); //BigArith object with value "6979999"
 ba = BigArith.add("+17031986", "24011985"); //BigArith object with value "41043971"
 ba = BigArith.add("8888888888888888888888888888888888888888888888888888888", "99999999999999999999999999999999999999999999999999999999999999"); //BigArith object with value "100000008888888888888888888888888888888888888888888888888888887"
+```
+
+#### Method chaining
+Since the method returns a BigArith objects, [method chaining](method_chaining.html) is possible.
+```javascript
+var ba = new BigArith("-17031986");
+ba = ba.add("+17031986").add("24011985").subtract("456785564"); //BigArith object with value "-432773579"
 ```
 
 More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/)
