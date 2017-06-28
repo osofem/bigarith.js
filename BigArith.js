@@ -35,10 +35,10 @@ var BigArith=function(n){
 	else if(typeof n == "object" && n.name == "BigArith") this.value = n.toString();
 	else if(typeof n == "undefined" || n == "") this.value = "0";
 	else if(n == "PI") this.value = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
-	else if(n == "LN2") this.value = "0.6931471805599453";
+	/*else if(n == "LN2") this.value = "0.6931471805599453";
 	else if(n == "LN10") this.value = "2.302585092994046";
 	else if(n == "LOG2E") this.value = "1.4426950408889634";
-	else if(n == "LOG10E") this.value = "0.4342944819032518";
+	else if(n == "LOG10E") this.value = "0.4342944819032518";*/
 	else if(n == "SQRT1_2") this.value = "0.70710678118654752440084436210484903928483593768847403658833986899536623923105351942519376716382078636750692311545614851246241802792536860632206074854996791570661133296375279637789997525057639103028574";
 	else if(n == "SQRT2") this.value = "1.41421356237309504880168872420969807856967187537694807317667973799073247846210703885038753432764157273501384623091229702492483605585073721264412149709993583141322266592750559275579995050115278206057147";
 	else this.value = this.verify(n);
@@ -270,7 +270,7 @@ BigArith.prototype.squareRoot=function(){
 	//If we got here that means we have reminders
 	n = BigArith.multiply(n, 100);
 	result +=  ".";
-	for(var count = 0; count <= 201; count++){
+	for(var count = 0; BigArith.compare(count, new BigArith().decimalSupport+1) <= 0; count++){
 		// take quotient double it and multiply by 10
 		var j = BigArith.multiply(quotient, 20); 
 		
@@ -289,7 +289,7 @@ BigArith.prototype.squareRoot=function(){
 		//If reminder is 0, break we have reached the end of calculation
 		if(BigArith.compare(n, 0) == 0) break;
 	}
-	return new BigArith(new BigArith(result).toFixed(200));
+	return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
 }
 
 /** [NEEDS OPTIMIZATION - incase n is very large]
@@ -470,47 +470,57 @@ BigArith.compareAbs=function(a, b){
 /**	
 *	Returns the minimum between this.value and n
 *	function min
-*	@param {string|number|BigArth} n value to compare with this.value
-*	@returns {BigArith} - The minimum of this.value and n
+*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@returns {BigArith} - The smallest number between this.value and parameters
 *	Dependent on static min() 
 */
-BigArith.prototype.min=function(n){
-	return BigArith.min(this.value, n);
+BigArith.prototype.min=function(){
+	return BigArith.min(this.value, ...arguments);
 }
 
 /**	
 *	Returns the minimum between a and b
 *	function min
-*	@param {string|number|BigArth} a value to compare
-*	@param {string|number|BigArth} b value to compare
-*	@returns {BigArith} - The minimum of a and b
-*	Dependent on static compare() 
+*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@returns {BigArith} - The smallest number between parameters
+*	Dependent on static compare(), valueOf()
 */
-BigArith.min=function(a, b){
-	return (BigArith.compare(a, b) == -1)?new BigArith(a):new BigArith(b);
+BigArith.min=function(){
+	var args = arguments;
+	var result = new BigArith(args[0]);
+	for(var i = 0; i < args.length; i++){
+		if(isNaN(new BigArith(args[i]).valueOf())) return NaN;
+		result = (BigArith.compare(result, args[i]) == -1)?result:new BigArith(args[i]);
+	}
+	return result;
 }
 
 /**	
 *	Returns the maximum between this.value and n
 *	function max
-*	@param {string|number|BigArth} n value to compare with this.value
-*	@returns {BigArith} - The maxmium of this.value and n
+*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@returns {BigArith} - The largest number between this.value and parameters
 *	Dependent on static max() 
 */
-BigArith.prototype.max=function(n){
-	return BigArith.max(this.value, n);
+BigArith.prototype.max=function(){
+	return BigArith.max(this.value, ...arguments);
 }
 
 /**	
 *	Returns the maximum between a and b
 *	function max
-*	@param {string|number|BigArth} a value to compare
-*	@param {string|number|BigArth} b value to compare
-*	@returns {BigArith} - The maxmium of a and b
-*	Dependent on static compare() 
+*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@returns {BigArith} - The largest number between parameters
+*	Dependent on static compare(), valueOf()
 */
-BigArith.max=function(a, b){
-	return (BigArith.compare(a,b) == 1)?new BigArith(a):new BigArith(b);
+BigArith.max=function(){
+	var args = arguments;
+	var result = new BigArith(args[0]);
+	for(var i = 0; i < args.length; i++){
+		if(isNaN(new BigArith(args[i]).valueOf())) return NaN;
+		result = (BigArith.compare(result, args[i]) == 1)?result:new BigArith(args[i]);
+	}
+	return result;
 }
 
 
@@ -603,7 +613,7 @@ BigArith.prototype.toFixed=function(d){
 //TODO==========
 BigArith.toFixed=function(n, d){
 	var e = new BigArith(d).floor().toString();
-	if(BigArith.compare(d, 0) == -1 || BigArith.compare(d, 200) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and 200! " + e + " supplied.");
+	if(BigArith.compare(d, 0) == -1 || BigArith.compare(d, new BigArith().decimalSupport) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and "+ new BigArith().decimalSupport +"! " + e + " supplied.");
 	var n = new BigArith(n);
 	if(!n.isInteger()){
 		n = n.toString().split(".");
@@ -698,7 +708,7 @@ BigArith.prototype.toWords = function(){
 	
 	//Characteristic part
 	
-	//Break into chunks of 3 digits e.g. ["1","000"]
+	//Break into chunks of 3 digits e.g. ["1","000"] for "1000"
 	var chunk = [], c = n[0];
 	for(var i = c.length; i > -1; i-=3){
 		chunk.unshift(c.slice((i-3>0)?i-3:0, i));
@@ -1006,7 +1016,7 @@ BigArith.modulus=function(a, b){
 *	Return this.valus/n (division of this.valus and n)
 *	function divide
 *	@param {string|number|BigArth} The divisor with this.value as the dividend. 
-*	@returns {BigArith} - The quotient to 200 decimal places when necessary.
+*	@returns {BigArith} - The quotient to "decimalSupport" decimal places when necessary.
 */
 BigArith.prototype.divide=function(n){
 	return BigArith.divide(this.value, n);
@@ -1017,7 +1027,7 @@ BigArith.prototype.divide=function(n){
 *	function divide
 *	@param {string|number|BigArth} The dividend.
 *	@param {string|number|BigArth} The divisor.
-*	@returns {BigArith} - The quotient to 200 decimal places when necessary.
+*	@returns {BigArith} - The quotient to "decimalSupport" decimal places when necessary.
 */
 BigArith.divide=function(a, b){
 	var a = new BigArith(a).toString().split(".");
@@ -1072,10 +1082,8 @@ BigArith.divide=function(a, b){
 		}
 	}
 	
-	if(BigArith.compare(count, new BigArith().decimalSupport+1) == 0 /*&& BigArith.compare(precision, 200) == "equal"*/)
+	if(BigArith.compare(count, new BigArith().decimalSupport+1) == 0)
 		return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
-	/*if(BigArith.compare(precision, 200) == "lesser") suspend the use of precission for now toFixed should actually do
-		return new BigArith(new BigArith(result).toFixed(precision));*/
 	else
 		return new BigArith(result);
 };
