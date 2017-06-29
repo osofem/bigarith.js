@@ -155,7 +155,7 @@ console.log(ba.valueOf());//this outputs -5637865.32 to the console
 
 
 #### toWords() method
-The <code>toWords</code> method returns the value of the BigArith object in English words using the [Short Scale](documentation/short_scales.html) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1,005 or the length of the mantissa part (part after the decimal point) is greater than 200, a <code>RangeError</code> is thrown.
+The <code>toWords</code> method returns the value of the BigArith object in English words using the [Short Scale](https://osofem.github.io/BigArith.js/documentation/short_scales.html) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1,005 or the length of the mantissa part (part after the decimal point) is greater than 200, a <code>RangeError</code> is thrown.
 ```javascript
 var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
