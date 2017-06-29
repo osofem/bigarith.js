@@ -1,7 +1,7 @@
 ## Welcome to BigArith.js
 [![Join the chat at https://gitter.im/BigArith-js/Lobby](https://badges.gitter.im/BigArith-js/Lobby.svg)](https://gitter.im/BigArith-js/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-<code>BigArith.js</code> offers a way to handles **very large numbers** (be it integers, fractionals, strings of digits, strings of english words) to precision.
+<code>BigArith.js</code> offers a way to handles **very large numbers** (be it integers, fractionals, strings of digits, strings of english words) to precision. BigArith is from the words <b>Big Arith</b>metic.
 
 ### Install
 Depending on the environment in which BigArith.js will be used, it can be installed via:
@@ -14,9 +14,9 @@ Server-side usage
 
 Client-side usage
 1. Including the library from the rawgit.com CDN.<br>
-	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/&lt;version tag&gt;/BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace &lt;version tag&gt; with the version targetted e.g. <code>v1.0</code>. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version (the latest version is always recommended).
+	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/BigArith.js/&lt;version tag&gt;/BigArith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace <code>&lt;version tag&gt;</code> with the version targetted e.g. <code>v1.0</code>. Check [versions](https://github.com/osofem/BigArith.js/tags) for the latest version (the latest version is always recommended).
 2. Downloading the source from GitHub.com<br>
-	You can also download BigArith.js from [releases](https://github.com/osofem/BigArith.js/releases/) on github.com (the latest version is always recommended).
+	You can also download BigArith.js from [releases](https://github.com/osofem/BigArith.js/releases/) on github.com (the latest version is always recommended). Extract the files and include the BigArith.js file in your work.
 
 Choose the method that best suit your need.
 
@@ -118,7 +118,7 @@ var ba = new BigArith("PI"); // this evaluate to "3.1415926535897932384626433832
 ```javascript
 var ba = new BigArith("PI"); // this evaluate to "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196"
 ```
-<code>BigArith.js</code> has a list of inbuilt constants which can be used for initialization. Check [here](list_constant.html) for the updated list.
+<code>BigArith.js</code> has a list of inbuilt constants which can be used for initialization. Check [here](documentation/list_constant.html) for the updated list.
 
 ##### 6. Initiating with a BigArith object
 ###### Server-side
@@ -155,7 +155,7 @@ console.log(ba.valueOf());//this outputs -5637865.32 to the console
 
 
 #### toWords() method
-The <code>toWords</code> method returns the value of the BigArith object in English words using the [Short Scale](short_scales.html) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1,005 or the length of the mantissa part (part after the decimal point) is greater than 200, a <code>RangeError</code> is thrown.
+The <code>toWords</code> method returns the value of the BigArith object in English words using the [Short Scale](documentation/short_scales.html) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1,005 or the length of the mantissa part (part after the decimal point) is greater than 200, a <code>RangeError</code> is thrown.
 ```javascript
 var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
