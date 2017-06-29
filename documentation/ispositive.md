@@ -1,5 +1,5 @@
 # isPositive()
-<code>isPositive()</code> returns a boolean indicating whether a number is greater than or equals to zero or not. This have only a method function.
+<code>isPositive()</code> returns a boolean indicating whether a number is greater than or equals to zero or not. This has only a method function.
 
 #### Syntax
 ##### method function

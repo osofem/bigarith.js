@@ -36,7 +36,7 @@ There are two functions which could be used, the *method function*, and the *sta
 
 The static method function takes two parameters (a, b) and is always used as <code>BigArith.compare()</code>. It returns an integer indicating whether a is lesser, equals or greater than b. 
 
-> Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 * <code>-1</code> : BigArith object value < n or a < b.
 * <code>0</code> : BigArith object value == n or a == b.

@@ -1,5 +1,5 @@
 # max()
-<code>max()</code> returns the largest of zero or more numbers. This have only a method function.
+<code>max()</code> returns the largest of zero or more numbers. There is a method function and a static method function.
 
 #### Syntax
 ##### method function
@@ -15,26 +15,27 @@ BigArith.max([value1,[value2[,...]]]);
 ### Parameters
 #### method function
 ##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the largest of (including the value of the BigArith object it's called on).
+The numbers to return the largest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, or a BigArith object.
 
 #### static method function
 ##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the largest of.
+The numbers to return the largest of. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
 #### method function - {BigArith}
-The largest of the given numbers and the value of the object it is called on. If at least one of the arguments cannot be converted to a number, NaN is returned.
+A BigArith object with its value equals the largest of the given numbers and the value of the object it is called on. If at least one of the arguments cannot be converted to a number, NaN is returned.
 
 #### static method function - {BigArith}
-The largest of the given numbers. If at least one of the arguments cannot be converted to a number, NaN is returned.
+A BigArith object with its value equals the largest of the given numbers. If at least one of the arguments cannot be converted to a number, NaN is returned.
 
 ##### Description
-There are two functions which could be used, the *method function*, and the *static method function*. The method function takes zero or more parameters and returns the largest between the parameters and the value of the BigArith object it is called on. If no parameter is give, the value of the BigArith object is returned.
+There are two functions which could be used, the *method function*, and the *static method function*. The method function takes zero or more parameters and returns the largest between the parameters and the value of the BigArith object it is called on. If no parameter is given, the value of the BigArith object is returned.
 
 The static method function takes zero or more parameters and return the largest. If no parameter is given, zero is returned.
 
 If at least one of the arguments cannot be converted to a number, NaN is returned.
 
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 ### Examples
 

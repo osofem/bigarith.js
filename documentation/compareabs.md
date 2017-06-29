@@ -36,11 +36,12 @@ There are two functions which could be used, the *method function*, and the *sta
 
 The static method function takes two parameters (a, b) and is always used as <code>BigArith.compareAbs()</code>. It returns an integer indicating whether absolute value of a is lesser, equals or greater than absolute value of b. 
 
-> Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
-
 * <code>-1</code> : BigArith object absolute value < n absolute value or a absolute value < b absolute value.
 * <code>0</code> : BigArith object absolute value == n absolute value or a absolute value == b absolute value.
 * <code>1</code> : BigArith object absolute value > n absolute value or a absolute value > b absolute value.
+
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
+
 
 ### Examples
 > In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.

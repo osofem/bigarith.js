@@ -32,7 +32,7 @@ There are two functions which could be used, the *method function*, and the *sta
 
 The static method function takes a parameter n and is always used as <code>BigArith.abs()</code>. It returns the absolute value of n. 
 
-> Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 ### Examples
 > In the server-side, always remember to add the line `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side code.

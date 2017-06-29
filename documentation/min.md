@@ -15,26 +15,27 @@ BigArith.min([value1,[value2[,...]]]);
 ### Parameters
 #### method function
 ##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the smallest of (including the value of the BigArith object it's called on).
+The numbers to return the smallest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, or a BigArith object.
 
 #### static method function
 ##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the smallest of.
+The numbers to return the smallest of. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
 #### method function - {BigArith}
-The smallest of the given numbers and the value of the object it is called on. If at least one of the arguments cannot be converted to a number, NaN is returned.
+A BigArith object with its value equals the smallest of the given numbers and the value of the object it is called on. If at least one of the arguments cannot be converted to a number, NaN is returned.
 
 #### static method function - {BigArith}
-The smallest of the given numbers. If at least one of the arguments cannot be converted to a number, NaN is returned.
+A BigArith object with its value equals the smallest of the given numbers. If at least one of the arguments cannot be converted to a number, NaN is returned.
 
 ##### Description
-There are two functions which could be used, the *method function*, and the *static method function*. The method function takes zero or more parameters and returns the smallest between the parameters and the value of the BigArith object it is called on. If no parameter is give, the value of the BigArith object is returned.
+There are two functions which could be used, the *method function*, and the *static method function*. The method function takes zero or more parameters and returns the smallest between the parameters and the value of the BigArith object it is called on. If no parameter is given, the value of the BigArith object is returned.
 
 The static method function takes zero or more parameters and return the smallest. If no parameter is given, zero is returned.
 
 If at least one of the arguments cannot be converted to a number, NaN is returned.
 
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 ### Examples
 

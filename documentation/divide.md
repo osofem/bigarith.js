@@ -40,7 +40,7 @@ The quotient returned will be to maximum of 200 decimal places *when necessary*.
 
 If n (in case of method function) or b (in case of static method function) is equivalent to zero, a <code>RangeError("Division by zero")</code> will be thrown.
 
-> Any number parameter (that is not strings of digits or a BigArith), it should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
+> Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
 
 ### Examples
@@ -71,7 +71,7 @@ ba = BigArith.divide("8888888888888888888888888888888888888888888888888888888", 
 Since the method returns a BigArith objects, [method chaining](method_chaining.html) is possible.
 ```javascript
 var ba = new BigArith("-17031986");
-ba = ba.divide("+17031986").add("24011985").multiply("456785564"); //BigArith object with value "10968327654198976"
+ba = ba.divide("+17031986").add("24011985").multiply("456785564").subtract("2"); //BigArith object with value "10968327654198974"
 ```
 
 More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
