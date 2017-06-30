@@ -26,4 +26,4 @@ Here is a updated list of constants predefined in BigArith.js
 		<tr><td>E</td> <td>e</td> <td>2.71828182845904523536...901</td><td>var ba = new BigArith("E");</td></tr>
 	</tbody>
 </table>
-Full documentation is [here](https://github.com/osofem/BigArith.js/tree/master/documentation).
+Full documentation is [here](https://github.com/osofem/bigarith.js/tree/master/documentation).

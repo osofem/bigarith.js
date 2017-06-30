@@ -138,4 +138,4 @@ var ba = new BigArith(1e3);
 console.log(ba.toWords());//this outputs "one thousand" to the console
 ```
 
-Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)

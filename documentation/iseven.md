@@ -15,7 +15,7 @@ ba.isEven();
 #### method function - {boolean}
 Returns true if the value of the BigArith object it is called on is exactly divisible by 2 otherwise false.
 
-##### Description
+### Description
 There is no static method function for `isEven()` so it should ALWAYS be used as a member function.
 
 
@@ -51,9 +51,9 @@ ba = new BigArith(NaN);
 console.log(ba = ba.isEven()); //logs NaN to the console 
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [isOdd()](https://osofem.github.io/BigArith.js/documentation/isodd.html)
-* [isPositive()](https://osofem.github.io/BigArith.js/documentation/ispositive.html)
-* [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html)
+* [isOdd()](https://osofem.github.io/bigarith.js/documentation/isodd.html)
+* [isPositive()](https://osofem.github.io/bigarith.js/documentation/ispositive.html)
+* [isNegative()](https://osofem.github.io/bigarith.js/documentation/isnegative.html)

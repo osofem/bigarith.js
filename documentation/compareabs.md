@@ -31,7 +31,7 @@ The number to compare with. This could be a string of digits, a number, or a Big
 #### static method function - {integer}
 <code>-1</code> if absolute value of a is less than absolute value of b, <code>0</code> if absolute value of a is equal to absolute value of b, <code>1</code> if absolute value of a is greater than absolute value of b.
 
-##### Description
+### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter (n) and returns an integer indicating whether absolute value of object is lesser, equals or greater than absolute value of n.
 
 The static method function takes two parameters (a, b) and is always used as <code>BigArith.compareAbs()</code>. It returns an integer indicating whether absolute value of a is lesser, equals or greater than absolute value of b. 
@@ -75,10 +75,10 @@ console.log(BigArith.compareAbs("88888888888888888888888888888888888888888888888
 console.log(BigArith.compareAbs(null, "")); //logs 0
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [compare()](https://osofem.github.io/BigArith.js/documentation/compare.html)
-* [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html)
-* [min()](https://osofem.github.io/BigArith.js/documentation/min.html)
-* [max()](https://osofem.github.io/BigArith.js/documentation/max.html)
+* [compare()](https://osofem.github.io/bigarith.js/documentation/compare.html)
+* [abs()](https://osofem.github.io/bigarith.js/documentation/abs.html)
+* [min()](https://osofem.github.io/bigarith.js/documentation/min.html)
+* [max()](https://osofem.github.io/bigarith.js/documentation/max.html)

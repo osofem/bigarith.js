@@ -60,13 +60,13 @@ ba = BigArith.abs(); //BigArith object with value "0"
 ba = BigArith.abs(NaN); //NaN
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [ceil()](https://osofem.github.io/BigArith.js/documentation/ceil.html)
-* [floor()](https://osofem.github.io/BigArith.js/documentation/floor.html)
-* [round()](https://osofem.github.io/BigArith.js/documentation/round.html)
-* [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html)
-* [isPositive()](https://osofem.github.io/BigArith.js/documentation/ispositive.html)
-* [truncate()](https://osofem.github.io/BigArith.js/documentation/truncate.html)
-* [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
+* [ceil()](https://osofem.github.io/bigarith.js/documentation/ceil.html)
+* [floor()](https://osofem.github.io/bigarith.js/documentation/floor.html)
+* [round()](https://osofem.github.io/bigarith.js/documentation/round.html)
+* [isNegative()](https://osofem.github.io/bigarith.js/documentation/isnegative.html)
+* [isPositive()](https://osofem.github.io/bigarith.js/documentation/ispositive.html)
+* [truncate()](https://osofem.github.io/bigarith.js/documentation/truncate.html)
+* [negate()](https://osofem.github.io/bigarith.js/documentation/negate.html)

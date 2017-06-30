@@ -31,7 +31,7 @@ A BigArith object with its value equals to the sum of n and the value of the Big
 #### static method function - {BigArith}
 A BigArith object with its value equals to the sum of a and b.
 
-##### Description
+### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter (n) and returns the sum of the parameter and the value of the BigArith object it is called on.
 
 The static method function takes two parameters (a, b) and is always used as <code>BigArith.add()</code>. It returns the sum of a and b. 
@@ -64,16 +64,16 @@ ba = BigArith.add("8888888888888888888888888888888888888888888888888888888", "99
 ```
 
 #### Method chaining
-Since the method returns a BigArith objects, [method chaining](method_chaining.html) is possible.
+Since the method returns a BigArith object, [method chaining](method_chaining.html) is possible.
 ```javascript
 var ba = new BigArith("-17031986");
 ba = ba.divide("+17031986").add("24011985").multiply("456785564").subtract("2"); //BigArith object with value "10968327654198974"
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [subtract()](https://osofem.github.io/BigArith.js/documentation/subtract.html)
-* [multiply()](https://osofem.github.io/BigArith.js/documentation/multiply.html)
-* [divide()](https://osofem.github.io/BigArith.js/documentation/divide.html)
-* [modulus()](https://osofem.github.io/BigArith.js/documentation/modulus.html)
+* [subtract()](https://osofem.github.io/bigarith.js/documentation/subtract.html)
+* [multiply()](https://osofem.github.io/bigarith.js/documentation/multiply.html)
+* [divide()](https://osofem.github.io/bigarith.js/documentation/divide.html)
+* [modulus()](https://osofem.github.io/bigarith.js/documentation/modulus.html)

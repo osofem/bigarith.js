@@ -28,7 +28,7 @@ A BigArith object with its value equals the largest of the given numbers and the
 #### static method function - {BigArith}
 A BigArith object with its value equals the largest of the given numbers. If at least one of the arguments cannot be converted to a number, NaN is returned.
 
-##### Description
+### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes zero or more parameters and returns the largest between the parameters and the value of the BigArith object it is called on. If no parameter is given, the value of the BigArith object is returned.
 
 The static method function takes zero or more parameters and return the largest. If no parameter is given, zero is returned.
@@ -74,7 +74,7 @@ BigArith.max("4", NaN); // NaN
 BigArith.max(NaN, "0.0467"); //NaN
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [min()](https://osofem.github.io/BigArith.js/documentation/min.html)
+* [min()](https://osofem.github.io/bigarith.js/documentation/min.html)

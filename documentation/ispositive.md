@@ -15,7 +15,7 @@ ba.isPositive();
 #### method function - {boolean}
 Returns true if the value of the BigArith object it is called on is greater than or equals to zero otherwise false.
 
-##### Description
+### Description
 There is no static method function for `isPositive()` so it should ALWAYS be used as a member function. 
 
 If the value of the BigArith object evaluates to "-0", false is returned.
@@ -56,9 +56,9 @@ ba = new BigArith(NaN);
 console.log(ba = ba.isPositive()); //logs NaN to the console 
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [isOdd()](https://osofem.github.io/BigArith.js/documentation/isodd.html)
-* [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html)
-* [isEven()](https://osofem.github.io/BigArith.js/documentation/iseven.html)
+* [isOdd()](https://osofem.github.io/bigarith.js/documentation/isodd.html)
+* [isNegative()](https://osofem.github.io/bigarith.js/documentation/isnegative.html)
+* [isEven()](https://osofem.github.io/bigarith.js/documentation/iseven.html)

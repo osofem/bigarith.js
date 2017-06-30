@@ -1,5 +1,5 @@
 # modulus()
-<code>modulus()</code> returns the reminder of division of two numbers. There is a method function and a static method function.
+<code>modulus()</code> returns the remainder of division of two numbers. There is a method function and a static method function.
 
 #### Syntax
 ##### method function
@@ -26,15 +26,15 @@ The divisor. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
 #### method function - {BigArith}
-The reminder of the division of the value of the BigArith object as the dividend and parameter n as the divisor. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
+The remainder of the division of the value of the BigArith object as the dividend and parameter n as the divisor. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
 
 #### static method function - {BigArith}
-The reminder of the division of parameter `a` as the dividend and parameter `b` as the divisor. If the divisor (i.e. parameter `b`) is zero, NaN is returned.
+The remainder of the division of parameter `a` as the dividend and parameter `b` as the divisor. If the divisor (i.e. parameter `b`) is zero, NaN is returned.
 
-##### Description
-There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter and returns the reminder of the division of the value of the BigArith object and parameter `n`. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
+### Description
+There are two functions which could be used, the *method function*, and the *static method function*. The method function takes one parameter and returns the remainder of the division of the value of the BigArith object and parameter `n`. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
 
-The static method function takes two parameters and returns the reminder of the division between parameter `a` and `b`. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
+The static method function takes two parameters and returns the remainder of the division between parameter `a` and `b`. If the divisor (i.e. parameter `n`) is zero, NaN is returned.
 
 If any of the divisor or the dividend evaluate to NaN, NaN is returned.
 
@@ -83,10 +83,10 @@ BigArith.modulus("0", "8"); //BigArith object with value "0"
 BigArith.modulus("8", "0"); //NaN
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [subtract()](https://osofem.github.io/BigArith.js/documentation/subtract.html)
-* [multiply()](https://osofem.github.io/BigArith.js/documentation/multiply.html)
-* [divide()](https://osofem.github.io/BigArith.js/documentation/divide.html)
-* [add()](https://osofem.github.io/BigArith.js/documentation/add.html)
+* [subtract()](https://osofem.github.io/bigarith.js/documentation/subtract.html)
+* [multiply()](https://osofem.github.io/bigarith.js/documentation/multiply.html)
+* [divide()](https://osofem.github.io/bigarith.js/documentation/divide.html)
+* [add()](https://osofem.github.io/bigarith.js/documentation/add.html)

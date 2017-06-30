@@ -27,7 +27,7 @@ A BigArith object with its value equals to the <code>ceil</code>ed value of the 
 #### static method function - {BigArith}
 A BigArith object with its value equals to the <code>ceil</code>'ed value of n.
 
-##### Description
+### Description
 There are two functions which could be used, the *method function*, and the *static method function*. The method function takes no parameter and returns a BigArith whose value equals the smallest integer greater than or equal to that of the BigArith object it is called on.
 
 The static method function takes one parameter (n) and is always used as <code>BigArith.ceil()</code>. It returns the smallest integer greater than or equal to n. 
@@ -71,13 +71,13 @@ ba = BigArith.ceil(null); //BigArith object with value "0"
 ba = BigArith.ceil(NaN); //NaN
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [abs()](https://osofem.github.io/BigArith.js/documentation/abs.html)
-* [floor()](https://osofem.github.io/BigArith.js/documentation/floor.html)
-* [round()](https://osofem.github.io/BigArith.js/documentation/round.html)
-* [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html)
-* [isPositive()](https://osofem.github.io/BigArith.js/documentation/ispositive.html)
-* [truncate()](https://osofem.github.io/BigArith.js/documentation/truncate.html)
-* [negate()](https://osofem.github.io/BigArith.js/documentation/negate.html)
+* [abs()](https://osofem.github.io/bigarith.js/documentation/abs.html)
+* [floor()](https://osofem.github.io/bigarith.js/documentation/floor.html)
+* [round()](https://osofem.github.io/bigarith.js/documentation/round.html)
+* [isNegative()](https://osofem.github.io/bigarith.js/documentation/isnegative.html)
+* [isPositive()](https://osofem.github.io/bigarith.js/documentation/ispositive.html)
+* [truncate()](https://osofem.github.io/bigarith.js/documentation/truncate.html)
+* [negate()](https://osofem.github.io/bigarith.js/documentation/negate.html)

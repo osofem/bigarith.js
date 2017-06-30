@@ -15,7 +15,7 @@ ba.isOdd();
 #### method function - {boolean}
 Returns true if the value of the BigArith object it is called on is an integer and not exactly divisible by 2 otherwise false.
 
-##### Description
+### Description
 There is no static method function for `isOdd()` so it should ALWAYS be used as a member function.
 
 
@@ -51,9 +51,9 @@ ba = new BigArith(NaN);
 console.log(ba = ba.isOdd()); //logs NaN to the console 
 ```
 
-More examples [here](https://github.com/osofem/BigArith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/BigArith.js/tree/master/documentation)
+More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
 ### See also
-* [isEven()](https://osofem.github.io/BigArith.js/documentation/iseven.html)
-* [isPositive()](https://osofem.github.io/BigArith.js/documentation/ispositive.html)
-* [isNegative()](https://osofem.github.io/BigArith.js/documentation/isnegative.html)
+* [isEven()](https://osofem.github.io/bigarith.js/documentation/iseven.html)
+* [isPositive()](https://osofem.github.io/bigarith.js/documentation/ispositive.html)
+* [isNegative()](https://osofem.github.io/bigarith.js/documentation/isnegative.html)
