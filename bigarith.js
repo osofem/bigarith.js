@@ -1,5 +1,5 @@
 /**	
-*	BigArith.js - Written by Oso Oluwafemi Ebenezer
+*	bigarith.js - Written by Oso Oluwafemi Ebenezer
 *	The constructor for BigArith
 *	@param {string|number|null|BigArith} n Accepts no parameter, or number within the safe integer limit or string in "-123.456" form or  
 *	"negative one hundred and twenty three point four five six" form or a constant "PI" form or a BigArith object
@@ -597,7 +597,7 @@ BigArith.prototype.round=function(){
 /**	
 *	Round n to the nearest integer
 *	function round
-*	@param {string} n number to round e.g "0.5"
+*	@param {string|number|BigArith} n number to round e.g "0.5"
 *	@returns {BigArith} - n rounded to nearest whole number e.g "1"
 *	Dependent on toString(), static compare(), isPositive(), add(), subtract()
 */
@@ -618,15 +618,28 @@ BigArith.round=function(n){
 	return new BigArith(n);
 }
 
-//TODO==========
+/**	
+*	Format a number to a number of decimal places
+*	function toFixed
+*	@param {string|number|BigArith} d number of decimal place to return this.value in.
+*	@returns {BigArith} - this.value to a number of decimal places
+*	Dependent on static toFixed()
+*/
 BigArith.prototype.toFixed=function(d){
 	return BigArith.toFixed(this.value, d);
 }
 
-//TODO==========
+/**	
+*	Round n to the nearest integer
+*	function round
+*	@param {string|number|BigArith} n number to format
+*	@param {string|number|BigArith} d number of decimal place to return n in.
+*	@returns {BigArith} - n rounded to nearest whole number e.g "1"
+*	Dependent on toString(), static compare(), isInteger(), add(), subtract()
+*/
 BigArith.toFixed=function(n, d){
 	var e = new BigArith(d).floor().toString();
-	if(BigArith.compare(d, 0) == -1 || BigArith.compare(d, new BigArith().decimalSupport) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and "+ new BigArith().decimalSupport +"! " + e + " supplied.");
+	if(BigArith.compare(e, 0) == -1 || BigArith.compare(e, new BigArith().decimalSupport) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and "+ new BigArith().decimalSupport +"! " + e + " supplied.");
 	var n = new BigArith(n);
 	if(!n.isInteger()){
 		n = n.toString().split(".");
