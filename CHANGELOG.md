@@ -51,6 +51,14 @@
 * Added squareRoot() [unstable]
 
 ### v0.0.2
+#### Released - 30th June, 2017
+* Fixed some bugs
+* change max() to accept any length of arguments
+* change min() to accept any length of arguments
+
+### v0.0.3
+* make max and min accept mixture of numbers and arrays e.g. max(1, 2, 3, [4, 5, 6])
+* Added power
 * Added sin()
 * Added cos()
 * Added tan()
