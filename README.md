@@ -151,7 +151,7 @@ var ba = new BigArith("negative five million six hundred and thirty seven thousa
 console.log(ba.valueOf());//this outputs -5637865.32 to the console
 ```
 
-> NOTE: Use this function with caution as JavaScript numbers looses precision once it is greater than Number.MAX_SAFE_INTEGER and becomes "Infinity" when it's greater than Number.MAX_VALUE.
+> NOTE: Use this function with caution as JavaScript numbers looses precision once it is greater than Number.MAX_SAFE_INTEGER or lesser than Number.MIN_SAFE_INTEGER and becomes "Infinity" when it is greater than Number.MAX_VALUE and "-Infinity" when it is less than Number.MIN_VALUE.
 
 
 #### toWords() method
