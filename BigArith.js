@@ -3,13 +3,13 @@
 *	The constructor for BigArith
 *	@param {string|number|null|BigArith} n Accepts no parameter, or number within the safe integer limit or string in "-123.456" form or  
 *	"negative one hundred and twenty three point four five six" form or a constant "PI" form or a BigArith object
-*	Dependent on verify(), name() getter
+*	Dependent on verify(), getter name()
 */
 var BigArith=function(n){
 	//version
 	Object.defineProperty(this, 'version', {
 		writable: false,
-		value: "v0.0-beta0.4",
+		value: "v0.0.2",
 	});
 	
 	//Object name
@@ -352,6 +352,7 @@ BigArith.prototype.negate=function(){
 */
 BigArith.negate=function(n){
 	var n = new BigArith(n);
+	if(isNaN(n)) return NaN;
 	return (n.toString()[0] == "-")?new BigArith(n.toString().substr(1)):new BigArith("-"+n);
 }
 
@@ -586,12 +587,24 @@ BigArith.ceil=function(n){
 /**	
 *	Round this.value to the nearest integer
 *	function round
-*	@param {string} - this.value e.g "0.5"
 *	@returns {BigArith} - this.value rounded to nearest whole number e.g "1"
-*	Dependent on toString(), static compare(), isPositive(), add(), subtract()
+*	Dependent on static round()
 */
 BigArith.prototype.round=function(){
-	var n = this.value;
+	return BigArith.round(this.value);
+}
+
+/**	
+*	Round n to the nearest integer
+*	function round
+*	@param {string} n number to round e.g "0.5"
+*	@returns {BigArith} - n rounded to nearest whole number e.g "1"
+*	Dependent on toString(), static compare(), isPositive(), add(), subtract()
+*/
+BigArith.round=function(n){
+	var n = new BigArith(n);
+	if(isNaN(n)) return NaN;
+	n = n.toString();
 	if(n.indexOf(".")>-1){
 		n = n.split(".");
 		if(BigArith.compare(n[1][0], "5") >= 0){
@@ -657,16 +670,16 @@ BigArith.toFixed=function(n, d){
 /**	
 *	Random number between 0 and 1 (1 exclusive)
 *	function random
-*	@returns {string} - any number between 0 and 1 (1 exclusive)
+*	@returns {BigArith} - any number between 0 and 1 (1 exclusive)
 *	Dependent on Math.random(), floor(), toString(), valueOf()
 */
 BigArith.random=function(){
-	var len = new BigArith(Math.random()*201).floor().valueOf();
+	var len = new BigArith(Math.random()*new BigArith().decimalSupport).floor().valueOf();
 	var n = "0";
 	for(var i = 0; i < len; i++){
 		n += new BigArith(Math.random()*10).floor().toString();
 	}
-	return (n == "0")?n:("0."+n.slice(1));
+	return (n == "0")?new BigArith(n):(new BigArith("0."+n.slice(1)));
 }
 
 /**	
@@ -674,11 +687,14 @@ BigArith.random=function(){
 *	function randomInt
 *	@param {number|string|BigArith} min minimum integer that can be returned (inclusive)
 *	@param {number|string|BigArith} max maximum integer that can be returned (exclusive)
-*	@returns {string} - any integer between min and max
-*	Dependent on static random(), floor(), toString(), multiply(), subtract(), add()
+*	@returns {BigArith} - any integer between min and max
+*	Dependent on static random(), floor(), toString(), multiply(), subtract(), add(), ceil()
 */
 BigArith.randomInt=function(min, max){
-	return (new BigArith(BigArith.random()).multiply(BigArith.subtract(max, min)).add(min)).floor().toString();
+	var min = new BigArith(min).floor();
+	var max = new BigArith (max).ceil();
+	if(isNaN(min) || isNaN(max)) return NaN;
+	return (BigArith.random().multiply(BigArith.subtract(max, min)).add(min)).floor(); // floor((ran()*(max-min))+min)
 }
 
 /**	
@@ -931,6 +947,8 @@ BigArith.multiply=function(a, b){
 	var a = new BigArith(a);
 	var b = new BigArith(b);
 	var signFlag = "";
+	
+	if(isNaN(a) || isNaN(b)) return NaN;
 	
 	if(a.isNegative() && b.isPositive()){
 		signFlag = "-";
