@@ -1,7 +1,7 @@
 <html>
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
-	<bascript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></bascript>
-	<script src="../BigArith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></bascript>
+	<script src="../bigarith.js"></script>
 	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
 	<script src="../../assert/assert.js"></script>
 	<script>
@@ -23,7 +23,11 @@
 		
 		//Negative
 		assertDeepEqual(new BigArith("-45.456").round(), new BigArith("-45"));
+		assertDeepEqual(new BigArith("-45.5").round(), new BigArith("-46"));
 		assertDeepEqual(new BigArith("-75.756").round(), new BigArith("-76"));
-	
+		assertDeepEqual(new BigArith("-20.51").round(), new BigArith("-21"));
+		
+		assertDeepEqual(BigArith.round("-20.51"), new BigArith("-21"));
+		assertIsNaN(new BigArith(NaN).round());
 	</script>
 </html>

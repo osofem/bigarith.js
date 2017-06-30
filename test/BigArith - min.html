@@ -1,22 +1,29 @@
 <html>
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
-	<bascript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></bascript>
-	<script src="../BigArith.js"></script>
-	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
+	<bascript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></bascript>
+	<script src="../bigarith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.2/assert.js"></bascript>
 	<script src="../../assert/assert.js"></script>
 	<script>
 		var ba = new BigArith(2);
 		//min
-		assertDeepEqual(ba.min("2"), new BigArith("2"));
-		assertDeepEqual(ba.min(-2), new BigArith("-2"));
-		assertDeepEqual(ba.min("two"), new BigArith("2"));
+		assertDeepEqual(ba.min("2", 45, -98), new BigArith("-98"));
+		assertDeepEqual(ba.min(-2, -90), new BigArith("-90"));
+		assertDeepEqual(ba.min("one"), new BigArith("1"));
 		assertDeepEqual(ba.min("2.0"), new BigArith("2"));
-		assertDeepEqual(ba.min("negative two"), new BigArith("-2"));
+		assertDeepEqual(ba.min("negative two", -89, -234, 788), new BigArith("-234"));
 		assertDeepEqual(ba.min("-2"), new BigArith("-2"));
+		assertDeepEqual(ba.min(), new BigArith("2"));
+		
+		ba = new BigArith(NaN);
+		assertIsNaN(ba.min(-7));
 		
 		//Or
-		assertDeepEqual(BigArith.min("-165.8987", "165.898700000000000000000"), new BigArith("-165.8987"));
-		assertDeepEqual(BigArith.min("0.123568123", "-0.03455893"), new BigArith("-0.03455893"));
-		assertDeepEqual(BigArith.min("+0.03455893", "0.123568123"), new BigArith("0.03455893"));
+		assertDeepEqual(BigArith.min("-165.8987", "165.898700000000000000000", "345"), new BigArith("-165.8987"));
+		assertDeepEqual(BigArith.min("0.123568123", "-0.03455893", "-0.000989"), new BigArith("-0.03455893"));
+		assertDeepEqual(BigArith.min("0.93455893", "-0.123568123", "45.89"), new BigArith("-0.123568123"));
+		
+		assertIsNaN(BigArith.min("0.93455893", "-0.123568123", "45.89", NaN));
+		assertIsNaN(BigArith.min(NaN));
 	</script>
 </html>

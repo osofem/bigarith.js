@@ -1,7 +1,7 @@
 <html>
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
-	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
-	<script src="../BigArith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></xscript>
+	<script src="../bigarith.js"></script>
 	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
 	<script src="../../assert/assert.js"></script>
 	<script>
@@ -66,7 +66,9 @@
 		ba = new BigArith("0.5");
 		ba = ba.divide("0.866025403");
 		assertDeepEqual(ba, new BigArith("0.5773502697125848628253229195402712684630106629793629737209914153060935095918889575575186678444350436681128163165440078898008953670380959945120686026804689469368833283519744512621415563718746943"));
+		
 		//Throws Error
-		//assertThrow(BigArith.divide("2", "0"));
+		var args = ["2", "0"];
+		assertThrowError(BigArith.divide, args);// throws division by zero error
 	</script>
 </html>

@@ -1,7 +1,7 @@
 <html>
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
-	<xscript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></xscript>
-	<script src="../BigArith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></xscript>
+	<script src="../bigarith.js"></script>
 	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
 	<script src="../../assert/assert.js"></script>
 	<script>
@@ -31,7 +31,7 @@
 		
 		//You should be able to multiply BigArith constants with each other
 		d = new BigArith("PI");
-		assertEqual(d.multiply(new BigArith("LN2")).toString(), "2.177586090303602100915581648314782964026590759501797640494281136271974276198197990252499391727155529588333580775461968343434168766667144089326723041148851655636238013841713633410356925774208158270231891350052005706788");
+		assertEqual(d.multiply(new BigArith("SQRT2")).toString(), "4.4428829381583662470158809900606936986146216893756902230853956069564347930994739105753269347647652373634102126852287913643595985183456274923753463596744150232792788197558775331134536611013065221276530128699651998226703464396427443872524914465638657528888510274321473482059474372598508678988359454771357116435627029778988197239706041672623879529785423779364609989555472275672415037451495117097029786812");
 		
 		//Further example
 		var ai = new BigArith("one point five");
@@ -60,5 +60,8 @@
 		assertEqual(i.multiply("negative five point three eight").toWords(), "negative five thousand three hundred and eighty one point six one four");
 	
 		assertEqual(BigArith.multiply("two", 3).toString(), "6");
+		
+		console.log(BigArith.multiply("0.00789", "0.065"));
+		console.log();
 	</script>
 </html>

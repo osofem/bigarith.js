@@ -1,7 +1,7 @@
 <html>
 	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
-	<bascript src="https://cdn.rawgit.com/osofem/BigArith.js/v0.0-beta0.0/BigArith.js"></bascript>
-	<script src="../BigArith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></bascript>
+	<script src="../bigarith.js"></script>
 	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
 	<script src="../../assert/assert.js"></script>
 	<script>
@@ -13,7 +13,7 @@
 		assertDeepEqual(BigArith.modulus("2100", 2), new BigArith(0));
 		assertDeepEqual(BigArith.modulus("0", "2"), new BigArith(0));
 		
-		assertIsNaN(BigArith.modulus("2", "0"));
+		
 		
 		assertDeepEqual(BigArith.modulus("9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",2), new BigArith(1));
 		
@@ -33,5 +33,13 @@
 		assertDeepEqual(BigArith.modulus("0.9","0.2"), new BigArith("0.1"));
 		assertDeepEqual(BigArith.modulus("-0.9","0.2"), new BigArith("-0.1"));
 		assertDeepEqual(BigArith.modulus("-0.0009","0.2"), new BigArith("-0.0009"));
+		
+		assertIsNaN(BigArith.modulus("2", "0"));
+		assertIsNaN(BigArith.modulus(NaN, "2"));
+		assertIsNaN(BigArith.modulus(45, NaN));
+		
+		ba = new BigArith("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
+		console.log(BigArith.modulus("0", "8"));
+		console.log(459%-165.8987);
 	</script>
 </html>
