@@ -1,15 +1,15 @@
-# round()
-`round()` returns the value of a number rounded to the nearest integer. There is a method function and a static method function.
+# truncate()
+`truncate()` returns the integer part of a number by removing the fractional part. There is a method function and a static method function.
 
 #### Syntax
 ##### method function
 ```javascript
-ba.round();
+ba.truncate();
 ```
 
 ##### static method function
 ```javascript
-BigArith.round(n);
+BigArith.truncate(n);
 ```
  
 ### Parameters
@@ -18,19 +18,21 @@ BigArith.round(n);
 
 #### static method function
 ##### n - Required - {string|number|BigArith}
-The number to round to the nearest integer. This could be a string of digits, a number, or a BigArith object.
+The number to truncate. This could be a string of digits, a number, or a BigArith object.
 
 ### Return value
 #### method function - {BigArith}
-A BigArith object with its value equals to the nearest integer to the value of the BigArith object it is called on.
+A BigArith object with its value equals to the integer part of the value of the BigArith object it is called on.
 
 #### static method function - {BigArith}
-A BigArith object with its value equals to the nearest integer to parameter n.
+A BigArith object with its value equals to the integer part of parameter n.
 
 ### Description
-There are two functions which could be used, the *method function*, and the *static method function*. The method function takes no parameter and returns a BigArith object with its value equals to the nearest integer to the value of the BigArith object it is called on.
+There are two functions which could be used, the *method function*, and the *static method function*. The method function takes no parameter and returns a BigArith object with its value equals to the integer part of the value of the BigArith object it is called on.
 
-The static method function takes one parameter (n) and is always used as <code>BigArith.round()</code>. It returns a BigArith object with its value equals to the nearest integer to parameter n.
+The static method function takes one parameter (n) and is always used as `BigArith.truncate()`. It returns a BigArith object with its value equals to the integer part of parameter n.
+
+Unlike ceil(), floor(), and round(), truncate() does not do any rounding on the number. It just remove the fractional part and return the integer remaining.
 
 > Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 
@@ -41,24 +43,24 @@ The static method function takes one parameter (n) and is always used as <code>B
 #### Using method function
 ```javascript
 var ba = new BigArith("-45.456");
-ba = ba.round(); //BigArith object with value "-45"
+ba = ba.truncate(); //BigArith object with value "-45"
 
 ba = new BigArith("-45.5");
-ba = ba.round(); //BigArith object with value "-46"
+ba = ba.truncate(); //BigArith object with value "-45"
 
 ba = new BigArith("0.4");
-ba = ba.round(); //BigArith object with value "0"
+ba = ba.truncate(); //BigArith object with value "0"
 
 ba = new BigArith("0.5");
-ba = ba.round(); //BigArith object with value "1"
+ba = ba.truncate(); //BigArith object with value "0"
 ```
 
 #### Using the static method function
 ```javascript
-var ba = BigArith.round("-45.456"); //BigArith object with value "-45"
-ba = BigArith.round("-45.5"); //BigArith object with value "-46"
-ba = BigArith.round("0.4"); //BigArith object with value "0"
-ba = BigArith.round("0.5"); //BigArith object with value "1"
+var ba = BigArith.truncate("-45.456"); //BigArith object with value "-45"
+ba = BigArith.truncate("-45.5"); //BigArith object with value "-45"
+ba = BigArith.truncate("0.4"); //BigArith object with value "0"
+ba = BigArith.truncate("0.5"); //BigArith object with value "0"
 ```
 
 #### Method chaining
@@ -75,4 +77,4 @@ More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/
 * [ceil()](https://osofem.github.io/bigarith.js/documentation/ceil.html)
 * [floor()](https://osofem.github.io/bigarith.js/documentation/floor.html)
 * [negate()](https://osofem.github.io/bigarith.js/documentation/negate.html)
-* [truncate()](https://osofem.github.io/bigarith.js/documentation/truncate.html)
+* [round()](https://osofem.github.io/bigarith.js/documentation/round.html)

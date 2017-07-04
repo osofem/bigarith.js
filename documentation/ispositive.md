@@ -29,31 +29,31 @@ If the value of the BigArith object evaluates to "-0", false is returned.
 
 ```javascript
 var ba = new BigArith("-17031986");
-console.log(ba = ba.isPositive()); //logs false to the console
+console.log(ba.isPositive()); //logs false to the console
 
 ba = new BigArith("+17031986");
-console.log(ba = ba.isPositive()); //logs true to the console
+console.log(ba.isPositive()); //logs true to the console
 
 ba = new BigArith("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
-console.log(ba = ba.isPositive()); //logs true to the console
+console.log(ba.isPositive()); //logs true to the console
 
 ba = new BigArith("2.4");
-console.log(ba = ba.isPositive()); //logs true to the console
+console.log(ba.isPositive()); //logs true to the console
 
 ba = new BigArith("0");
-console.log(ba = ba.isPositive()); //logs true to the console 
+console.log(ba.isPositive()); //logs true to the console 
 
 ba = new BigArith("-0");
-console.log(ba = ba.isPositive()); //logs false to the console 
+console.log(ba.isPositive()); //logs false to the console 
 
 ba = new BigArith();
-console.log(ba = ba.isPositive()); //logs true to the console 
+console.log(ba.isPositive()); //logs true to the console 
 
 ba = new BigArith(null);
-console.log(ba = ba.isPositive()); //logs true to the console 
+console.log(ba.isPositive()); //logs true to the console 
 
 ba = new BigArith(NaN);
-console.log(ba = ba.isPositive()); //logs NaN to the console 
+console.log(ba.isPositive()); //logs NaN to the console 
 ```
 
 More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
