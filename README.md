@@ -14,7 +14,7 @@ Server-side usage
 
 Client-side usage
 1. Including the library from the rawgit.com CDN.<br>
-	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/bigarith.js/&lt;version tag&gt;/bigarith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace `&lt;version tag&gt;` with the version targeted e.g. `v1.0.0`. Check [versions](https://github.com/osofem/bigarith.js/tags) for the latest version (the latest version is always recommended).
+	You can do that by adding <code>&lt;script src=&quot;https&#58;&#47;&#47;cdn.rawgit.com/osofem/bigarith.js/&lt;version tag&gt;/bigarith.js&quot;&gt;&lt;/script&gt;</code> to your code. Replace <code>&lt;version tag&gt;</code> with the version targeted e.g. `v1.0.0`. Check [versions](https://github.com/osofem/bigarith.js/tags) for the latest version (the latest version is always recommended).
 2. Downloading the source from GitHub.com<br>
 	You can also download bigarith.js from [releases](https://github.com/osofem/bigarith.js/releases/) on github.com (the latest version is always recommended). Extract the files and include the bigarith.js file in your work.
 
