@@ -9,7 +9,7 @@ var BigArith=function(n){
 	//version
 	Object.defineProperty(this, 'version', {
 		writable: false,
-		value: "v0.0.2",
+		value: "v0.0.3",
 	});
 	
 	//Object name
@@ -213,6 +213,7 @@ BigArith.prototype.isPositive=function(){
 *	@return {boolean} - this.value is integer?
 */
 BigArith.prototype.isInteger=function(){
+	if(isNaN(this.value)) return NaN;
 	if(this.value.indexOf(".") == -1) return true;
 	return false;
 }
@@ -265,12 +266,12 @@ BigArith.prototype.squareRoot=function(){
 	var quotient = ps;
 	n = BigArith.subtract(n, BigArith.multiply(ps, ps));
 	//If reminder is 0, return result we have reached the end of calculation
-	if(BigArith.compare(n,0) == 0) return new BigArith(result);
+	if(BigArith.compare(n, 0) == 0) return new BigArith(result);
 	
 	//If we got here that means we have reminders
-	n = BigArith.multiply(n, 100);
+	n = BigArith.multiply(n, 100); //multiply reminder by 100
 	result +=  ".";
-	for(var count = 0; BigArith.compare(count, new BigArith().decimalSupport+1) <= 0; count++){
+	for(var count = 0; count <= new BigArith().decimalSupport+1; count++){
 		// take quotient double it and multiply by 10
 		var j = BigArith.multiply(quotient, 20); 
 		
@@ -281,7 +282,9 @@ BigArith.prototype.squareRoot=function(){
 			if(BigArith.compare(g, n) >= 0 || BigArith.compare(n, 0) == 0) break;
 		}
 		//If (j+i)*i > n or i == 10, reduce i by 1
+		var ji = BigArith.multiply(BigArith.add(j,i), i); //(j+i)*i
 		if(i == 10 || BigArith.compare(BigArith.multiply(BigArith.add(j,i), i), n) == 1) i--;
+		
 		n =  BigArith.multiply(BigArith.subtract(n, BigArith.multiply(BigArith.add(j,i), i)),100);//(n-(j+i)*i)*100;
 		result += i;
 		quotient += i.toString();
@@ -293,12 +296,12 @@ BigArith.prototype.squareRoot=function(){
 }
 
 /** [NEEDS OPTIMIZATION - incase n is very large]
-*	Returns the perfect square just below or equals to n
+*	Returns the square root of the perfect square just below or equals to n
 * 	function perfectSq
 *	@param - {string|number|BigArth} n The number to find the perfect square before
 *	@return {string} - the perfect square just less than n or n if it is a perfect square
 */
-BigArith.perfectSq=function(n){ 
+BigArith.perfectSq=function(n){
 	var n = new BigArith(n).toString();
 	//start counting from 1 to we get to i*i<=n
 	//This is not the best idea if n is very large
@@ -622,10 +625,10 @@ BigArith.round=function(n){
 *	Format a number to a number of decimal places
 *	function toFixed
 *	@param {string|number|BigArith} d number of decimal place to return this.value in.
-*	@returns {BigArith} - this.value to a number of decimal places
+*	@returns {string} - this.value to a number of decimal places
 *	Dependent on static toFixed()
 */
-BigArith.prototype.toFixed=function(d){
+BigArith.prototype.toFixed=function(d=0){
 	return BigArith.toFixed(this.value, d);
 }
 
@@ -634,18 +637,25 @@ BigArith.prototype.toFixed=function(d){
 *	function round
 *	@param {string|number|BigArith} n number to format
 *	@param {string|number|BigArith} d number of decimal place to return n in.
-*	@returns {BigArith} - n rounded to nearest whole number e.g "1"
+*	@returns {string} - n rounded to nearest whole number e.g "1"
 *	Dependent on toString(), static compare(), isInteger(), add(), subtract()
 */
-BigArith.toFixed=function(n, d){
+BigArith.toFixed=function(n, d=0){
 	var e = new BigArith(d).floor().toString();
+	if(isNaN(n) || isNaN(e)) return NaN;
 	if(BigArith.compare(e, 0) == -1 || BigArith.compare(e, new BigArith().decimalSupport) == 1 || isNaN(e)) throw new Error("Argument must be between 0 and "+ new BigArith().decimalSupport +"! " + e + " supplied.");
 	var n = new BigArith(n);
+	var sign = n.isNegative();
 	if(!n.isInteger()){
 		n = n.toString().split(".");
 		if(BigArith.compare(e, "0") == 0){
 			if(BigArith.compare(n[1][0], "5") >= 0){
-				n[0] = BigArith.add(n[0], "1").toString();
+				if(!sign){
+					n[0] = BigArith.add(n[0], "1").toString();
+				}
+				else{
+					n[0] = BigArith.subtract(n[0], "1").toString();
+				}
 				n[1] = "0";
 			}
 			else n[1] = "0";
@@ -963,21 +973,10 @@ BigArith.multiply=function(a, b){
 	
 	if(isNaN(a) || isNaN(b)) return NaN;
 	
-	if(a.isNegative() && b.isPositive()){
-		signFlag = "-";
-		a = a.abs();
-	}
-	if(a.isPositive() && b.isNegative()){
-		signFlag = "-";
-		b = b.abs();
-	}
-	if(a.isNegative() && b.isNegative()){
-		a = a.abs();
-		b = b.abs();
-	}
+	if((a.isNegative() || b.isNegative()) && !(a.isNegative() && b.isNegative())) signFlag = "-";
 	
-	a = a.toString().split(".");
-	b = b.toString().split(".");
+	a = a.abs().toString().split(".");
+	b = b.abs().toString().split(".");
 	(typeof(a[1]) == 'undefined')?a[1]="0":0;
 	(typeof(b[1]) == 'undefined')?b[1]="0":0;
 		
@@ -991,30 +990,36 @@ BigArith.multiply=function(a, b){
 	for(var i = a.length-1; i >= 0; i--){
 		var subSum = "";
 		var flag = 0;
-		for(var j = b.length-1; j >= 0; j--){
-			var z = a.charAt(i)*b.charAt(j)+flag;
-			if(z>9 && j>0){
-				flag = new BigArith(z/10).floor().valueOf();
-				subSum = (z-flag*10)+subSum;
-			}
-			else{
-				subSum = z+subSum;
-				flag = 0;
+		if(i < a.lastIndexOf(a.charAt(i))){ /* Do not need to compute already computed values, just copy answer from previous computation*/
+			results.push(results[a.length-1-a.lastIndexOf(a.charAt(i))]);
+			continue;
+		}
+		else{
+			for(var j = b.length-1; j >= 0; j--){
+				var z = a.charAt(i)*b.charAt(j)+flag;
+				if(z>9 && j>0){
+					flag = new BigArith(z/10).floor().valueOf();
+					subSum = (z-flag*10)+subSum;
+				}
+				else{
+					subSum = z+subSum;
+					flag = 0;
+				}
 			}
 		}
 		results.push(subSum);
 	}
-  
+	
+	// Sum all the answers
 	var result = "0";
-	for(var i = 0; i < results.length; i++){
-		result = BigArith.add(result, results[i]+"0".repeat(i));
-	}
+	for(var i = 0; i < results.length; i++) result = BigArith.add(result, results[i]+"0".repeat(i));
+	
+	//Put the decimal point in the apropriate place
 	result = result.toString(); //It's a BigArith
 	if(max*2 > result.length) result = "0".repeat(max*2 - result.length) + result; //Problem with slice if result is shorter than max*2
 	result = result.slice(0, result.length - max*2) + "." + result.slice(result.length - max*2);
-	result = result.replace(/^0+/g,"")/*Remove front zeros*/.replace(/\.0+$/g,"")/*Remove zeros after decimal point zeros*/;
-	if(result[0] == ".") result = "0" + result;
-	return ((result == "")? new BigArith("0") : new BigArith((signFlag+result)));
+	
+	return ((BigArith.compare(new BigArith(result),0) == 0)?new BigArith("0"):new BigArith(signFlag+result));
 }
 
 /**	
@@ -1077,7 +1082,7 @@ BigArith.divide=function(a, b){
 		denominatorIndex = b[1].length;
 	a = a[0] + ((typeof a[1] != "undefined")?a[1]:"");
 	b = b[0] + ((typeof b[1] != "undefined")?b[1]:"");
-	
+
 	var result = BigArith.divWithRem(a, b);
 	var rem = result[1];
 	var remResult = "0.";
@@ -1092,7 +1097,7 @@ BigArith.divide=function(a, b){
 	}
 	if(remResult == "0.") remResult = "0.0";
 	result = result[0] + "." + remResult.split(".")[1];
-	var dPosition = (result.indexOf(".") == -1)?result.length : result.indexOf(".");
+	var dPosition = (result.indexOf(".") == -1)?result.length : result.indexOf("."); // decimal position in answer
 	
 	//Numerator decimal point means we shift the decimal point in answer forward
 	//Denominator decimal point means we shift the decimal point in answer backward
@@ -1116,18 +1121,14 @@ BigArith.divide=function(a, b){
 				result[1].substr(dPosition)+ "0";
 		}
 	}
-	
-	if(BigArith.compare(count, new BigArith().decimalSupport+1) == 0)
-		return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
-	else
-		return new BigArith(result);
+	return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
 };
 
 /**	Return a/b (division of a/b)
 *	function divWithRem
 *	@param {string|number|BigArth} a The dividend. Must always be integers.
 *	@param {String|Number|BigArth} b The divisor. Must always be integers.
-*	@returns {Array of integers} - [quotient, reminder]
+*	@returns {Array of "strings of digits" (integer)} - [quotient, reminder]
 */
 BigArith.divWithRem=function(a, b){
 	var a = new BigArith(a);
@@ -1135,7 +1136,7 @@ BigArith.divWithRem=function(a, b){
 	if(isNaN(a) || isNaN(b))
 		return NaN;
 	
-	if(!a.isInteger() || !b.isInteger()) throw new Error("divWithRem accepts only integers. Non integers passed in");
+	if(!a.isInteger() || !b.isInteger()) throw new TypeError("divWithRem accepts only integers. Non integers passed in");
 	if(BigArith.compare(b, 0) == 0) throw new RangeError("Division by zero");
 	var signFlag = false;
 	
@@ -1168,7 +1169,7 @@ BigArith.divWithRem=function(a, b){
 	}
 	result = result.replace(/^0*/g,"");
 	result = (result == "")? "0" : result;
-	return [((signFlag)?"-":"")+result, hold];
+	return [((signFlag)?"-":"")+result, hold.toString()];
 };
 	
 /**	
@@ -1202,5 +1203,4 @@ BigArith.prototype.w_Dict2=function(w){
 	w_Dict["0".repeat(3)] = "thousand"; w_Dict["0".repeat(6)]="million";w_Dict["0".repeat(9)]="billion";w_Dict["0".repeat(12)]="trillion";w_Dict["0".repeat(15)]="quadrillion";w_Dict["0".repeat(18)]="quintillion";w_Dict["0".repeat(21)]="sextillion";w_Dict["0".repeat(24)]="septillion";w_Dict["0".repeat(27)]="octillion";w_Dict["0".repeat(30)]="nonillion";w_Dict["0".repeat(33)]="decillion";w_Dict["0".repeat(36)]="undecillion";w_Dict["0".repeat(39)]="duodecillion";w_Dict["0".repeat(42)]="tredecillion";w_Dict["0".repeat(45)]="quattuordecillion";w_Dict["0".repeat(48)]="quindecillion";w_Dict["0".repeat(51)]="sexdecillion";w_Dict["0".repeat(54)]="septendecillion";w_Dict["0".repeat(57)]="octodecillion";w_Dict["0".repeat(60)]="novemdecillion";w_Dict["0".repeat(63)]="vigintillion";w_Dict["0".repeat(66)]="unvigintillion";w_Dict["0".repeat(69)]="duovigintillion";w_Dict["0".repeat(72)]="trevigintillion";w_Dict["0".repeat(75)]="quattuorvigintillion";w_Dict["0".repeat(78)]="quinvigintillion";w_Dict["0".repeat(81)]="sexvigintillion";w_Dict["0".repeat(84)]="septenvigintillion";w_Dict["0".repeat(87)]="octavigintillion";w_Dict["0".repeat(90)]="novemvigintillion";w_Dict["0".repeat(93)]="trigintillion";w_Dict["0".repeat(96)]="untrigintillion";w_Dict["0".repeat(99)]="duotrigintillion";w_Dict["0".repeat(102)]="tretrigintillion";w_Dict["0".repeat(105)]="quattuortrigintillion";w_Dict["0".repeat(108)]="quintrigintillion";w_Dict["0".repeat(111)]="sextrigintillion";w_Dict["0".repeat(114)]="septentrigintillion";w_Dict["0".repeat(117)]="octotrigintillion";w_Dict["0".repeat(120)]="novemtrigintillion";w_Dict["0".repeat(123)]="quadragintillion";w_Dict["0".repeat(126)]="unquadragintillion";w_Dict["0".repeat(129)]="duoquadragintillion";w_Dict["0".repeat(132)]="trequadragintillion";w_Dict["0".repeat(135)]="quattuorquadragintillion";w_Dict["0".repeat(138)]="quinquadragintillion";w_Dict["0".repeat(141)]="sexquadragintillion";w_Dict["0".repeat(144)]="septenquadragintillion";w_Dict["0".repeat(147)]="octaquadragintillion";w_Dict["0".repeat(150)]="novemquadragintillion";w_Dict["0".repeat(153)]="quinquagintillion";w_Dict["0".repeat(156)]="unquinquagintillion";w_Dict["0".repeat(159)]="duoquinquagintillion";w_Dict["0".repeat(162)]="trequinquagintillion";w_Dict["0".repeat(165)]="quattuorquinquagintillion";w_Dict["0".repeat(168)]="quinquinquagintillion";w_Dict["0".repeat(171)]="sexquinquagintillion";w_Dict["0".repeat(174)]="septenquinquagintillion";w_Dict["0".repeat(177)]="octaquinquagintillion";w_Dict["0".repeat(180)]="novemquinquagintillion";w_Dict["0".repeat(183)]="sexagintillion";w_Dict["0".repeat(186)]="unsexagintillion";w_Dict["0".repeat(189)]="duosexagintillion";w_Dict["0".repeat(192)]="tresexagintillion";w_Dict["0".repeat(195)]="quattuorsexagintillion";w_Dict["0".repeat(198)]="quinsexagintillion";w_Dict["0".repeat(201)]="sexsexagintillion";w_Dict["0".repeat(204)]="septensexagintillion";w_Dict["0".repeat(207)]="octasexagintillion";w_Dict["0".repeat(210)]="novemsexagintillion";w_Dict["0".repeat(213)]="septuagintillion";w_Dict["0".repeat(216)]="unseptuagintillion";w_Dict["0".repeat(219)]="duoseptuagintillion";w_Dict["0".repeat(222)]="treseptuagintillion";w_Dict["0".repeat(225)]="quattuorseptuagintillion";w_Dict["0".repeat(228)]="quinseptuagintillion";w_Dict["0".repeat(231)]="sexseptuagintillion";w_Dict["0".repeat(234)]="septenseptuagintillion";w_Dict["0".repeat(237)]="octaseptuagintillion";w_Dict["0".repeat(240)]="novemseptuagintillion";w_Dict["0".repeat(243)]="octagintillion";w_Dict["0".repeat(246)]="unoctogintillion";w_Dict["0".repeat(249)]="duooctogintillion";w_Dict["0".repeat(252)]="treoctogintillion";w_Dict["0".repeat(255)]="quattuoroctogintillion";w_Dict["0".repeat(258)]="quinoctogintillion";w_Dict["0".repeat(261)]="sexoctogintillion";w_Dict["0".repeat(264)]="septenoctogintillion";w_Dict["0".repeat(267)]="octaoctogintillion";w_Dict["0".repeat(270)]="novemoctogintillion";w_Dict["0".repeat(273)]="nonagintillion";w_Dict["0".repeat(276)]="unnonagintillion";w_Dict["0".repeat(279)]="duononagintillion";w_Dict["0".repeat(282)]="trenonagintillion";w_Dict["0".repeat(285)]="quattuornonagintillion";w_Dict["0".repeat(288)]="quinnonagintillion";w_Dict["0".repeat(291)]="sexnonagintillion";w_Dict["0".repeat(294)]="septennonagintillion";w_Dict["0".repeat(297)]="octanonagintillion";w_Dict["0".repeat(300)]="novemnonagintillion";w_Dict["0".repeat(303)]="centillion";w_Dict["0".repeat(306)]="cenuntillion";w_Dict["0".repeat(309)]="cendotillion";w_Dict["0".repeat(312)]="centretillion";w_Dict["0".repeat(315)]="cenquattuortillion";w_Dict["0".repeat(318)]="cenquintillion";w_Dict["0".repeat(321)]="censextillion";w_Dict["0".repeat(324)]="censeptentillion";w_Dict["0".repeat(327)]="cenoctotillion";w_Dict["0".repeat(330)]="cennovemtillion";w_Dict["0".repeat(333)]="cendecillion";w_Dict["0".repeat(336)]="cenundecillion";w_Dict["0".repeat(339)]="cendodecillion";w_Dict["0".repeat(342)]="centredecillion";w_Dict["0".repeat(345)]="cenquattuordecillion";w_Dict["0".repeat(348)]="cenquindecillion";w_Dict["0".repeat(351)]="censexdecillion";w_Dict["0".repeat(354)]="censeptendecillion";w_Dict["0".repeat(357)]="cenoctodecillion";w_Dict["0".repeat(360)]="cennovemdecillion";w_Dict["0".repeat(363)]="cenvigintillion";w_Dict["0".repeat(366)]="cenunvigintillion";w_Dict["0".repeat(369)]="cendovigintillion";w_Dict["0".repeat(372)]="centrevigintillion";w_Dict["0".repeat(375)]="cenquattuorvigintillion";w_Dict["0".repeat(378)]="cenquinvigintillion";w_Dict["0".repeat(381)]="censexvigintillion";w_Dict["0".repeat(384)]="censeptenvigintillion";w_Dict["0".repeat(387)]="cenoctovigintillion";w_Dict["0".repeat(390)]="cennovemvigintillion";w_Dict["0".repeat(393)]="centrigintillion";w_Dict["0".repeat(396)]="cenuntrigintillion";w_Dict["0".repeat(399)]="cendotrigintillion";w_Dict["0".repeat(402)]="centretrigintillion";w_Dict["0".repeat(405)]="cenquattuortrigintillion";w_Dict["0".repeat(408)]="cenquintrigintillion";w_Dict["0".repeat(411)]="censextrigintillion";w_Dict["0".repeat(414)]="censeptentrigintillion";w_Dict["0".repeat(417)]="cenoctotrigintillion";w_Dict["0".repeat(420)]="cennovemtrigintillion";w_Dict["0".repeat(423)]="cenquadragintillion";w_Dict["0".repeat(426)]="cenunquadragintillion";w_Dict["0".repeat(429)]="cendoquadragintillion";w_Dict["0".repeat(432)]="centrequadragintillion";w_Dict["0".repeat(435)]="cenquattuorquadragintillion";w_Dict["0".repeat(438)]="cenquinquadragintillion";w_Dict["0".repeat(441)]="censexquadragintillion";w_Dict["0".repeat(444)]="censeptenquadragintillion";w_Dict["0".repeat(447)]="cenoctoquadragintillion";w_Dict["0".repeat(450)]="cennovemquadragintillion";w_Dict["0".repeat(453)]="cenquinquagintillion";w_Dict["0".repeat(456)]="cenunquinquagintillion";w_Dict["0".repeat(459)]="cendoquinquagintillion";w_Dict["0".repeat(462)]="centrequinquagintillion";w_Dict["0".repeat(465)]="cenquattuorquinquagintillion";w_Dict["0".repeat(468)]="cenquinquinquagintillion";w_Dict["0".repeat(471)]="censexquinquagintillion";w_Dict["0".repeat(474)]="censeptenquinquagintillion";w_Dict["0".repeat(477)]="cenoctoquinquagintillion";w_Dict["0".repeat(480)]="cennovemquinquagintillion";w_Dict["0".repeat(483)]="censexagintillion";w_Dict["0".repeat(486)]="cenunsexagintillion";w_Dict["0".repeat(489)]="cendosexagintillion";w_Dict["0".repeat(492)]="centresexagintillion";w_Dict["0".repeat(495)]="cenquattuorsexagintillion";w_Dict["0".repeat(498)]="cenquinsexagintillion";w_Dict["0".repeat(501)]="censexsexagintillion";w_Dict["0".repeat(504)]="censeptensexagintillion";w_Dict["0".repeat(507)]="cenoctosexagintillion";w_Dict["0".repeat(510)]="cennovemsexagintillion";w_Dict["0".repeat(513)]="censeptuagintillion";w_Dict["0".repeat(516)]="cenunseptuagintillion";w_Dict["0".repeat(519)]="cendoseptuagintillion";w_Dict["0".repeat(522)]="centreseptuagintillion";w_Dict["0".repeat(525)]="cenquattuorseptuagintillion";w_Dict["0".repeat(528)]="cenquinseptuagintillion";w_Dict["0".repeat(531)]="censexseptuagintillion";w_Dict["0".repeat(534)]="censeptenseptuagintillion";w_Dict["0".repeat(537)]="cenoctoseptuagintillion";w_Dict["0".repeat(540)]="cennovemseptuagintillion";w_Dict["0".repeat(543)]="cenoctogintillion";w_Dict["0".repeat(546)]="cenunoctogintillion";w_Dict["0".repeat(549)]="cendooctogintillion";w_Dict["0".repeat(552)]="centreoctogintillion";w_Dict["0".repeat(555)]="cenquattuoroctogintillion";w_Dict["0".repeat(558)]="cenquinoctogintillion";w_Dict["0".repeat(561)]="censexoctogintillion";w_Dict["0".repeat(564)]="censeptenoctogintillion";w_Dict["0".repeat(567)]="cenoctooctogintillion";w_Dict["0".repeat(570)]="cennovemoctogintillion";w_Dict["0".repeat(573)]="cennonagintillion";w_Dict["0".repeat(576)]="cenunnonagintillion";w_Dict["0".repeat(579)]="cendononagintillion";w_Dict["0".repeat(582)]="centrenonagintillion";w_Dict["0".repeat(585)]="cenquattuornonagintillion";w_Dict["0".repeat(588)]="cenquinnonagintillion";w_Dict["0".repeat(591)]="censexnonagintillion";w_Dict["0".repeat(594)]="censeptennonagintillion";w_Dict["0".repeat(597)]="cenoctononagintillion";w_Dict["0".repeat(600)]="cennovemnonagintillion";w_Dict["0".repeat(603)]="duocentillion";w_Dict["0".repeat(606)]="duocenuntillion";w_Dict["0".repeat(609)]="duocendotillion";w_Dict["0".repeat(612)]="duocentretillion";w_Dict["0".repeat(615)]="duocenquattuortillion";w_Dict["0".repeat(618)]="duocenquintillion";w_Dict["0".repeat(621)]="duocensextillion";w_Dict["0".repeat(624)]="duocenseptentillion";w_Dict["0".repeat(627)]="duocenoctotillion";w_Dict["0".repeat(630)]="duocennovemtillion";w_Dict["0".repeat(633)]="duocendecillion";w_Dict["0".repeat(636)]="duocenundecillion";w_Dict["0".repeat(639)]="duocendodecillion";w_Dict["0".repeat(642)]="duocentredecillion";w_Dict["0".repeat(645)]="duocenquattuordecillion";w_Dict["0".repeat(648)]="duocenquindecillion";w_Dict["0".repeat(651)]="duocensexdecillion";w_Dict["0".repeat(654)]="duocenseptendecillion";w_Dict["0".repeat(657)]="duocenoctodecillion";w_Dict["0".repeat(660)]="duocennovemdecillion";w_Dict["0".repeat(663)]="duocenvigintillion";w_Dict["0".repeat(666)]="duocenunvigintillion";w_Dict["0".repeat(669)]="duocendovigintillion";w_Dict["0".repeat(672)]="duocentrevigintillion";w_Dict["0".repeat(675)]="duocenquattuorvigintillion";w_Dict["0".repeat(678)]="duocenquinvigintillion";w_Dict["0".repeat(681)]="duocensexvigintillion";w_Dict["0".repeat(684)]="duocenseptenvigintillion";w_Dict["0".repeat(687)]="duocenoctovigintillion";w_Dict["0".repeat(690)]="duocennovemvigintillion";w_Dict["0".repeat(693)]="duocentrigintillion";w_Dict["0".repeat(696)]="duocenuntrigintillion";w_Dict["0".repeat(699)]="duocendotrigintillion";w_Dict["0".repeat(702)]="duocentretrigintillion";w_Dict["0".repeat(705)]="duocenquattuortrigintillion";w_Dict["0".repeat(708)]="duocenquintrigintillion";w_Dict["0".repeat(711)]="duocensextrigintillion";w_Dict["0".repeat(714)]="duocenseptentrigintillion";w_Dict["0".repeat(717)]="duocenoctotrigintillion";w_Dict["0".repeat(720)]="duocennovemtrigintillion";w_Dict["0".repeat(723)]="duocenquadragintillion";w_Dict["0".repeat(726)]="duocenunquadragintillion";w_Dict["0".repeat(729)]="duocendoquadragintillion";w_Dict["0".repeat(732)]="duocentrequadragintillion";w_Dict["0".repeat(735)]="duocenquattuorquadragintillion";w_Dict["0".repeat(738)]="duocenquinquadragintillion";w_Dict["0".repeat(741)]="duocensexquadragintillion";w_Dict["0".repeat(744)]="duocenseptenquadragintillion";w_Dict["0".repeat(747)]="duocenoctoquadragintillion";w_Dict["0".repeat(750)]="duocennovemquadragintillion";w_Dict["0".repeat(753)]="duocenquinquagintillion";w_Dict["0".repeat(756)]="duocenunquinquagintillion";w_Dict["0".repeat(759)]="duocendoquinquagintillion";w_Dict["0".repeat(762)]="duocentrequinquagintillion";w_Dict["0".repeat(765)]="duocenquattuorquinquagintillion";w_Dict["0".repeat(768)]="duocenquinquinquagintillion";w_Dict["0".repeat(771)]="duocensexquinquagintillion";w_Dict["0".repeat(774)]="duocenseptenquinquagintillion";w_Dict["0".repeat(777)]="duocenoctoquinquagintillion";w_Dict["0".repeat(780)]="duocennovemquinquagintillion";w_Dict["0".repeat(783)]="duocensexagintillion";w_Dict["0".repeat(786)]="duocenunsexagintillion";w_Dict["0".repeat(789)]="duocendosexagintillion";w_Dict["0".repeat(792)]="duocentresexagintillion";w_Dict["0".repeat(795)]="duocenquattuorsexagintillion";w_Dict["0".repeat(798)]="duocenquinsexagintillion";w_Dict["0".repeat(801)]="duocensexsexagintillion";w_Dict["0".repeat(804)]="duocenseptensexagintillion";w_Dict["0".repeat(807)]="duocenoctosexagintillion";w_Dict["0".repeat(810)]="duocennovemsexagintillion";w_Dict["0".repeat(813)]="duocenseptuagintillion";w_Dict["0".repeat(816)]="duocenunseptuagintillion";w_Dict["0".repeat(819)]="duocendoseptuagintillion";w_Dict["0".repeat(822)]="duocentreseptuagintillion";w_Dict["0".repeat(825)]="duocenquattuorseptuagintillion";w_Dict["0".repeat(828)]="duocenquinseptuagintillion";w_Dict["0".repeat(831)]="duocensexseptuagintillion";w_Dict["0".repeat(834)]="duocenseptenseptuagintillion";w_Dict["0".repeat(837)]="duocenoctoseptuagintillion";w_Dict["0".repeat(840)]="duocennovemseptuagintillion";w_Dict["0".repeat(843)]="duocenoctogintillion";w_Dict["0".repeat(846)]="duocenunoctogintillion";w_Dict["0".repeat(849)]="duocendooctogintillion";w_Dict["0".repeat(852)]="duocentreoctogintillion";w_Dict["0".repeat(855)]="duocenquattuoroctogintillion";w_Dict["0".repeat(858)]="duocenquinoctogintillion";w_Dict["0".repeat(861)]="duocensexoctogintillion";w_Dict["0".repeat(864)]="duocenseptenoctogintillion";w_Dict["0".repeat(867)]="duocenoctooctogintillion";w_Dict["0".repeat(870)]="duocennovemoctogintillion";w_Dict["0".repeat(873)]="duocennonagintillion";w_Dict["0".repeat(876)]="duocenunnonagintillion";w_Dict["0".repeat(879)]="duocendononagintillion";w_Dict["0".repeat(882)]="duocentrenonagintillion";w_Dict["0".repeat(885)]="duocenquattuornonagintillion";w_Dict["0".repeat(888)]="duocenquinnonagintillion";w_Dict["0".repeat(891)]="duocensexnonagintillion";w_Dict["0".repeat(894)]="duocenseptennonagintillion";w_Dict["0".repeat(897)]="duocenoctononagintillion";w_Dict["0".repeat(900)]="duocennovemnonagintillion";w_Dict["0".repeat(903)]="trecentillion";w_Dict["0".repeat(906)]="trecenuntillion";w_Dict["0".repeat(909)]="trecendotillion";w_Dict["0".repeat(912)]="trecentretillion";w_Dict["0".repeat(915)]="trecenquattuortillion";w_Dict["0".repeat(918)]="trecenquintillion";w_Dict["0".repeat(921)]="trecensextillion";w_Dict["0".repeat(924)]="trecenseptentillion";w_Dict["0".repeat(927)]="trecenoctotillion";w_Dict["0".repeat(930)]="trecennovemtillion";w_Dict["0".repeat(933)]="trecendecillion";w_Dict["0".repeat(936)]="trecenundecillion";w_Dict["0".repeat(939)]="trecendodecillion";w_Dict["0".repeat(942)]="trecentredecillion";w_Dict["0".repeat(945)]="trecenquattuordecillion";w_Dict["0".repeat(948)]="trecenquindecillion";w_Dict["0".repeat(951)]="trecensexdecillion";w_Dict["0".repeat(954)]="trecenseptendecillion";w_Dict["0".repeat(957)]="trecenoctodecillion";w_Dict["0".repeat(960)]="trecennovemdecillion";w_Dict["0".repeat(963)]="trecenvigintillion";w_Dict["0".repeat(966)]="trecenunvigintillion";w_Dict["0".repeat(969)]="trecendovigintillion";w_Dict["0".repeat(972)]="trecentrevigintillion";w_Dict["0".repeat(975)]="trecenquattuorvigintillion";w_Dict["0".repeat(978)]="trecenquinvigintillion";w_Dict["0".repeat(981)]="trecensexvigintillion";w_Dict["0".repeat(984)]="trecenseptenvigintillion";w_Dict["0".repeat(987)]="trecenoctovigintillion";w_Dict["0".repeat(990)]="trecennovemvigintillion";w_Dict["0".repeat(993)]="trecentrigintillion";w_Dict["0".repeat(996)]="trecenuntrigintillion";w_Dict["0".repeat(999)]="trecendotrigintillion";w_Dict["0".repeat(1002)]="trecentretrigintillion";
 	return w_Dict[w];
 }
-if(typeof module != 'undefined')
-	module.exports = BigArith;
+if(typeof module != 'undefined') module.exports = BigArith;

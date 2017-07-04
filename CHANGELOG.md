@@ -57,8 +57,17 @@
 * change min() to accept any length of arguments
 
 ### v0.0.3
+#### Released - 04th July, 2017
+* Documentation update
+* Fixed some bugs
+
+
+### Planned to do!
 * make max and min accept mixture of numbers and arrays e.g. max(1, 2, 3, [4, 5, 6])
-* Added power
-* Added sin()
-* Added cos()
-* Added tan()
+* Add power()
+* Add sin()
+* Add cos()
+* Add tan()
+* Add log()
+* Add log10()
+* Improve squareRoot()
