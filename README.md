@@ -53,7 +53,7 @@ var ba = new BigArith(12345); //initialize ba to a BigArith object of value "123
 ```
 The number must be between the `Number.MIN_SAFE_INTEGER` (-9007199254740991) and `Number.MAX_SAFE_INTEGER` (9007199254740991) limits else a `RangeError` will be thrown. <em>Please note that only integers are recommended for this method</em> because of the floating point precision _problem_ in JavaScript (which is one of the problems bigarith.js aim to solve). 
 
-Doing `var ba = new BigArith(0.45);` might still be considered _"safe"_ but some could be tempted to do `var ba = new BigArith(0.1 \* 0.2);`. As it is known `0.1 \* 0.2` will not give `0.02` in JavaScript but rather `0.020000000000000004`. Therefore, it is better to avoid initializing fractional numbers this way.
+Doing `var ba = new BigArith(0.45);` might still be considered _"safe"_ but some could be tempted to do `var ba = new BigArith(0.1*0.2);`. As it is known `0.1*0.2` will not give `0.02` in JavaScript but rather `0.020000000000000004`. Therefore, it is better to avoid initializing fractional numbers this way.
 
 > It is recommended fractional numbers are initialized with strings.
 > See [here](#init_string).
