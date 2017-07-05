@@ -9,6 +9,42 @@
 		var y = new BigArith("zero point three");
 		var z = new BigArith(7.65);
 		
+		var r = new BigArith("-1.35");
+		assertEqual(r.toFixed(0), (-1.35).toFixed(0));
+		
+		var r = new BigArith("-1.35");
+		assertEqual(r.toFixed(1), (-1.35).toFixed(1));
+		
+		var r = new BigArith("-1.45");
+		assertEqual(r.toFixed(0), (-1.45).toFixed(0));
+		
+		var r = new BigArith("-1.55");
+		assertEqual(r.toFixed(0), (-1.55).toFixed(0));
+		
+		var r = new BigArith("-1.65");
+		assertEqual(r.toFixed(0), (-1.65).toFixed(0));
+		
+		var r = new BigArith("-1.35");
+		assertEqual(r.toFixed(1), (-1.35).toFixed(1));
+		
+		var r = new BigArith("-1.55");
+		assertEqual(r.toFixed(1), (-1.55).toFixed(1));
+		
+		var r = new BigArith("-1.45");
+		assertEqual(r.toFixed(1), "-1.5");
+		
+		var r = new BigArith("-1.46");
+		assertEqual(r.toFixed(1), (-1.46).toFixed(1));
+		
+		var r = new BigArith("-1.55");
+		assertEqual(r.toFixed(1), (-1.55).toFixed(1));
+		
+		var r = new BigArith("-1.65");
+		assertEqual(r.toFixed(1), "-1.7");
+		
+		var r = new BigArith("9");
+		console.log(r.toFixed("5.6"));
+		
 		var a = new BigArith(".05"); 
 		var b = new BigArith("eighty three point seven three"); 
 		var c = new BigArith("56857675753763473473463574574575693849335.567787856456453");

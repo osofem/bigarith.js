@@ -60,5 +60,8 @@
 		assertDeepEqual(BigArith.subtract("0.9","0.1"), new BigArith("0.8"));
 		assertDeepEqual(BigArith.subtract("1","-0.1"), new BigArith("1.1"));
 		
+		var ba = new BigArith("3");
+		console.log(ba.subtract(NaN));
+		
 	</script>
 </html>

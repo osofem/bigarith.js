@@ -25,5 +25,8 @@
 		
 		assertIsNaN(BigArith.min("0.93455893", "-0.123568123", "45.89", NaN));
 		assertIsNaN(BigArith.min(NaN));
+		
+		assertDeepEqual(BigArith.min(2, 3, "5", [3, "8", new BigArith("24"), "two",[1]]), new BigArith("1"));
+		assertDeepEqual(BigArith.min(2, 3, "5", [3, "8", new BigArith("0"), "fifty"], new BigArith("30")), new BigArith("0"));
 	</script>
 </html>

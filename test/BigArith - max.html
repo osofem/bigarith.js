@@ -27,6 +27,9 @@
 		assertDeepEqual(BigArith.max("45", "4590", "+0.03455893", "0.123568123"), new BigArith("4590"));
 		assertDeepEqual(BigArith.max(), new BigArith("0"));
 		
+		assertDeepEqual(BigArith.max(2, 3, "5", [3, "8", new BigArith("24"), "two",[78, 8]]), new BigArith("78"));
+		assertDeepEqual(BigArith.max(2, 3, "5", [3, "8", new BigArith("24"), "fifty"], new BigArith("30")), new BigArith("50"));
+		
 		assertIsNaN(BigArith.max("4", NaN));
 		assertIsNaN(BigArith.max(NaN, "4"));
 	</script>

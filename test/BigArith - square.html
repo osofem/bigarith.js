@@ -19,5 +19,10 @@
 		assertDeepEqual(a.square(), new BigArith("2058.346161"));
 		assertDeepEqual(b.square(), new BigArith("115940.25"));
 		assertDeepEqual(c.square(), new BigArith("3176429685394293.52560225"));
+		
+		var ba = new BigArith("-45.5");
+console.log(ba = ba.square());
+		
+		assertIsNaN(new BigArith(NaN).square());
 	</script>
 </html>
