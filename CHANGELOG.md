@@ -61,9 +61,12 @@
 * Documentation update
 * Fixed some bugs
 
+### v0.0.4
+#### Released - 04th July, 2017
+* Fixed a bug in divide in which a single digit divided by a 200 decimal place digits returns a 1 decimal place answer instead of a 200 decimal place answer.
+* changed max() and min() to also accept arrays of string, numbers or BigArith objects to any depth.
 
 ### Planned to do!
-* make max and min accept mixture of numbers and arrays e.g. max(1, 2, 3, [4, 5, 6])
 * Add power()
 * Add sin()
 * Add cos()

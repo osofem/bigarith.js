@@ -56,9 +56,9 @@ The number must be between the `Number.MIN_SAFE_INTEGER` (-9007199254740991) and
 Doing `var ba = new BigArith(0.45);` might still be considered _"safe"_ but some could be tempted to do `var ba = new BigArith(0.1*0.2);`. As it is known `0.1*0.2` will not give `0.02` in JavaScript but rather `0.020000000000000004`. Therefore, it is better to avoid initializing fractional numbers this way.
 
 > It is recommended fractional numbers are initialized with strings.
-> See [here](#init_string).
+> See [here](#3-initiating-with-string).
 
-##### 3. <span id="init_string">Initiating with string</span>
+##### 3. <span id="#3-initiating-with-string">Initiating with string</span>
 ###### Server-side
 ```javascript
 var BigArith = require('bigarith.js');
@@ -99,7 +99,7 @@ var bd = new BigArith("point two three seven"); //initialize bd to a BigArith ob
 ```
 `bigarith.js` accepts english words of up to (&#177;1x10^1,005)-0.0000{insert 195 more zeroes}01 (i.e. nine hundred and ninety nine trecentretrigintillion point nine nine nine nine nine {insert 195 more "nine"'s}). That is 1,005 length of characteristic (parts before the decimal point) and 200 length of mantissa (parts after the decimal point). 
 
-> *This limit only applies to when initializing with words, [initializing with strings](#init_string) can be to any length. 
+> *This limit only applies to when initializing with words, [initializing with strings](#3-initiating-with-string) can be to any length. 
 
 A negative number <em>should</em> start with the word `"negative"`, a positive number can start with the "positive" word but this can be outrightly omitted. The mantissa part <em>should be spelt out</em> after the word `point` or else the word will evaluate to `NaN`.
 
@@ -137,7 +137,7 @@ var bb = new BigArith(ba); //initialize bb to the value of ba (i.e. "3")
 ```
 
 ### Functions
-#### <span id="toString">toString() method</span>
+#### <span id="tostring-method">toString() method</span>
 The `toString()` method returns the value of the BigArith object as a strings of digits.
 
 ```javascript
@@ -164,7 +164,7 @@ consoole.log(ba.toString()); //this outputs "99999999999999999999999999999999999
 #### toWords() method
 The `toWords` method returns the value of the BigArith object in English words using the [Short Scale](https://osofem.github.io/bigarith.js/documentation/short_scales.html) naming system. If the length of the object's characteristic part (part before the decimal point) is greater than 1,005 or the length of the mantissa part (part after the decimal point) is greater than 200, a `RangeError` is thrown.
 
-> *This limit only applies to the `toWords()` method function, [toString()](#toString) outputs the value of the BigArith object to any lenth as a string of digits.*
+> *This limit only applies to the `toWords()` method function, [toString()](#tostring-method) outputs the value of the BigArith object to any lenth as a string of digits.*
 
 ```javascript
 var ba = new BigArith(1e3);

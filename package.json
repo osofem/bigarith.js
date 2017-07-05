@@ -1,7 +1,7 @@
 {
   "name": "bigarith.js",
-  "version": "v0.0.3",
-  "description": "Do very large math!",
+  "version": "v0.0.4",
+  "description": "Do very large math to precision!",
   "main": "bigarith.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

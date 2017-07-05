@@ -9,7 +9,7 @@ var BigArith=function(n){
 	//version
 	Object.defineProperty(this, 'version', {
 		writable: false,
-		value: "v0.0.3",
+		value: "v0.0.4",
 	});
 	
 	//Object name
@@ -485,12 +485,12 @@ BigArith.prototype.min=function(){
 /**	
 *	Returns the minimum between a and b
 *	function min
-*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@param {string|number|BigArth|Array} - optional - zero or more parameters
 *	@returns {BigArith} - The smallest number between parameters
 *	Dependent on static compare(), valueOf()
 */
 BigArith.min=function(){
-	var args = arguments;
+	var args = BigArith.extract(arguments);
 	var result = new BigArith(args[0]);
 	for(var i = 0; i < args.length; i++){
 		if(isNaN(new BigArith(args[i]).valueOf())) return NaN;
@@ -513,12 +513,12 @@ BigArith.prototype.max=function(){
 /**	
 *	Returns the maximum between a and b
 *	function max
-*	@param {string|number|BigArth} - optional - zero or more parameters
+*	@param {string|number|BigArth|Array} - optional - zero or more parameters
 *	@returns {BigArith} - The largest number between parameters
 *	Dependent on static compare(), valueOf()
 */
 BigArith.max=function(){
-	var args = arguments;
+	var args = BigArith.extract(arguments);
 	var result = new BigArith(args[0]);
 	for(var i = 0; i < args.length; i++){
 		if(isNaN(new BigArith(args[i]).valueOf())) return NaN;
@@ -527,6 +527,16 @@ BigArith.max=function(){
 	return result;
 }
 
+//TODO
+BigArith.extract=function(a){
+	var args = [];
+	for(var k in a){
+		if(typeof a[k] == "number" || typeof a[k] == "string"){args.push(a[k]);}
+		else if(typeof a[k] == "object" && a[k].name == "BigArith"){args.push(a[k].toString());}
+		else if(typeof a[k] == "object"){args.push(...BigArith.extract(a[k]));}
+	}
+	return args;
+}
 
 /**	
 *	Returns largest integer less than or equal to this.value
@@ -686,7 +696,7 @@ BigArith.toFixed=function(n, d=0){
 		}
 		n = n[0]+((n[1]!="0")?("."+n[1]):"");
 	}
-	else n=n+((BigArith.compare(e, "0") == 1)?("."+"0".repeat(e)):"");
+	else n=n.toString()+((BigArith.compare(e, "0") == 1)?("."+"0".repeat(e)):"");
 	return n; 
 }
 
@@ -1086,14 +1096,26 @@ BigArith.divide=function(a, b){
 	var result = BigArith.divWithRem(a, b);
 	var rem = result[1];
 	var remResult = "0.";
-	var count = 0;
+	
+	/*	If the decimal place index of denominator - numerator is positive, 
+		we are likely going to encroach into the 200 decimal result 
+		when shifting the decimal pointto the left. The best is to start count from -(denominator-numerator)
+		instead of 0 in this case.
+	*/
 
+	var count = (denominatorIndex-numeratorIndex>0)?(-1*(denominatorIndex-numeratorIndex)):0, c = 0;
+	var flag = false;
 	while(BigArith.compare(rem, "0") == 1 && BigArith.compare(count, new BigArith().decimalSupport+1) == -1){
 		rem += "0";
 		var j = BigArith.divWithRem(rem, b);
 		remResult +=  j[0];
 		rem = j[1];
-		count++;
+		/*Don't count yet if quotient is still all 0's
+		This takes care of (x/x.y) returning (x.x) instead of (x.y) 
+		where x is any single digit, and y is any 200 digits*/
+		if(j[0] > 0) flag = true; if(!flag) c++;
+		if(c > 201) break; //if we have gotten 0.00{199 more 0's}, no need to continue
+		if(flag)count++;
 	}
 	if(remResult == "0.") remResult = "0.0";
 	result = result[0] + "." + remResult.split(".")[1];
@@ -1103,7 +1125,6 @@ BigArith.divide=function(a, b){
 	//Denominator decimal point means we shift the decimal point in answer backward
 	dPosition = dPosition+denominatorIndex-numeratorIndex;
 	result = result.split(".");
-	if(typeof result[1] == "undefined") result[1] = "0";
 	if(dPosition < 0){
 		result = "0." + "0".repeat(-1*dPosition) + result[0] + result[1];
 	}
@@ -1121,7 +1142,7 @@ BigArith.divide=function(a, b){
 				result[1].substr(dPosition)+ "0";
 		}
 	}
-	return new BigArith(new BigArith(result).toFixed(new BigArith().decimalSupport));
+	return new BigArith(new BigArith(result.replace(/^0+/,"")).toFixed(new BigArith().decimalSupport));
 };
 
 /**	Return a/b (division of a/b)
