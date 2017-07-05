@@ -1,0 +1,35 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></xscript>
+	<script src="../bigarith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		var ba = new BigArith("zero point five");
+		assertExpect(ba.isPositive(), true);
+		
+		ba = new BigArith("negative zero point five");
+		assertExpect(ba.isPositive(), false);
+		
+		ba = new BigArith("-234");
+		assertExpect(ba.isPositive(), false);
+		
+		ba = new BigArith("+8758376");
+		assertExpect(ba.isPositive(), true);
+		
+		ba = new BigArith("-17031986");
+		assertExpect(ba.isPositive(), false);
+
+		ba = new BigArith("-0");
+		assertExpect(ba.isPositive(), false); 
+
+		ba = new BigArith();
+		assertExpect(ba.isPositive(), true);
+
+		ba = new BigArith(null);
+		assertExpect(ba.isPositive(), true);
+
+		ba = new BigArith(NaN);
+		assertIsNaN(ba.isPositive()); 
+	</script>
+</html>

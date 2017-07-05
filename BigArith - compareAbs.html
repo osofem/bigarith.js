@@ -1,0 +1,27 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></xscript>
+	<script src="../bigarith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		var x = new BigArith(2);
+		
+		//CompareAbs
+		assertEqual(x.compareAbs("2"), 0);
+		assertEqual(x.compareAbs(-2), 0);
+		assertEqual(x.compareAbs("two"), 0);
+		assertEqual(x.compareAbs("2.0"), 0);
+		assertEqual(x.compareAbs("negative two"), 0);
+		assertEqual(x.compareAbs("-2"), 0);
+		
+		//Or
+		assertEqual(BigArith.compareAbs("-165.8987", "165.898700000000000000000"), 0);
+		assertEqual(BigArith.compareAbs("0.123568123", "-0.03455893"), 1);
+		assertEqual(BigArith.compareAbs("+0.03455893", "0.123568123"), -1);
+		
+		assertEqual(BigArith.compareAbs("", null), 0);
+		
+		assertIsNaN(BigArith.compareAbs("", NaN));
+	</script>
+</html>

@@ -1,0 +1,37 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<bascript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></bascript>
+	<script src="../bigarith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		var ba = new BigArith(2);
+		assertDeepEqual(ba.negate(), new BigArith("-2"));
+		
+		ba = new BigArith(-2);
+		assertDeepEqual(ba.negate(), new BigArith("2"));
+		
+		ba = new BigArith("-2");
+		assertDeepEqual(ba.negate(), new BigArith("2"));
+		
+		ba = new BigArith("+2");
+		assertDeepEqual(ba.negate(), new BigArith("-2"));
+		
+		ba = new BigArith("0");
+		assertDeepEqual(ba.negate(), new BigArith("-0"));
+		
+		ba = new BigArith(null);
+		assertDeepEqual(ba.negate(), new BigArith("-0"));
+		
+		ba = new BigArith("-0");
+		assertDeepEqual(ba.negate(), new BigArith("0"));
+		
+		ba = new BigArith(NaN);
+		assertIsNaN(ba.negate());
+		
+		//Or
+		assertDeepEqual(BigArith.negate("-165.8987"), new BigArith("165.8987"));
+		assertDeepEqual(BigArith.negate("0.123568123"), new BigArith("-0.123568123"));
+		assertDeepEqual(BigArith.negate("+0.03455893"), new BigArith("-0.03455893"));
+	</script>
+</html>

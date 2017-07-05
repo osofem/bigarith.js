@@ -1,0 +1,36 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<bascript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></bascript>
+	<script src="../bigarith.js"></script>
+	<bascript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></bascript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		var ba = new BigArith(2);
+		//max
+		assertDeepEqual(ba.max("4", 8), new BigArith("8"));
+		assertDeepEqual(ba.max(-2, -3, -10), new BigArith("2"));
+		assertDeepEqual(ba.max("two"), new BigArith("2"));
+		assertDeepEqual(ba.max("2.0"), new BigArith("2"));
+		assertDeepEqual(ba.max("negative two", "3.0", 987), new BigArith("987"));
+		assertDeepEqual(ba.max("-2"), new BigArith("2"));
+		assertDeepEqual(ba.max(), new BigArith("2"));
+		
+		ba = new BigArith(-2);
+		assertDeepEqual(ba.max(-4), new BigArith("-2"));
+		
+		ba = new BigArith(NaN);
+		assertIsNaN(ba.max("4"));
+		
+		//Or
+		assertDeepEqual(BigArith.max("459", "-165.8987", "165.898700000000000000000", "200", "467"), new BigArith("467"));
+		assertDeepEqual(BigArith.max("99", "0.123568123", "-0.03455893"), new BigArith("99"));
+		assertDeepEqual(BigArith.max("45", "4590", "+0.03455893", "0.123568123"), new BigArith("4590"));
+		assertDeepEqual(BigArith.max(), new BigArith("0"));
+		
+		assertDeepEqual(BigArith.max(2, 3, "5", [3, "8", new BigArith("24"), "two",[78, 8]]), new BigArith("78"));
+		assertDeepEqual(BigArith.max(2, 3, "5", [3, "8", new BigArith("24"), "fifty"], new BigArith("30")), new BigArith("50"));
+		
+		assertIsNaN(BigArith.max("4", NaN));
+		assertIsNaN(BigArith.max(NaN, "4"));
+	</script>
+</html>
