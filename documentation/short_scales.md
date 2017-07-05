@@ -345,4 +345,4 @@ Here is short scale naming system used in BigArith.js
 		<tr><td>10<sup>1002</sup></td><td>trecentretrigintillion</td></tr>
 	</tbody>
 </table>
-Full documentation is [here](https://github.com/osofem/bigarith.js/tree/master/documentation).
+Full documentation is <a href="https://github.com/osofem/bigarith.js/tree/master/documentation">here</a>.

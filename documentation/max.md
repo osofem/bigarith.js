@@ -14,12 +14,12 @@ BigArith.max([value1,[value2[,...]]]);
  
 ### Parameters
 #### method function
-##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the largest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, or a BigArith object.
+##### value1, value2, ... - Optional - {string|number|BigArith|Array}
+The numbers to return the largest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, a BigArith object or array of integers, strings, or BigArith objects to any depth.
 
 #### static method function
-##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the largest of. This could be a string of digits, a number, or a BigArith object.
+##### value1, value2, ... - Optional - {string|number|BigArith|Array}
+The numbers to return the largest of. This could be a string of digits, a number, a BigArith object or array of integers, strings, or BigArith objects to any depth.
 
 ### Return value
 #### method function - {BigArith}
@@ -59,6 +59,13 @@ ba.max(); //BigArith object with value "9999999999999999999999999999999999999999
 ba = new BigArith(-34);
 ba.max("negative two", "-3.0", -987); //BigArith object with value "-2"
 
+/*With arrays - array can be to any depth*/
+ba = new BigArith(2);
+ba.max(3, "5", [3, "8", new BigArith("24"), "two", [78, 7] ]); //BigArith object with value "78"
+
+ba = new BigArith(1);
+ba.max("4", "7", [2, "17", new BigArith("12"), "fifty"], new BigArith("30")); //BigArith object with value "50"
+
 ba = new BigArith(-34);
 ba.max("-2", NaN); // NaN
 ```
@@ -69,6 +76,10 @@ BigArith.max("459", "-165.8987", "165.898700000000000000000", "200", "467"); //B
 BigArith.max("99", "0.123568123", "-0.03455893"); //BigArith object with value "99"
 BigArith.max("45", "4590", "+0.03455893", "0.123568123"); //BigArith object with value "4590"
 BigArith.max(); //BigArith object with value "0"
+
+/*With arrays - array can be to any depth*/
+BigArith.max(2, 3, "5", [3, "8", new BigArith("24"), "two", [78, 7] ]); //BigArith object with value "78"
+BigArith.max(1, "4", "7", [2, "17", new BigArith("12"), "fifty"], new BigArith("30")) //BigArith object with value "50"
 
 BigArith.max("4", NaN); // NaN
 BigArith.max(NaN, "0.0467"); //NaN

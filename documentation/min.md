@@ -14,12 +14,12 @@ BigArith.min([value1,[value2[,...]]]);
  
 ### Parameters
 #### method function
-##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the smallest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, or a BigArith object.
+##### value1, value2, ... - Optional - {string|number|BigArith|Array}
+The numbers to return the smallest of (including the value of the BigArith object it is called on). This could be a string of digits, a number, a BigArith object or array of integers, strings, or BigArith objects to any depth.
 
 #### static method function
-##### value1, value2, ... - Optional - {string|number|BigArith}
-The numbers to return the smallest of. This could be a string of digits, a number, or a BigArith object.
+##### value1, value2, ... - Optional - {string|number|BigArith|Array}
+The numbers to return the smallest of. This could be a string of digits, a number, a BigArith object or array of integers, strings, or BigArith objects to any depth..
 
 ### Return value
 #### method function - {BigArith}
@@ -59,6 +59,13 @@ ba.min("8888888888888888888888888888"); //BigArith object with value "8888888888
 ba = new BigArith(-34);
 ba.min("negative two", "-3.0", -987); //BigArith object with value "-987"
 
+/*Array - array can be to any depth*/
+ba = new BigArith(2);
+ba.min(3, "5", [3, "8", new BigArith("24"), "two", [1]])); //BigArith object with value "1"
+
+ba = new BigArith(2);
+BigArith.min(3, "5", [3, "8", new BigArith("0"), "fifty"], new BigArith("30")); //BigArith object with value "0"
+
 ba = new BigArith(-34);
 ba.min("-2", NaN); // NaN
 ```
@@ -69,6 +76,10 @@ BigArith.min("459", "-165.8987", "165.898700000000000000000", "200", "467"); //B
 BigArith.min("99", "0.123568123", "-0.03455893"); //BigArith object with value "-0.03455893"
 BigArith.min("45", "4590", "+0.03455893", "0.123568123"); //BigArith object with value "0.03455893"
 BigArith.min(); //BigArith object with value "0"
+
+/*Array - array can be to any depth*/
+BigArith.min(2, 3, "5", [3, "8", new BigArith("24"), "two", [1]])); //BigArith object with value "1"
+BigArith.min(2, 3, "5", [3, "8", new BigArith("0"), "fifty"], new BigArith("30")); //BigArith object with value "0"
 
 BigArith.min("4", NaN); // NaN
 BigArith.min(NaN, "0.0467"); //NaN

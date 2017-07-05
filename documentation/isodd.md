@@ -27,28 +27,28 @@ There is no static method function for `isOdd()` so it should ALWAYS be used as 
 
 ```javascript
 var ba = new BigArith("-17031986");
-console.log(ba = ba.isOdd()); //logs false to the console
+console.log(ba.isOdd()); //logs false to the console
 
 ba = new BigArith("+17031986");
-console.log(ba = ba.isOdd()); //logs false to the console
+console.log(ba.isOdd()); //logs false to the console
 
 ba = new BigArith("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999");
-console.log(ba = ba.isOdd()); //logs true to the console
+console.log(ba.isOdd()); //logs true to the console
 
 ba = new BigArith("2.4");
-console.log(ba = ba.isOdd()); //logs false to the console
+console.log(ba.isOdd()); //logs false to the console
 
 ba = new BigArith("0");
-console.log(ba = ba.isOdd()); //logs false to the console 
+console.log(ba.isOdd()); //logs false to the console 
 
 ba = new BigArith();
-console.log(ba = ba.isOdd()); //logs false to the console 
+console.log(ba.isOdd()); //logs false to the console 
 
 ba = new BigArith(null);
-console.log(ba = ba.isOdd()); //logs false to the console 
+console.log(ba.isOdd()); //logs false to the console 
 
 ba = new BigArith(NaN);
-console.log(ba = ba.isOdd()); //logs NaN to the console 
+console.log(ba.isOdd()); //logs NaN to the console 
 ```
 
 More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)

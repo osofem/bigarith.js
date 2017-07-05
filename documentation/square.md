@@ -43,7 +43,6 @@ Since the method returns a BigArith object, [method chaining](method_chaining.ht
 var ba = new BigArith("-17031986");
 ba = ba.divide("+17031986").add("24011985").multiply("456785564").subtract("2"); //BigArith object with value "10968327654198974"
 ```
-```
 
 More examples [here](https://github.com/osofem/bigarith.js/tree/master/examples/). Full documentation [here](https://github.com/osofem/bigarith.js/tree/master/documentation)
 
