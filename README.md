@@ -3,6 +3,22 @@
 
 `bigarith.js` offers a way to handle **very large numbers** (be it integers, fractionals, strings of digits, english words) to precision. bigarith is from the words **big arith**metic.
 
+```javascript
+var ba = new BigArith("two million three hundred and sixty nine point two five seven one nine");
+console.log( ba.add("300164677834746574576636455846484578468383.968785364758348").subtract("58967883445567247657787456634534546650.0955344465644497").multiply("-323333256645735747677476657457673734399124.90745562122345555").divide("0.009899667856554544334565487673234").abs().square().toString());
+/* This outputs 
+"96074475586197577621365133601838365203080754085195939359953075396624558104713187059409912271015743874101504692641365467550955268112648730652787010947788963291422897835924.2697158811425922569339591402860355619971451186954192254552990138752891749629006917912953942976702570634093674662564598087492412925971450372323378467910693943693505333234015230699695868364256999174194600745045683291593833019710855049245471924913674245229558192580612054808910477322678828203196181992794776861557204199127862657871835998341406371689589320661826402247662519900739514364587371169640378081" 
+to the console */
+```
+Check [here](https://github.com/osofem/bigarith.js/tree/master/documentation) for full documentation.
+
+### Chanelog for V0.0.5
+* Fixed some bugs.
+* Added sin()
+* Added cos()
+* Added tan()
+Full Changelog [here](https://github.com/osofem/bigarith.js/blob/master/CHANGELOG.md).
+
 ### Install
 Depending on the environment in which bigarith.js will be used, it can be installed via:
 
@@ -21,9 +37,13 @@ Client-side usage
 Choose the method that best suit your need.
 
 ### Usage
-`bigarith.js` can be initialized in six ways.
 
 > In the server-side, always add the `var BigArith = require('bigarith.js');` however every other thing remains the same in both server-side and client-side.
+
+Check [documentation](https://github.com/osofem/bigarith.js/tree/master/documentation) for the full list of supported functions.
+
+#### Initialization
+`bigarith.js` can be initialized in six ways.
 
 ##### 1. Initiating without any parameter or null
 ###### Server-side
@@ -199,5 +219,8 @@ See also:
 25. [valueOf()](https://osofem.github.io/bigarith.js/documentation/valueof.html)
 26. [truncate()](https://osofem.github.io/bigarith.js/documentation/truuncate.html)
 27. [negate()](https://osofem.github.io/bigarith.js/documentation/negate.html)
+28. [sin()](https://osofem.github.io/bigarith.js/documentation/sin.html) [unstable]
+29. [cos()](https://osofem.github.io/bigarith.js/documentation/cos.html) [unstable]
+30. [tan()](https://osofem.github.io/bigarith.js/documentation/tan.html) [unstable]
 
 Full documentation is [here](https://github.com/osofem/bigarith.js/tree/master/documentation).

@@ -66,11 +66,19 @@
 * Fixed a bug in divide in which a single digit divided by a 200 decimal place digits returns a 1 decimal place answer instead of a 200 decimal place answer.
 * changed max() and min() to also accept arrays of string, numbers or BigArith objects to any depth.
 
+### v0.0.5
+#### Released - 11th July, 2017
+* Fixed some bugs.
+* Added sin()
+* Added cos()
+* Added tan()
+
 ### Planned to do!
 * Add power()
-* Add sin()
-* Add cos()
-* Add tan()
+* Improve sin()
+* Improve cos()
+* Improve tan()
 * Add log()
 * Add log10()
 * Improve squareRoot()
+* Add hypotenuse (square root of sum of square of arguments. With one argument, Math.hypot() returns the same as Math.abs().)
