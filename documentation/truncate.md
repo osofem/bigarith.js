@@ -32,7 +32,7 @@ There are two functions which could be used, the *method function*, and the *sta
 
 The static method function takes one parameter (n) and is always used as `BigArith.truncate()`. It returns a BigArith object with its value equals to the integer part of parameter n.
 
-Unlike ceil(), floor(), and round(), truncate() does not do any rounding on the number. It just remove the fractional part and return the integer remaining.
+Unlike ceil(), floor(), and round(), truncate() does not do any rounding on the number. It just removes the fractional part and returns the integer remaining.
 
 > Any number parameter (that is not strings of digits or a BigArith) should be between the <code>Number.MIN_SAFE_INTEGER</code> and <code>Number.MAX_SAFE_INTEGER</code> limits.
 

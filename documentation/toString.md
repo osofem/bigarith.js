@@ -1,5 +1,5 @@
 # toString()
-`toString()` returns the value of the BigArith object as a strings of digits.
+`toString()` returns the value of the BigArith object as a string of digits.
 
 #### Syntax
 ##### method function
@@ -13,7 +13,7 @@ ba.toString();
 
 ### Return value
 #### method function - {string}
-Returns the value of the BigArith object as a strings of digits.
+Returns the value of the BigArith object as a string of digits.
 
 ### Description
 If the value of the BigArith object evaluate to NaN, NaN is returned.
