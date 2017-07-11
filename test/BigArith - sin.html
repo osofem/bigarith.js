@@ -1,0 +1,14 @@
+<html>
+	<!--Remember to change /v0.0-beta0.0/ to the version you are targeting -->
+	<xscript src="https://cdn.rawgit.com/osofem/bigarith.js/v0.0-beta0.0/bigarith.js"></xscript>
+	<script src="../bigarith.js"></script>
+	<xscript src="https://cdn.rawgit.com/osofem/assert.js/v0.0-beta0.0/assert.js"></xscript>
+	<script src="../../assert/assert.js"></script>
+	<script>
+		then = new Date();
+		var s = BigArith.sin("45");
+		now = new Date();
+		assertSimilar(s, new BigArith("1").divide("SQRT2"));
+		console.log(now-then);
+	</script>
+</html>
