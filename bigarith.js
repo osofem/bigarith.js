@@ -8,12 +8,14 @@
 var BigArith=function(n){
 	//version
 	Object.defineProperty(this, 'version', {
+		enumerable: true,
 		writable: false,
 		value: "v0.0.5",
 	});
 	
 	//Object name
 	Object.defineProperty(this, 'name', {
+		enumerable: true,
 		writable: false,
 		value: "BigArith"
 	});
@@ -35,6 +37,7 @@ var BigArith=function(n){
 	else if(typeof n == "object" && n.name == "BigArith") this.value = n.toString();
 	else if(typeof n == "undefined" || n == "") this.value = "0";
 	else if(n == "PI") this.value = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
+	else if(n == "E") this.value = "2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319525101901";
 	/*else if(n == "LN2") this.value = "0.6931471805599453";
 	else if(n == "LN10") this.value = "2.302585092994046";
 	else if(n == "LOG2E") this.value = "1.4426950408889634";
@@ -1204,6 +1207,7 @@ BigArith.divWithRem=function(a, b){
 *	function sin
 *	@param {string|number|BigArth} n The angle in degree
 *	@returns {BigArith} - sine of n
+*	x - x^3/3! + x^5/5! - x^7/7! + x^9/9! - ... (x in radian)
 */
 BigArith.sin=function(n){
 	//Have to use PI to atleast 203 decimal places so new BigArith("PI") won't work here as it is to 200 decimal place
@@ -1237,6 +1241,7 @@ BigArith.sin=function(n){
 *	function cos
 *	@param {string|number|BigArth} n The angle in degrees
 *	@returns {BigArith} - cosine of n
+*	1 - x^2/2! + x^4/4! - x^6/6! + x8/8! - ... (x in radian)
 */
 BigArith.cos=function(n){
 	//Have to use PI to atleast 203 decimal places so new BigArith("PI") won't work here as it is to 200 decimal place
@@ -1271,6 +1276,7 @@ BigArith.cos=function(n){
 *	function cos
 *	@param {string|number|BigArth} n The angle in degrees
 *	@returns {BigArith} - tangent of n
+*	tan = sin/cos
 */
 BigArith.tan=function(n){
 	return BigArith.divide(BigArith.sin(n), BigArith.cos(n));
