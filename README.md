@@ -12,11 +12,11 @@ to the console */
 ```
 Check [here](https://github.com/osofem/bigarith.js/tree/master/documentation) for full documentation.
 
-### Chanelog for V0.0.5
+### Chanelog for v0.0.6
 * Fixed some bugs.
-* Added sin()
-* Added cos()
-* Added tan()
+* Fixed some comments and minor erroes
+* Changed the tests to .js files
+
 Full Changelog [here](https://github.com/osofem/bigarith.js/blob/master/CHANGELOG.md).
 
 ### Install
