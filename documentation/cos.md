@@ -22,7 +22,7 @@ A BigArith object with its value equals to the cosine of the given angle.
 ### Description
 There is no method function for `cos()` so it should ALWAYS be used as a static member function `BigArith.cos()`.
 
-The returned result is the cosine of the angle (given in degress) to 200 decimal places. 
+The returned result is the cosine of the angle (given in degrees) to 200 decimal places. 
 
 
 ### Examples

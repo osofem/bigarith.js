@@ -7,8 +7,7 @@ Here is a updated list of constants predefined in BigArith.js
 	<col style="width:40%; word-wrap:break-word;">
 	<thead><tr><td>Constant</td><td>Description</td><td style="width:130px">Value (to 200 decimal places)</td><td>Usage</td></tr></thead>
 	<tbody>
-		<tr><td>PI</td> <td>pi</td> <td>3.1415926535897932384...196</td><td>var ba = new BigArith("PI");</td></tr>
-
+		<tr><td>PI</td> <td>pi</td> <td>3.14159265358979323846...196</td><td>var ba = new BigArith("PI");</td></tr>
 		<!-- -------------------------------------------------------------------------------------------
 		<tr><td>LN2</td> <td>ln(2)</td> <td>0.6931471805599453</td><td>var ba = new BigArith("LN2");</td></tr>
 

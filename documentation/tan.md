@@ -1,6 +1,6 @@
 # tan() [UNSTABLE]
 
-> This function is still unstable and in the developmental stage. It takes about `computation time for sin + computation time for cos` milliseconds to compute tan &theta;&deg;.
+> This function is still unstable and in the developmental stage. It takes about `computation time for sin + computation time for cos` milliseconds to compute tan &theta;&deg; (which is about  for tan 90&deg;).
 
 `tan()` returns the tangent of an angle (given in degrees). This has only a static method function.
 
@@ -22,7 +22,7 @@ A BigArith object with its value equals to the tangent of the given angle.
 ### Description
 There is no method function for `tan()` so it should ALWAYS be used as a static member function `BigArith.tan()`.
 
-The returned result is the tangent of the angle (given in degress) to 200 decimal places. 
+The returned result is the tangent of the angle (given in degrees) to 200 decimal places. 
 
 
 ### Examples

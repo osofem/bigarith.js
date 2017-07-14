@@ -22,7 +22,7 @@ A BigArith object with its value equals to the sine of the given angle.
 ### Description
 There is no method function for `sin()` so it should ALWAYS be used as a static member function `BigArith.sin()`.
 
-The returned result is the sine of the angle (given in degress) to 200 decimal places. 
+The returned result is the sine of the angle (given in degrees) to 200 decimal places. 
 
 
 ### Examples
