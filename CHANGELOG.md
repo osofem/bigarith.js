@@ -76,7 +76,7 @@
 ### v0.0.6
 #### Released - 14th July, 2017
 * Fixed some bugs.
-* Fixed some comments and minor erroes
+* Fixed some comments and minor errors
 * Changed the tests to .js files
 
 ### Planned to do!
