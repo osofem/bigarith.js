@@ -10,7 +10,7 @@ var BigArith=function(n){
 	Object.defineProperty(this, 'version', {
 		enumerable: true,
 		writable: false,
-		value: "v0.0.5",
+		value: "v0.0.6",
 	});
 	
 	//Object name
@@ -35,7 +35,7 @@ var BigArith=function(n){
 	//assign this.value
 	if(n == null) this.value = "0"
 	else if(typeof n == "object" && n.name == "BigArith") this.value = n.toString();
-	else if(typeof n == "undefined" || n == "") this.value = "0";
+	else if(typeof n == "undefined" /*null*/ || n == "") this.value = "0";
 	else if(n == "PI") this.value = "3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196";
 	else if(n == "E") this.value = "2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746639193200305992181741359662904357290033429526059563073813232862794349076323382988075319525101901";
 	/*else if(n == "LN2") this.value = "0.6931471805599453";
@@ -53,19 +53,17 @@ var BigArith=function(n){
 *	@param {string|number|BigArth} n Number within the safe integer limit or string in "-123.456" or  
 *	"negative one hundred and twenty three point four five six" form or a BigArith object
 *	@returns {string|NaN} - A string representation of @param in form "-123.456" or NaN if @param is not valid,
-*	or throws an error if input is in number form but not within safe limits.
+*	or throws a RangeError if input is in number form but not within safe limits.
 *	Dependent on w_Dict()
 */
 BigArith.prototype.verify = function(n){
-	//Can be already verified BigArith object
-	if(typeof(n) == "object" && n.name == "BigArith")
-		return n.toString();
+	//Can be an already verified BigArith object
+	if(typeof(n) == "object" && n.name == "BigArith") return n.toString();
 		
 	//Can be a number in form of 1000 or 1e3
-	if(typeof(n) == 'number' && n <= Number.MAX_SAFE_INTEGER && n >= Number.MIN_SAFE_INTEGER)//Number must be within the safe integer range
-		return n.toString();
-	if(typeof(n) == 'number' && (n > Number.MAX_SAFE_INTEGER || n < Number.MIN_SAFE_INTEGER))
-		throw new RangeError("The number you entered in typeof 'number' form is not within the safe limit. Please enter the number as a string.");
+	//Number must be within the safe integer range
+	if(typeof(n) == 'number' && n <= Number.MAX_SAFE_INTEGER && n >= Number.MIN_SAFE_INTEGER) return n.toString();
+	if(typeof(n) == 'number' && (n > Number.MAX_SAFE_INTEGER || n < Number.MIN_SAFE_INTEGER)) throw new RangeError("The number you entered in typeof 'number' form is not within the safe limit. Please enter the number as a string.");
 	
 	//It can be string in form "-123.89"
 	if(typeof(n) == 'string' && /\d/.test(n)/*This just test if it contains any digit, real test in below*/){
@@ -80,17 +78,14 @@ BigArith.prototype.verify = function(n){
 		}
 		
 		n = n.split(".");
-		if(n.length > 2)
-			return NaN;
-		if(n[0] == "")
-			n[0] = "0";
-		if(typeof(n[1]) == 'undefined')
-			n[1] = "0";
+		if(n.length > 2) return NaN;
+		if(n[0] == "") n[0] = "0";
+		if(typeof(n[1]) == 'undefined') n[1] = "0";
 		if(/^\d+$/.test(n[0]) && /^\d+$/.test(n[1])/*Test that it contains only digits*/){
-			//Remove unnecessary zeros
+			//Remove unnecessary zeroes
 			n[0] = n[0].replace(/^[0]+/g, "");
 			n[1] = n[1].replace(/[0]+$/g, "");
-			return ((sign)?"-":"") + ((n[0] == "")? "0":n[0]) + ((n[1] == "")?"":"."+n[1]);
+			return ((sign)?"-":"") + ((n[0] == "")?"0":n[0]) + ((n[1] == "")?"":"."+n[1]);
 		}
 		else
 			return NaN;
@@ -104,7 +99,7 @@ BigArith.prototype.verify = function(n){
 		
 		var fNum, dNum = fNum =  "";
 		
-		//Is Negative?
+		//Is Negative or Positive?
 		var sign = false;
 		n = n.split(" ");
 		if(n[0] == "negative"){
@@ -127,7 +122,7 @@ BigArith.prototype.verify = function(n){
 		var subArray = [];
 		var subString = "";
 		var prevSuffix = "0".repeat(this.wordSupport);
-		var prevHSuffix = false;
+		var prevHSuffix = false; //To check have we gotten an hundred earlier?
 		var prevValue = false;
 		for(var i = 0; i < n.length; i++){
 			if(typeof(this.w_Dict(n[i])) == 'undefined')return NaN; //Spelling errors and what-nots
@@ -149,7 +144,7 @@ BigArith.prototype.verify = function(n){
 				prevHSuffix = true;
 			}
 			else{
-				if(typeof this.w_Dict(n[i-1])!='undefined'&&(this.w_Dict(n[i]).length>this.w_Dict(n[i-1]).length||(this.w_Dict(n[i]).length==1&&this.w_Dict(n[i-1]).length==1))) return NaN; //one ninety is wrong, eight hundred and six three
+				if(typeof this.w_Dict(n[i-1])!='undefined'&&(this.w_Dict(n[i]).length>this.w_Dict(n[i-1]).length||(this.w_Dict(n[i]).length==1&&this.w_Dict(n[i-1]).length==1))) return NaN; //one ninety is wrong, eight hundred and six three is wrong
 				subString = subString.substr(0, subString.length - this.w_Dict(n[i]).length) + this.w_Dict(n[i]);
 				prevValue = true;
 			}
@@ -224,6 +219,7 @@ BigArith.prototype.isInteger=function(){
 /** 
 *	Returns true if this.value is even, false otherwise
 *	@return {boolean} - this.value is even?
+*	Dependent on floor(), static divide(), isInteger(), static compare()
 */
 BigArith.prototype.isEven=function(){
 	if(isNaN(this.value)) return NaN;
@@ -237,6 +233,7 @@ BigArith.prototype.isEven=function(){
 /** 
 *	Returns true if this.value is NOT even and is an integer, false otherwise
 *	@return {boolean} - this.value is NOT even and is an integer?
+*	Dependent on isEven(), isInteger()
 */
 BigArith.prototype.isOdd=function(){
 	if(isNaN(this.value)) return NaN;
@@ -249,6 +246,7 @@ BigArith.prototype.isOdd=function(){
 *	Returns square of this.value
 *	function square
 *	@return {BigArith} - product of this.value and this.value
+*	Dependent on static multiply()
 */
 BigArith.prototype.square=function(){
 	return BigArith.multiply(this.value, this.value);
@@ -1221,7 +1219,7 @@ BigArith.sin=function(n){
 	while(BigArith.compare(term, tolerance) == 1){
 		if(i > 1){
 			_x = BigArith.multiply(_x, x.square()).toString().split(".");
-			//the first 203 decimal digit is needed as _x gets very large quickly
+			//only the first 203 decimal digit is needed as _x gets very large quickly
 			_x = _x[0] + "." +_x[1].substr(0, new BigArith().decimalSupport+3); 
 			
 			term = BigArith.div(_x, BigArith.factorial(i), new BigArith().decimalSupport+3).toString();
@@ -1316,7 +1314,7 @@ BigArith.prototype.w_Dict2=function(w){
 
 /*
 *	Factorial 0 to 200
-*	Precompiled factorial reduces computation time in calculting sine and cosine
+*	Precompiled factorial reduces computation time in calculating sine and cosine
 *	But increases file size by 34kb
 */
 BigArith.factorial = function(n){
