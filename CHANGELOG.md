@@ -79,6 +79,10 @@
 * Fixed some comments and minor errors
 * Changed the tests to .js files
 
+### v0.0.7
+#### Released - 15th August, 2017
+* Fixed a bug in divWithRem
+
 ### Planned to do!
 * Add power()
 * Improve sin()
