@@ -10,7 +10,7 @@ var BigArith=function(n){
 	Object.defineProperty(this, 'version', {
 		enumerable: true,
 		writable: false,
-		value: "v0.0.6",
+		value: "v0.0.7",
 	});
 	
 	//Object name
@@ -258,15 +258,15 @@ BigArith.prototype.square=function(){
 *	@return {BigArith} - root of this.value
 */
 BigArith.prototype.squareRoot=function(){
-	if(isNaN(this.value) || new BigArith(this.value).isNegative()) return NaN;
 	var n = this.value;
+	if(isNaN(n) || new BigArith(n).isNegative()) return NaN;
 	
 	//Find the perfect square just less than or equal to n
 	var ps = BigArith.perfectSq(n); 
 	var result = ps;
 	var quotient = ps;
 	n = BigArith.subtract(n, BigArith.multiply(ps, ps));
-	//If reminder is 0, return result we have reached the end of calculation
+	//If reminder (n) is 0, return result we have reached the end of calculation
 	if(BigArith.compare(n, 0) == 0) return new BigArith(result);
 	
 	//If we got here that means we have reminders
@@ -1192,9 +1192,8 @@ BigArith.divWithRem=function(a, b){
 		}
 		aSub = hold.toString();
 	}
-	if(aSub.length > 1 && aSub[0] == "0"){
-		hold = new BigArith(aSub).toString();
-	}
+	hold = new BigArith(aSub).toString();
+
 	result = result.replace(/^0*/g,"");
 	result = (result == "")? "0" : result;
 	return [((signFlag)?"-":"")+result, hold.toString()];
@@ -1277,7 +1276,9 @@ BigArith.cos=function(n){
 *	tan = sin/cos
 */
 BigArith.tan=function(n){
-	return BigArith.divide(BigArith.sin(n), BigArith.cos(n));
+	var sin = BigArith.sin(n);
+	var cos = BigArith.cos(n);
+	return BigArith.divide(sin, cos);
 }
 
 /**	
