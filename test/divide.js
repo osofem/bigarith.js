@@ -1,5 +1,9 @@
 console.log("%cTesting for divide", "color: blue; font-size: 20pt;");
 
+assertDeepEqual(BigArith.divide("11460", "1106"), new BigArith("10.36166365280289330922242314647377938517179023508137432188065099457504520795660036166365280289330922242314647377938517179023508137432188065099457504520795660036166365280289330922242314647377938517179024"));
+
+assertDeepEqual(BigArith.divWithRem("64727385000", "541829"), ["119460","492660"]);
+
 assertDeepEqual(BigArith.divide("426", 2), new BigArith(213));
 assertDeepEqual(BigArith.divide("128", 2), new BigArith(64));
 assertDeepEqual(BigArith.divide("138", 2), new BigArith(69));
