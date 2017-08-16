@@ -10,7 +10,7 @@ var BigArith=function(n){
 	Object.defineProperty(this, 'version', {
 		enumerable: true,
 		writable: false,
-		value: "v0.0.7",
+		value: "v0.0.8",
 	});
 	
 	//Object name
@@ -1123,6 +1123,7 @@ BigArith.div=function(a, b, d){
 		if(c > 201) break; //if we have gotten 0.00{199 more 0's}, no need to continue
 		if(flag)count++;
 	}
+	remResult = remResult.replace(/\-/g,"");
 	if(remResult == "0.") remResult = "0.0";
 	result = result[0] + "." + remResult.split(".")[1];
 	var dPosition = (result.indexOf(".") == -1)?result.length : result.indexOf("."); // decimal position in answer
