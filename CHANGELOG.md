@@ -83,6 +83,10 @@
 #### Released - 15th August, 2017
 * Fixed a bug in divWithRem
 
+### v0.0.8
+#### Released - 16th August, 2017
+* Fixed a bug in div
+
 ### Planned to do!
 * Add power()
 * Improve sin()
