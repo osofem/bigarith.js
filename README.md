@@ -12,10 +12,8 @@ to the console */
 ```
 Check [here](https://github.com/osofem/bigarith.js/tree/master/documentation) for full documentation.
 
-### Chanelog for v0.0.6
-* Fixed some bugs.
-* Fixed some comments and minor erroes
-* Changed the tests to .js files
+### Chanelog for v0.0.8
+* Fixed a bug in div
 
 Full Changelog [here](https://github.com/osofem/bigarith.js/blob/master/CHANGELOG.md).
 
